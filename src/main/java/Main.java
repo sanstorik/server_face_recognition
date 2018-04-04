@@ -9,7 +9,7 @@ public class Main extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        resp.getWriter().print("Илюха пидарас сосет хуй!\n");
+        resp.getWriter().print("Ilya pidoras i soset hui\n");
 
         String msg = req.getMethod();
         msg += req.getHeader("login");
@@ -23,7 +23,7 @@ public class Main extends HttpServlet {
     }
 
     @Override protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().print("Илюха пидарас сосет хуй!\n");
+        resp.getWriter().print("Ilya pidoras i soset hui!\n");
     }
 
 
