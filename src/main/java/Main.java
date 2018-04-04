@@ -9,8 +9,23 @@ public class Main extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        resp.getWriter().print("Hello from Java!\n");
+        resp.getWriter().print("Илюха пидарас сосет хуй!\n");
+
+        String msg = req.getMethod();
+        msg += req.getHeader("login");
+        msg += " " +req.getHeader("password");
+
+        resp.getWriter().print("\n " + msg);
+        resp.getWriter().print("\n" + req.getRequestURL().toString());
+        resp.getWriter().print("\n" + req.getContextPath().toString());
+
+        resp.getWriter().print("\n" + req.getParameter("name"));
     }
+
+    @Override protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.getWriter().print("Илюха пидарас сосет хуй!\n");
+    }
+
 
     public static void main(String[] args) throws Exception{
         Server server = new Server(Integer.valueOf(System.getenv("PORT")));
