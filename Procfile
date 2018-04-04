@@ -1,1 +1,2 @@
-server: sh target/bin/main
+main: sh target/bin/main
+temp: sh target/bin/temp

@@ -42,6 +42,10 @@
                             <mainClass>Main</mainClass>
                             <name>main</name>
                         </program>
+                        <program>
+                            <mainClass>Temp</mainClass>
+                            <name>temp</name>
+                        </program>
                     </programs>
                 </configuration>
                 <executions>
