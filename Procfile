@@ -1,2 +1,1 @@
-main: sh target/bin/main
-temp: sh target/bin/temp
+web:    java -cp target/classes:target/dependency/* HelloWorld
