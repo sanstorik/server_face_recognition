@@ -1,5 +1,12 @@
 public class Temp {
     public static void main(String[] args) {
-        System.out.println("hello world");
+        while(true) {
+            try {
+                Thread.sleep(1000);
+                System.out.println("HELLO");
+            } catch(InterruptedException e) {}
+
+            System.out.println("Worker process woke up");
+        }
     }
 }
