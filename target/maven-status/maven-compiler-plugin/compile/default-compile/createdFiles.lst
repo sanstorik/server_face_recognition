@@ -1,4 +1,5 @@
-Temp.class
 Server.class
 Main.class
+QueryMethod.class
 FileUtils.class
+HttpServer.class
