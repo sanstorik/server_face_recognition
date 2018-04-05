@@ -31,8 +31,7 @@ enum QueryMethod {
 
 public class HttpServer extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    @Override protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         getQuery(request, response);
     }
@@ -56,10 +55,10 @@ public class HttpServer extends HttpServlet {
         response.getWriter().print("\n" + request.getParameter("name"));
     }
 
-    private String parseMethodByUrl(String url) {
-        String methodName = url.substring(url.lastIndexOf("/"), url.length() - 1);
+    private QueryMethod parseMethodByUrl(String url) {
+        String methodName = url.substring(url.lastIndexOf("/"), url.length());
 
-        return methodName;
+        return QueryMethod.of(methodName);
     }
 
     private void postQuery(HttpServletRequest request, HttpServletResponse response) {
