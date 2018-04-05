@@ -1,11 +1,13 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 
 public final class FileUtils {
-    private static final String FONTS_FOLDER = "fonts/";
     private static final String IMAGES_FOLDER = "images/";
 
     private FileUtils() {}
@@ -40,13 +42,16 @@ public final class FileUtils {
     public static void copyFileUsingChannel(File source, File dest) throws IOException {
         FileChannel sourceChannel = null;
         FileChannel destChannel = null;
+
         try {
             sourceChannel = new FileInputStream(source).getChannel();
             destChannel = new FileOutputStream(dest).getChannel();
             destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
         } finally{
-            sourceChannel.close();
-            destChannel.close();
+            if (sourceChannel != null && destChannel != null) {
+                sourceChannel.close();
+                destChannel.close();
+            }
         }
     }
 }

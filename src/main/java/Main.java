@@ -1,38 +1,23 @@
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.*;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 
-public class Main extends HttpServlet {
+public class Main {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        resp.getWriter().print("Ilya pidoras i soset hui\n");
-
-        String msg = req.getMethod();
-        msg += req.getHeader("login");
-        msg += " " +req.getHeader("password");
-
-        resp.getWriter().print("\n " + msg);
-        resp.getWriter().print("\n" + req.getRequestURL().toString());
-        resp.getWriter().print("\n" + req.getContextPath().toString());
-
-        resp.getWriter().print("\n" + req.getParameter("name"));
+    public static void main(String[] args) {
+        try {
+            startServer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().print("Ilya pidoras i soset hui!\n");
-    }
-
-
-    public static void main(String[] args) throws Exception{
+    private static void startServer() throws Exception {
         Server server = new Server(Integer.valueOf(System.getenv("PORT")));
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
         server.setHandler(context);
-        context.addServlet(new ServletHolder(new Main()),"/*");
+        context.addServlet(new ServletHolder(new HttpServer()), "/*");
         server.start();
         server.join();
     }
