@@ -24,7 +24,7 @@ public class DatabaseConnection {
                     "ID SERIAL PRIMARY KEY, " +
                     "NAME VARCHAR(255) NOT NULL);").execute();
 
-            sqlConnection.prepareStatement("INSERT INTO USERS(NAME) VALUES ('MATILDA');").execute();
+            sqlConnection.prepareStatement("INSERT INTO USERS(5,NAME) VALUES ('MATILDA');").execute();
             return sqlConnection.prepareStatement("SELECT * FROM USERS").executeQuery().getString("name");
         } catch (SQLException e) {
             error = e.toString();
