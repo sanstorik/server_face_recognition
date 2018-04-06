@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f9567ab7-4235-408a-b245-4c77bedf3a24" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseConnection.java" afterPath="$PROJECT_DIR$/src/main/java/DatabaseConnection.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/HttpServer.java" afterPath="$PROJECT_DIR$/src/main/java/HttpServer.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -48,23 +47,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DatabaseConnection.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DatabaseConnection.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseConnection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+            <state relative-caret-position="315">
+              <caret line="21" column="66" lean-forward="false" selection-start-line="21" selection-start-column="66" selection-end-line="21" selection-end-column="66" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1523034025788" expanded="true" signature="455:595" ph="CREATE TABLE... USERS" />
-                <marker date="1523034025788" expanded="true" signature="655:687" ph="INSERT INTO USERS... " />
-                <marker date="1523034025788" expanded="true" signature="655:697" ph="INSERT INTO USERS... " />
-                <marker date="1523034025788" expanded="true" signature="763:782" ph="SELECT * FRO... USERS" />
+                <marker date="1523034166867" expanded="true" signature="455:612" ph="CREATE TABLE... USERS" />
+                <marker date="1523034166867" expanded="true" signature="672:704" ph="INSERT INTO USERS... " />
+                <marker date="1523034166867" expanded="true" signature="672:714" ph="INSERT INTO USERS... " />
+                <marker date="1523034166867" expanded="true" signature="780:799" ph="SELECT * FRO... USERS" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HttpServer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HttpServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/HttpServer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="568">
@@ -150,8 +149,8 @@
         <option value="$PROJECT_DIR$/src/main/java/Server.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/.env" />
-        <option value="$PROJECT_DIR$/src/main/java/DatabaseConnection.java" />
         <option value="$PROJECT_DIR$/src/main/java/HttpServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DatabaseConnection.java" />
       </list>
     </option>
   </component>
@@ -351,12 +350,12 @@
       <workItem from="1522916371752" duration="1351000" />
       <workItem from="1522926862333" duration="1652000" />
       <workItem from="1522941456689" duration="29000" />
-      <workItem from="1523030607407" duration="2794000" />
+      <workItem from="1523030607407" duration="2941000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10774000" />
+    <option name="totallyTimeSpent" value="10921000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -776,20 +775,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1523034025788" expanded="true" signature="455:595" ph="CREATE TABLE... USERS" />
-            <marker date="1523034025788" expanded="true" signature="655:687" ph="INSERT INTO USERS... " />
-            <marker date="1523034025788" expanded="true" signature="655:697" ph="INSERT INTO USERS... " />
-            <marker date="1523034025788" expanded="true" signature="763:782" ph="SELECT * FRO... USERS" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -820,6 +805,20 @@
             <element signature="e#451#452#0" expanded="true" />
             <element signature="e#837#838#0" expanded="true" />
             <element signature="e#880#881#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="66" lean-forward="false" selection-start-line="21" selection-start-column="66" selection-end-line="21" selection-end-column="66" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1523034166867" expanded="true" signature="455:612" ph="CREATE TABLE... USERS" />
+            <marker date="1523034166867" expanded="true" signature="672:704" ph="INSERT INTO USERS... " />
+            <marker date="1523034166867" expanded="true" signature="672:714" ph="INSERT INTO USERS... " />
+            <marker date="1523034166867" expanded="true" signature="780:799" ph="SELECT * FRO... USERS" />
           </folding>
         </state>
       </provider>
