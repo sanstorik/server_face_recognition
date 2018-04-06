@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
@@ -26,7 +27,9 @@ public class DatabaseConnection {
                     "NAME VARCHAR(255) NOT NULL);").execute();
 
             sqlConnection.prepareStatement("INSERT INTO USERS(NAME, PASSWORD) VALUES ('MATILDA', 'USER');").execute();
-            return String.valueOf(sqlConnection.prepareStatement("SELECT * FROM USERS;").executeQuery().next());
+            ResultSet set = sqlConnection.prepareStatement("SELECT * FROM USERS;").executeQuery();
+
+            return set.getString("NAME");
         } catch (SQLException e) {
             error = e.toString();
             e.printStackTrace();
