@@ -26,7 +26,7 @@ public class DatabaseConnection {
                     "NAME VARCHAR(255) NOT NULL);").execute();
 
             sqlConnection.prepareStatement("INSERT INTO USERS(NAME, PASSWORD) VALUES ('MATILDA', 'USER');").execute();
-            return sqlConnection.prepareStatement("SELECT * FROM USERS").executeQuery().getString("name");
+            return sqlConnection.prepareStatement("SELECT * FROM USERS;").executeQuery().getString("NAME");
         } catch (SQLException e) {
             error = e.toString();
             e.printStackTrace();
