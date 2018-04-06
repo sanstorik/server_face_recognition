@@ -30,10 +30,8 @@ public class DatabaseConnection {
     }
 
     private Connection getSqlConnection() throws SQLException {
-        final String url = System.getenv("DATABASE_URL");
-        final String username = System.getenv("DATABASE_USERNAME");
-        final String password = System.getenv("DATABASE_PASSWORD");
+        final String url = System.getenv("JDBC_DATABASE_URL");
 
-        return DriverManager.getConnection(url, username, password);
+        return DriverManager.getConnection(url);
     }
 }
