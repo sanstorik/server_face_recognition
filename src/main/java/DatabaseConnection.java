@@ -18,9 +18,9 @@ public class DatabaseConnection {
         String error = "";
 
         try {
-            sqlConnection.prepareStatement("DROP TABLE USERS;");
+            sqlConnection.prepareStatement("DROP TABLE IF EXISTS USERS;").execute();
 
-            sqlConnection.prepareStatement("CREATE TABLE USERS(" +
+            sqlConnection.prepareStatement("CREATE TABLE IF NOT EXISTS USERS(" +
                     "ID SERIAL PRIMARY KEY, " +
                     "PASSWORD VARCHAR(255) NOT NULL, " +
                     "NAME VARCHAR(255) NOT NULL);").execute();

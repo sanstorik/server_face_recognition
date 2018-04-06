@@ -50,16 +50,16 @@
       <file leaf-file-name="DatabaseConnection.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseConnection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="61" lean-forward="false" selection-start-line="20" selection-start-column="61" selection-end-line="20" selection-end-column="61" />
+            <state relative-caret-position="405">
+              <caret line="27" column="67" lean-forward="false" selection-start-line="27" selection-start-column="67" selection-end-line="27" selection-end-column="67" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1523034826868" expanded="true" signature="455:471" ph="DROP TABLE I... " />
-                <marker date="1523034826868" expanded="true" signature="521:643" ph="CREATE TABLE... USERS" />
-                <marker date="1523034826868" expanded="true" signature="521:697" ph="CREATE TABLE... USERS" />
-                <marker date="1523034826868" expanded="true" signature="757:799" ph="INSERT INTO USERS... " />
-                <marker date="1523034826868" expanded="true" signature="757:817" ph="INSERT INTO USERS... " />
-                <marker date="1523034826868" expanded="true" signature="883:902" ph="SELECT * FRO... USERS" />
+                <marker date="1523034919548" expanded="true" signature="455:481" ph="DROP TABLE I... " />
+                <marker date="1523034919548" expanded="true" signature="541:677" ph="CREATE TABLE... USERS" />
+                <marker date="1523034919548" expanded="true" signature="541:731" ph="CREATE TABLE... USERS" />
+                <marker date="1523034919548" expanded="true" signature="791:833" ph="INSERT INTO USERS... " />
+                <marker date="1523034919548" expanded="true" signature="791:851" ph="INSERT INTO USERS... " />
+                <marker date="1523034919548" expanded="true" signature="917:936" ph="SELECT * FRO... USERS" />
               </folding>
             </state>
           </provider>
@@ -352,12 +352,12 @@
       <workItem from="1522916371752" duration="1351000" />
       <workItem from="1522926862333" duration="1652000" />
       <workItem from="1522941456689" duration="29000" />
-      <workItem from="1523030607407" duration="3578000" />
+      <workItem from="1523030607407" duration="3670000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11558000" />
+    <option name="totallyTimeSpent" value="11650000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -813,16 +813,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseConnection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="61" lean-forward="false" selection-start-line="20" selection-start-column="61" selection-end-line="20" selection-end-column="61" />
+        <state relative-caret-position="405">
+          <caret line="27" column="67" lean-forward="false" selection-start-line="27" selection-start-column="67" selection-end-line="27" selection-end-column="67" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1523034826868" expanded="true" signature="455:471" ph="DROP TABLE I... " />
-            <marker date="1523034826868" expanded="true" signature="521:643" ph="CREATE TABLE... USERS" />
-            <marker date="1523034826868" expanded="true" signature="521:697" ph="CREATE TABLE... USERS" />
-            <marker date="1523034826868" expanded="true" signature="757:799" ph="INSERT INTO USERS... " />
-            <marker date="1523034826868" expanded="true" signature="757:817" ph="INSERT INTO USERS... " />
-            <marker date="1523034826868" expanded="true" signature="883:902" ph="SELECT * FRO... USERS" />
+            <marker date="1523034919548" expanded="true" signature="455:481" ph="DROP TABLE I... " />
+            <marker date="1523034919548" expanded="true" signature="541:677" ph="CREATE TABLE... USERS" />
+            <marker date="1523034919548" expanded="true" signature="541:731" ph="CREATE TABLE... USERS" />
+            <marker date="1523034919548" expanded="true" signature="791:833" ph="INSERT INTO USERS... " />
+            <marker date="1523034919548" expanded="true" signature="791:851" ph="INSERT INTO USERS... " />
+            <marker date="1523034919548" expanded="true" signature="917:936" ph="SELECT * FRO... USERS" />
           </folding>
         </state>
       </provider>
