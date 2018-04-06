@@ -19,7 +19,7 @@ public class DatabaseConnection {
 
         try {
             sqlConnection.prepareStatement("CREATE TABLE IF NOT EXISTS USERS(" +
-                    "ID INTEGER PRIMARY KEY NOT NULL AUTOINCREMENT, " +
+                    "ID SERIAL PRIMARY KEY, " +
                     "NAME VARCHAR(255) NOT NULL);").execute();
 
             sqlConnection.prepareStatement("INSERT INTO USERS(NAME) VALUES ('MATILDA');").execute();

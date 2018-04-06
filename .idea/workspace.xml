@@ -51,13 +51,13 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseConnection.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="315">
-              <caret line="21" column="66" lean-forward="false" selection-start-line="21" selection-start-column="66" selection-end-line="21" selection-end-column="66" />
+              <caret line="21" column="30" lean-forward="true" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1523034166867" expanded="true" signature="455:612" ph="CREATE TABLE... USERS" />
-                <marker date="1523034166867" expanded="true" signature="672:704" ph="INSERT INTO USERS... " />
-                <marker date="1523034166867" expanded="true" signature="672:714" ph="INSERT INTO USERS... " />
-                <marker date="1523034166867" expanded="true" signature="780:799" ph="SELECT * FRO... USERS" />
+                <marker date="1523034283450" expanded="true" signature="455:588" ph="CREATE TABLE... USERS" />
+                <marker date="1523034283450" expanded="true" signature="648:680" ph="INSERT INTO USERS... " />
+                <marker date="1523034283450" expanded="true" signature="648:690" ph="INSERT INTO USERS... " />
+                <marker date="1523034283450" expanded="true" signature="756:775" ph="SELECT * FRO... USERS" />
               </folding>
             </state>
           </provider>
@@ -350,12 +350,12 @@
       <workItem from="1522916371752" duration="1351000" />
       <workItem from="1522926862333" duration="1652000" />
       <workItem from="1522941456689" duration="29000" />
-      <workItem from="1523030607407" duration="2941000" />
+      <workItem from="1523030607407" duration="3052000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10921000" />
+    <option name="totallyTimeSpent" value="11032000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -812,13 +812,13 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseConnection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
-          <caret line="21" column="66" lean-forward="false" selection-start-line="21" selection-start-column="66" selection-end-line="21" selection-end-column="66" />
+          <caret line="21" column="30" lean-forward="true" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1523034166867" expanded="true" signature="455:612" ph="CREATE TABLE... USERS" />
-            <marker date="1523034166867" expanded="true" signature="672:704" ph="INSERT INTO USERS... " />
-            <marker date="1523034166867" expanded="true" signature="672:714" ph="INSERT INTO USERS... " />
-            <marker date="1523034166867" expanded="true" signature="780:799" ph="SELECT * FRO... USERS" />
+            <marker date="1523034283450" expanded="true" signature="455:588" ph="CREATE TABLE... USERS" />
+            <marker date="1523034283450" expanded="true" signature="648:680" ph="INSERT INTO USERS... " />
+            <marker date="1523034283450" expanded="true" signature="648:690" ph="INSERT INTO USERS... " />
+            <marker date="1523034283450" expanded="true" signature="756:775" ph="SELECT * FRO... USERS" />
           </folding>
         </state>
       </provider>
