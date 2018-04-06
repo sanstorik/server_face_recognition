@@ -28,6 +28,7 @@ public class DatabaseConnection {
 
             sqlConnection.prepareStatement("INSERT INTO USERS(NAME, PASSWORD) VALUES ('MATILDA', 'USER');").execute();
             ResultSet set = sqlConnection.prepareStatement("SELECT * FROM USERS;").executeQuery();
+            set.next();
 
             return set.getString("NAME");
         } catch (SQLException e) {
