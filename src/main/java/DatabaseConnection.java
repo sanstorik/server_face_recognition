@@ -18,13 +18,14 @@ public class DatabaseConnection {
         String error = "";
 
         try {
-            sqlConnection.prepareStatement("DROP TABLE  IF EXISTS  USERS;");
+            sqlConnection.prepareStatement("DROP TABLE USERS;");
 
-            sqlConnection.prepareStatement("CREATE TABLE IF NOT EXISTS USERS(" +
+            sqlConnection.prepareStatement("CREATE TABLE USERS(" +
                     "ID SERIAL PRIMARY KEY, " +
+                    "PASSWORD VARCHAR(255) NOT NULL, " +
                     "NAME VARCHAR(255) NOT NULL);").execute();
 
-            sqlConnection.prepareStatement("INSERT INTO USERS(5,NAME) VALUES ('MATILDA');").execute();
+            sqlConnection.prepareStatement("INSERT INTO USERS(NAME, PASSWORD) VALUES ('MATILDA', 'USER');").execute();
             return sqlConnection.prepareStatement("SELECT * FROM USERS").executeQuery().getString("name");
         } catch (SQLException e) {
             error = e.toString();
