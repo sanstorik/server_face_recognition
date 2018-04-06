@@ -1,41 +1,42 @@
+import database.PostgreSqlConnection;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-enum QueryMethod {
-    ACCEPT_JSON("/accept_json"), DECLINE_JSON("/decline_json"), NONE("/error");
+public class HttpServer extends HttpServlet {
+    private enum QueryMethod {
+        ACCEPT_JSON("/accept_json"), DECLINE_JSON("/decline_json"), NONE("/error");
 
-    private String stringRepresentation;
+        private String stringRepresentation;
 
-    QueryMethod(String stringRepresentation) {
-        this.stringRepresentation = stringRepresentation;
-    }
+        QueryMethod(String stringRepresentation) {
+            this.stringRepresentation = stringRepresentation;
+        }
 
-    static QueryMethod of(String stringRepresentation) {
-        if (stringRepresentation.equals(ACCEPT_JSON.stringRepresentation)) {
-            return ACCEPT_JSON;
-        } else if (stringRepresentation.equals(DECLINE_JSON.stringRepresentation)) {
-            return DECLINE_JSON;
-        } else {
-            return NONE;
+        static QueryMethod of(String stringRepresentation) {
+            if (stringRepresentation.equals(ACCEPT_JSON.stringRepresentation)) {
+                return ACCEPT_JSON;
+            } else if (stringRepresentation.equals(DECLINE_JSON.stringRepresentation)) {
+                return DECLINE_JSON;
+            } else {
+                return NONE;
+            }
+        }
+
+        @Override  public String toString() {
+            return stringRepresentation;
         }
     }
 
-    @Override  public String toString() {
-        return stringRepresentation;
-    }
-}
-
-
-public class HttpServer extends HttpServlet {
-    private final DatabaseConnection databaseConnection;
+    private final PostgreSqlConnection databaseConnection;
 
     public HttpServer() {
         super();
 
-        this.databaseConnection = new DatabaseConnection();
+        this.databaseConnection = new PostgreSqlConnection();
     }
 
     @Override protected void doGet(HttpServletRequest request, HttpServletResponse response)

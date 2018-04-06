@@ -1,6 +1,6 @@
-Server.class
+database/DatabaseConnection.class
 Main.class
-DatabaseConnection.class
-QueryMethod.class
 FileUtils.class
+database/PostgreSqlConnection.class
 HttpServer.class
+HttpServer$QueryMethod.class
