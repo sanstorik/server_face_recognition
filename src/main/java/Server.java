@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class Server extends NanoHTTPD
 {
+
     public Server() throws IOException {
         super(5000);
 

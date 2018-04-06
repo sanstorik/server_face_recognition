@@ -30,6 +30,13 @@ enum QueryMethod {
 
 
 public class HttpServer extends HttpServlet {
+    private final DatabaseConnection databaseConnection;
+
+    public HttpServer() {
+        super();
+
+        this.databaseConnection = new DatabaseConnection();
+    }
 
     @Override protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -53,6 +60,8 @@ public class HttpServer extends HttpServlet {
         response.getWriter().print("\n" + request.getContextPath().toString());
 
         response.getWriter().print("\n" + request.getParameter("name"));
+
+        response.getWriter().print("\n size = " + String.valueOf(databaseConnection.sqlQuery()));
     }
 
     private QueryMethod parseMethodByUrl(String url) {

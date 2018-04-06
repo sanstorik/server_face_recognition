@@ -18,6 +18,7 @@ public class Main {
         context.setContextPath("/");
         server.setHandler(context);
         context.addServlet(new ServletHolder(new HttpServer()), "/*");
+
         server.start();
         server.join();
     }

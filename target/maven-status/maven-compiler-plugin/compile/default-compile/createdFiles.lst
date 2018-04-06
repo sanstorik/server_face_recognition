@@ -1,5 +1,6 @@
 Server.class
 Main.class
+DatabaseConnection.class
 QueryMethod.class
 FileUtils.class
 HttpServer.class
