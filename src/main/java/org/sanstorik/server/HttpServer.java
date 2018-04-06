@@ -1,4 +1,6 @@
-import database.PostgreSqlConnection;
+package org.sanstorik.server;
+
+import org.sanstorik.database.PostgreSqlConnection;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

@@ -1,4 +1,4 @@
-package database;
+package org.sanstorik.database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
