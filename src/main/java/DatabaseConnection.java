@@ -14,19 +14,22 @@ public class DatabaseConnection {
         }
     }
 
-    public int sqlQuery() {
+    public String sqlQuery() {
+        String error = "";
+
         try {
             sqlConnection.prepareStatement("CREATE TABLE IF NOT EXISTS USERS(" +
                     "ID INT PRIMARY KEY  NOT NULL, " +
                     "NAME VARCHAR(255) NOT NULL);").execute();
 
             sqlConnection.prepareStatement("INSERT INTO USERS(NAME) VALUES ('MATILDA');").execute();
-            return sqlConnection.prepareStatement("SELECT * FROM USERS").executeQuery().getFetchSize();
+            return sqlConnection.prepareStatement("SELECT * FROM USERS").executeQuery().getString("name");
         } catch (SQLException e) {
+            error = e.toString();
             e.printStackTrace();
         }
 
-        return -1;
+        return error;
     }
 
     private Connection getSqlConnection() throws SQLException {

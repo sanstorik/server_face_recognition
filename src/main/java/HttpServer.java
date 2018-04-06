@@ -61,7 +61,7 @@ public class HttpServer extends HttpServlet {
 
         response.getWriter().print("\n" + request.getParameter("name"));
 
-        response.getWriter().print("\n size = " + String.valueOf(databaseConnection.sqlQuery()));
+        response.getWriter().print("\n size = " + databaseConnection.sqlQuery());
     }
 
     private QueryMethod parseMethodByUrl(String url) {
