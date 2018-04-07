@@ -2,7 +2,6 @@ package org.sanstorik.database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.concurrent.ExecutionException;
 
 
 public class PostgreSqlConnection extends DatabaseConnection {

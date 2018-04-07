@@ -48,7 +48,7 @@ public final class HttpResponse {
         JSONObject json = new JSONObject();
         json.put("status", status);
 
-        if (status == SUCCESS_STATUS) {
+        if (status == SUCCESS_STATUS && params != null) {
             JSONObject data = new JSONObject();
             json.put("data", data);
 

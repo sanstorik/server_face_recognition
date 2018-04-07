@@ -1,10 +1,8 @@
 package org.sanstorik.server;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.sanstorik.database.PostgreSqlConnection;
 import org.sanstorik.database.Token;
@@ -20,6 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpServer extends HttpServlet {
+    @FunctionalInterface
+    private interface QueryExecutor {
+        String processQuery();
+    }
     private enum QueryMethod {
         LOGIN("/login"), ACCEPT_JSON("/accept_json"), DECLINE_JSON("/decline_json"),
         UPLOAD_IMAGE("/upload_image"), NOT_SUPPORTED("/not_supported");
@@ -50,7 +52,6 @@ public class HttpServer extends HttpServlet {
     }
 
     private final PostgreSqlConnection databaseConnection;
-    private String savedToken = "";
 
     public HttpServer() {
         super();
@@ -98,6 +99,7 @@ public class HttpServer extends HttpServlet {
         response.getWriter().print(jsonResponse);
     }
 
+
     private void postQuery(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         QueryMethod queryMethod = parseMethodByUrl(request.getRequestURL().toString());
@@ -108,6 +110,10 @@ public class HttpServer extends HttpServlet {
                 jsonResponse = uploadImageQuery(request);
                 break;
             }
+            case NOT_SUPPORTED: {
+                jsonResponse = errorQuery();
+                break;
+            }
         }
 
         response.getWriter().print(jsonResponse);
@@ -115,7 +121,8 @@ public class HttpServer extends HttpServlet {
 
 
     private String acceptJsonQuery(HttpServletRequest request) {
-        return "";
+        return executeAfterTokenIsVerified(request, "No json available.",
+                () -> HttpResponse.create(null).asJson());
     }
 
 
@@ -130,38 +137,31 @@ public class HttpServer extends HttpServlet {
 
 
     private String uploadImageQuery(HttpServletRequest request) {
-        final String token = request.getHeader("token");
-
-        try {
-            Algorithm algorithm = Algorithm.HMAC256("sanstorik_mangix");
-
-            DecodedJWT decoded = JWT.require(algorithm)
-                    .build().verify(token);
-
-            if (decoded.getExpiresAt().before(new Date())) {
-                return HttpResponse.error("Token is expired. Create a new one.").asJson();
-            }
-
-            if (!databaseConnection.isValidToken(
-                    new Token(token, decoded.getClaim("username").asString(),
-                            decoded.getClaim("password").asString()))) {
-                return HttpResponse.error("Token is not verified. Invalid user.").asJson();
-            }
-
-            Map<String, String> params = new HashMap<>();
-            params.put("image", "image");
-
-            return HttpResponse.create(params).asJson();
-        } catch (UnsupportedEncodingException|JWTDecodeException e) {
-            e.printStackTrace();
-        }
-
-        return HttpResponse.error("Failed to upload image. Check your token.").asJson();
+        return executeAfterTokenIsVerified(request,
+                "Faced problem during upload. Check your token.", () -> {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("image", "image");
+                    return HttpResponse.create(params).asJson();
+                });
     }
-    
-    private String verifyToken(HttpServletRequest request) {
-        final String token = request.getHeader("token");
 
+
+    /**
+     * Method is used to abstract from checking token validation in query.
+     * @param request Rest API request from user
+     * @param errorMessage message to user if we couldn't parse token
+     * @param executor normal functionality that returns valid json to user.
+     * @return json API response to user
+     */
+    private String executeAfterTokenIsVerified(HttpServletRequest request, String errorMessage,
+                                               QueryExecutor executor) {
+        //token is in form Bearer + <token>
+        String token = request.getHeader("Authorization");
+        if (token == null || token.length() < 8) {
+            return HttpResponse.error("Token is empty or too short.").asJson();
+        }
+
+        token = token.substring(7);
         try {
             Algorithm algorithm = Algorithm.HMAC256("sanstorik_mangix");
 
@@ -169,7 +169,7 @@ public class HttpServer extends HttpServlet {
                     .build().verify(token);
 
             if (decoded.getExpiresAt().before(new Date())) {
-                return HttpResponse.error("Token is expired. Create a new one.").asJson();
+                return HttpResponse.error("Token usability time has been expired. Create a new one.").asJson();
             }
 
             if (!databaseConnection.isValidToken(
@@ -178,15 +178,12 @@ public class HttpServer extends HttpServlet {
                 return HttpResponse.error("Token is not verified. Invalid user.").asJson();
             }
 
-            Map<String, String> params = new HashMap<>();
-            params.put("image", "image");
-
-            return HttpResponse.create(params).asJson();
-        } catch (UnsupportedEncodingException|JWTDecodeException e) {
+            return executor.processQuery();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return HttpResponse.error("Failed to upload image. Check your token.").asJson();
+        return HttpResponse.error(errorMessage).asJson();
     }
 
 
@@ -234,10 +231,6 @@ public class HttpServer extends HttpServlet {
         }
 
         return null;
-    }
-
-    private void checkToken() {
-
     }
 
 

@@ -1,5 +1,6 @@
 org/sanstorik/server/HttpResponse.class
 org/sanstorik/Main.class
+org/sanstorik/server/HttpServer$QueryExecutor.class
 org/sanstorik/database/PostgreSqlConnection.class
 org/sanstorik/utils/FileUtils.class
 org/sanstorik/server/HttpServer$QueryMethod.class
