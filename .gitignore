@@ -3,6 +3,7 @@
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
+.idea/dataSources.xml
 .idea/**/dataSources.ids
 .idea/**/dataSources.local.xml
 .idea/**/sqlDataSources.xml
@@ -44,6 +45,7 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 
-src/.env
+.env
 .idea/workspace.xml
 .idea/sqldialects.xml
+.idea/codeStyles

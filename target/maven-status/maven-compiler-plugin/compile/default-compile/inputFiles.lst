@@ -1,5 +1,7 @@
-/Users/chloe/GitApplications/temp/sanstorik_server/src/main/java/DatabaseConnection.java
-/Users/chloe/GitApplications/temp/sanstorik_server/src/main/java/HttpServer.java
-/Users/chloe/GitApplications/temp/sanstorik_server/src/main/java/Main.java
-/Users/chloe/GitApplications/temp/sanstorik_server/src/main/java/Server.java
-/Users/chloe/GitApplications/temp/sanstorik_server/src/main/java/FileUtils.java
+/Users/chloe/GitApplications/temp/sanstorik_server/src/main/java/org/sanstorik/server/HttpServer.java
+/Users/chloe/GitApplications/temp/sanstorik_server/src/main/java/org/sanstorik/Main.java
+/Users/chloe/GitApplications/temp/sanstorik_server/src/main/java/org/sanstorik/database/PostgreSqlConnection.java
+/Users/chloe/GitApplications/temp/sanstorik_server/src/main/java/org/sanstorik/utils/FileUtils.java
+/Users/chloe/GitApplications/temp/sanstorik_server/src/main/java/org/sanstorik/database/DatabaseConnection.java
+/Users/chloe/GitApplications/temp/sanstorik_server/src/main/java/org/sanstorik/database/Token.java
+/Users/chloe/GitApplications/temp/sanstorik_server/src/main/java/org/sanstorik/server/HttpResponse.java
