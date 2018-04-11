@@ -49,4 +49,7 @@ fabric.properties
 .idea/workspace.xml
 .idea/sqldialects.xml
 .idea/codeStyles
+.idea
+sanstorik_server.iml
+target
 com

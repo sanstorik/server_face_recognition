@@ -4,12 +4,15 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.sanstorik.http_server.server.HttpServer;
+import org.sanstorik.neural_network.face_identifying.FaceRecognizer;
 
 public class Main {
 
     public static void main(String[] args) {
         try {
-            //startServer();
+            startServer();
+
+            FaceRecognizer.create();
         } catch (Exception e) {
             e.printStackTrace();
         }
