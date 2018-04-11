@@ -1,6 +1,5 @@
 package org.sanstorik.neural_network.face_detection;
 
-import org.sanstorik.neural_network.face_detection.Face;
 import org.sanstorik.neural_network.face_identifying.FaceRecognizer;
 import org.sanstorik.neural_network.utils.FileUtils;
 
