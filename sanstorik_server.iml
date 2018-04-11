@@ -37,5 +37,10 @@
     <orderEntry type="library" name="Maven: org.tensorflow:libtensorflow:1.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.tensorflow:libtensorflow_jni:1.6.0" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:1.3.2" level="project" />
+    <orderEntry type="library" name="Maven: org.opencv:opencv-linux-x86:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.opencv:linux_ppc:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.opencv:mac_os:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.opencv:opencv_simple:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.opencv:platform:1.0-SNAPSHOT" level="project" />
   </component>
 </module>
