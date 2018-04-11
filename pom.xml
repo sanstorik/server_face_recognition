@@ -71,6 +71,11 @@
         </dependency>
 
 
+        <!--
+        HERE STARTS CUSTOM OPENCV LIBS IMPORT
+        TO EXCLUDE WINDOWS/ANDROID/IOS VERSION
+        WHAT SAVES 150mb OF MEMMORY ON SERVER
+        -->
 
         <dependency>
             <groupId>org.opencv</groupId>
