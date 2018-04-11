@@ -75,7 +75,6 @@
         HERE STARTS CUSTOM OPENCV LIBS IMPORT
         TO EXCLUDE WINDOWS/ANDROID/IOS VERSION
         WHAT SAVES 150mb OF MEMMORY ON SERVER
-        -->
 
         <dependency>
             <groupId>org.opencv</groupId>
@@ -106,6 +105,7 @@
             <artifactId>platform</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+                -->
 
 
     </dependencies>
@@ -140,12 +140,5 @@
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>opencv_jars</id>
-            <url>file://${project.basedir}/opencv_jars</url>
-        </repository>
-    </repositories>
 </project>
 
