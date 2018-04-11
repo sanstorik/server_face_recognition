@@ -94,6 +94,10 @@ public class HttpServer extends HttpServlet {
                 jsonResponse = errorQuery();
                 break;
             }
+            default: {
+                jsonResponse = errorQuery();
+                break;
+            }
         }
 
         response.getWriter().print(jsonResponse);
@@ -111,6 +115,10 @@ public class HttpServer extends HttpServlet {
                 break;
             }
             case NOT_SUPPORTED: {
+                jsonResponse = errorQuery();
+                break;
+            }
+            default: {
                 jsonResponse = errorQuery();
                 break;
             }
