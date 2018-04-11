@@ -49,3 +49,5 @@ fabric.properties
 .idea/workspace.xml
 .idea/sqldialects.xml
 .idea/codeStyles
+com
+opencv_jars/
