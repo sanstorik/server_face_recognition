@@ -61,9 +61,21 @@
         </dependency>
 
         <dependency>
-            <groupId>com.sanstorik.graduate</groupId>
-            <artifactId>face_recognition</artifactId>
-            <version>1.0</version>
+            <groupId>org.tensorflow</groupId>
+            <artifactId>tensorflow</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>24.1-jre</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv-platform</artifactId>
+            <version>1.4.1</version>
         </dependency>
     </dependencies>
 
