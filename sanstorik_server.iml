@@ -37,6 +37,13 @@
     <orderEntry type="library" name="Maven: org.tensorflow:libtensorflow:1.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.tensorflow:libtensorflow_jni:1.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:flandmark-platform:1.07-1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv-platform:3.4.1-1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv:3.4.1-1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv:linux-x86:3.4.1-1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv:linux-x86_64:3.4.1-1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv:linux-armhf:3.4.1-1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv:linux-ppc64le:3.4.1-1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:opencv:macosx-x86_64:3.4.1-1.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:flandmark:1.07-1.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco:javacpp:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.bytedeco.javacpp-presets:flandmark:android-arm:1.07-1.4.1" level="project" />
