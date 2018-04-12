@@ -16,8 +16,7 @@ import static org.bytedeco.javacpp.opencv_imgproc.*;
 import static org.bytedeco.javacpp.opencv_objdetect.CascadeClassifier;
 
 public class UserFaceDetector {
-    private static final String LOADER_PATH = "save_session/haarcascade_frontalcatface.xml";
-
+    private static final String LOADER_URL = "save_session/haarcascade_frontalcatface.xml";
     private static final int IMAGE_WIDTH = 165;
     private static final int IMAGE_HEIGHT = 170;
 
@@ -26,7 +25,8 @@ public class UserFaceDetector {
 
 
     private UserFaceDetector() {
-        faceDetector = new CascadeClassifier(FileUtils.getResourcesPath() + LOADER_PATH);
+
+        faceDetector = new CascadeClassifier(getClass().getClassLoader().getResource(LOADER_URL).getPath());
     }
 
 

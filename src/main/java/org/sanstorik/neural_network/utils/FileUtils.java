@@ -64,7 +64,7 @@ public final class FileUtils {
 
 
     public static File saveImageAsTemporaryFile(BufferedImage image) {
-        return saveImageAsTemporaryFile(image, "/save_session/recognizer_cache.jpg");
+        return saveImageAsTemporaryFile(image, "/images/recognizer_cache.jpg");
     }
 
 

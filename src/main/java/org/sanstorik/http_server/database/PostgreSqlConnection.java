@@ -9,8 +9,9 @@ import java.sql.SQLException;
 public class PostgreSqlConnection extends DatabaseConnection {
     private static final String USERS_TABLE_NAME = "users";
 
+    //System.getenv("JDBC_DATABASE_URL")
     public PostgreSqlConnection() {
-        super("jdbc:postgresql://localhost:5432/chloe");
+        super(System.getenv("JDBC_DATABASE_URL"));
     }
 
 
