@@ -24,13 +24,6 @@ public class HttpServer extends HttpServlet {
 
 
     @Override protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       /* resp.setContentType("application/octet-stream");
-        resp.setHeader("Content-Disposition", "filename=\"recognizer_cache.jpg\"");
-        File srcFile = org.sanstorik.neural_network.utils.FileUtils.loadFile("save_session/recognizer_cache.jpg");
-
-        ImageIO.write(ImageIO.read(srcFile), "jpg", resp.getOutputStream()); /*/
-
-
         FaceRecognizer.create();
         UserFaceDetector.create();
 
@@ -55,7 +48,7 @@ public class HttpServer extends HttpServlet {
     }
 
 
-    protected static String createURL(HttpServletRequest request, String resourcePath) {
+    private String createURL(HttpServletRequest request, String resourcePath) {
 
         int port = request.getServerPort();
         StringBuilder result = new StringBuilder();

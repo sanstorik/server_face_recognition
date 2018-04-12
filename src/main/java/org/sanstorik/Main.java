@@ -31,8 +31,11 @@ public class Main {
     private static void startServer() throws Exception {
         //Integer.valueOf(System.getenv("PORT"))
 
-        final String resourcePath = "images";
+        final String resourcePath = "src/main/resources/images";
 
+
+        //create temp directory for files (heroku)
+        new File("images").mkdir();
 
         //create main handler http
         Server server = new Server(5000);
