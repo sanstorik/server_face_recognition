@@ -1,16 +1,10 @@
 package org.sanstorik.http_server.server.queries;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import org.apache.http.HttpRequest;
 import org.sanstorik.http_server.HttpResponse;
 import org.sanstorik.http_server.Token;
 import org.sanstorik.http_server.database.PostgreSqlConnection;
-import org.sanstorik.http_server.server.HttpServer;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 
 public abstract class Query {
     @FunctionalInterface

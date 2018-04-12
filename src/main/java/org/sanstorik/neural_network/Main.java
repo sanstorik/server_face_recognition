@@ -1,15 +1,5 @@
 package org.sanstorik.neural_network;
 
-import com.google.gson.Gson;
-import org.sanstorik.neural_network.face_identifying.FaceFeatures;
-import org.sanstorik.neural_network.utils.FileUtils;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 public class Main {
     public static void main(String[] args) {
        /* FaceRecognizer recognizer = FaceRecognizer.create();
