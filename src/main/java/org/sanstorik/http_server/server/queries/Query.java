@@ -34,13 +34,19 @@ public abstract class Query {
     }
 
     private String queryMethod;
-    private Type type;
+    private Type type = Type.POST;
     private HttpServletRequest request;
     private final HttpResponse response = HttpResponse.fromTemplate();
     private PostgreSqlConnection databaseConnection;
 
 
     Query() {
+        parseRequest(request);
+    }
+
+
+    Query(Type type) {
+        this.type = type;
         parseRequest(request);
     }
 
@@ -81,8 +87,8 @@ public abstract class Query {
     }
 
 
-    public final String asJson() {
-        return response.asJson();
+    public final String execute() {
+        return executeAfterTokenIsVerified();
     }
 
 
@@ -93,39 +99,36 @@ public abstract class Query {
         return databaseConnection;
     }
 
+
     /**
      * Method is used to abstract from checking token validation in query.
-     * @param request Rest API request from user
-     * @param errorMessage message to user if we couldn't parse token
-     * @param executor normal functionality that returns valid json to user.
      * @return json API response to user
      */
-    private String executeAfterTokenIsVerified(HttpServletRequest request, String errorMessage,
-                                               QueryExecutor executor) {
-        //token is in form Bearer + <token>
+    private String executeAfterTokenIsVerified() {
+        //token is in form {Bearer <token>}
         String token = request.getHeader("Authorization");
         if (token == null || token.length() < 8) {
             return HttpResponse.error("Token is empty or too short.").asJson();
         }
 
+        String errorMessage = "Server wasn't able to verificate token";
         token = token.substring(7);
+
         try {
-            Algorithm algorithm = Algorithm.HMAC256("sanstorik_mangix");
+            Token decypheredToken = Token.decypherToken(token);
+            boolean isValidToken = true;
 
-            DecodedJWT decoded = JWT.require(algorithm)
-                    .build().verify(token);
-
-            if (decoded.getExpiresAt().before(new Date())) {
-                return HttpResponse.error("Token usability time has been expired. Create a new one.").asJson();
+            if (decypheredToken.isExpired()) {
+                errorMessage = "Token usability time has been expired. Create a new one.";
+                isValidToken = false;
             }
 
-            if (!databaseConnection.isValidToken(
-                    new Token(token, decoded.getClaim("username").asString(),
-                            decoded.getClaim("password").asString()))) {
-                return HttpResponse.error("Token is not verified. Invalid user.").asJson();
+            if (!databaseConnection.isValidToken(decypheredToken)) {
+                errorMessage = "Token is not verified. Invalid user. Make sure you've put Bearer in front.";
+                isValidToken = false;
             }
 
-            return executor.processQuery();
+            return isValidToken? response.asJson() : HttpResponse.error(errorMessage).asJson();
         } catch (Exception e) {
             e.printStackTrace();
         }
