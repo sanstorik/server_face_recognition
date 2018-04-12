@@ -1,0 +1,5 @@
+.idea
+target
+.env
+sanstorik_server.iml
+opencv_jars
