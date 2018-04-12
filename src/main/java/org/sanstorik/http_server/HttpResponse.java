@@ -10,8 +10,11 @@ public final class HttpResponse {
     private final static String ERROR_STATUS = "error";
 
     private Map<String, String> params;
-    private String message;
+    private String errorMessage;
     private String status;
+
+    private HttpResponse() { }
+
 
     private HttpResponse(Map<String, String> params) {
         this.params = params;
@@ -19,7 +22,32 @@ public final class HttpResponse {
 
 
     private HttpResponse(String message) {
-        this.message = message;
+        this.errorMessage = message;
+    }
+
+
+    public void setSuccessStatus() {
+        this.status = SUCCESS_STATUS;
+    }
+
+
+    public void setErrorStatus() {
+        this.status = ERROR_STATUS;
+    }
+
+
+    public void addParam(String key, String value) {
+        params.put(key, value);
+    }
+
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+
+    public static HttpResponse fromTemplate() {
+        return new HttpResponse();
     }
 
 
@@ -56,7 +84,7 @@ public final class HttpResponse {
                 data.put(entry.getKey().toString(), entry.getValue().toString());
             }
         } else if (status == ERROR_STATUS) {
-            json.put("message", message);
+            json.put("errorMessage", errorMessage);
         }
 
         return json.toString();

@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.sanstorik.http_server.HttpResponse;
 import org.sanstorik.http_server.Token;
 import org.sanstorik.http_server.database.PostgreSqlConnection;
+import org.sanstorik.http_server.server.queries.Query;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,34 +23,6 @@ public class HttpServer extends HttpServlet {
     @FunctionalInterface
     private interface QueryExecutor {
         String processQuery();
-    }
-    private enum QueryMethod {
-        LOGIN("/login"), ACCEPT_JSON("/accept_json"), DECLINE_JSON("/decline_json"),
-        UPLOAD_IMAGE("/upload_image"), NOT_SUPPORTED("/not_supported");
-
-        private String stringRepresentation;
-
-        QueryMethod(String stringRepresentation) {
-            this.stringRepresentation = stringRepresentation;
-        }
-
-        static QueryMethod of(String stringRepresentation) {
-            if (stringRepresentation.equals(ACCEPT_JSON.stringRepresentation)) {
-                return ACCEPT_JSON;
-            } else if (stringRepresentation.equals(LOGIN.stringRepresentation)) {
-                return LOGIN;
-            } else if (stringRepresentation.equals(DECLINE_JSON.stringRepresentation)) {
-                return DECLINE_JSON;
-            } else if (stringRepresentation.equals(UPLOAD_IMAGE.stringRepresentation)) {
-                return UPLOAD_IMAGE;
-            } else {
-                return NOT_SUPPORTED;
-            }
-        }
-
-        @Override  public String toString() {
-            return stringRepresentation;
-        }
     }
 
     private final PostgreSqlConnection databaseConnection;
@@ -73,59 +46,20 @@ public class HttpServer extends HttpServlet {
     }
 
 
+
     private void getQuery(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QueryMethod queryMethod = parseMethodByUrl(request.getRequestURL().toString());
-        String jsonResponse = "";
+        Query query = Query.fromRequest(request);
 
-        switch (queryMethod) {
-            case LOGIN: {
-                jsonResponse = loginQuery(request);
-                break;
-            }
-            case ACCEPT_JSON: {
-                jsonResponse = acceptJsonQuery(request);
-                break;
-            }
-            case DECLINE_JSON: {
-                jsonResponse = declineJsonQuery();
-                break;
-            }
-            case NOT_SUPPORTED: {
-                jsonResponse = errorQuery();
-                break;
-            }
-            default: {
-                jsonResponse = errorQuery();
-                break;
-            }
-        }
-
-        response.getWriter().print(jsonResponse);
+        response.getWriter().print(query.asJson());
     }
 
 
     private void postQuery(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QueryMethod queryMethod = parseMethodByUrl(request.getRequestURL().toString());
-        String jsonResponse = "";
+        Query query = Query.fromRequest(request);
 
-        switch (queryMethod) {
-            case UPLOAD_IMAGE: {
-                jsonResponse = uploadImageQuery(request);
-                break;
-            }
-            case NOT_SUPPORTED: {
-                jsonResponse = errorQuery();
-                break;
-            }
-            default: {
-                jsonResponse = errorQuery();
-                break;
-            }
-        }
-
-        response.getWriter().print(jsonResponse);
+        response.getWriter().print(query.asJson());
     }
 
 
@@ -240,12 +174,5 @@ public class HttpServer extends HttpServlet {
         }
 
         return null;
-    }
-
-
-    private QueryMethod parseMethodByUrl(String url) {
-        String methodName = url.substring(url.lastIndexOf("/"), url.length());
-
-        return QueryMethod.of(methodName);
     }
 }

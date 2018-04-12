@@ -71,26 +71,4 @@ public class Main {
         //FileUtils.saveImageAsTemporaryFile(faceDetector.highlightFacesOnImage(FileUtils.loadFile("egipet.jpg")), "egipet.jpg");
 
     }
-
-    private static void createJson(FaceFeatures features, String name) {
-        Gson gson = new Gson();
-
-        try {
-            Files.write(Paths.get(FileUtils.getResourcesPath() + "json/" + name), gson.toJson(features).getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private static FaceFeatures readJson(String jsonName) {
-        Gson gson = new Gson();
-        try {
-            return gson.fromJson(new FileReader(FileUtils.getResourcesPath() + "json/" + jsonName), FaceFeatures.class);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 }

@@ -167,7 +167,7 @@ public class UserFaceDetector {
         Mat matImage = bufferedImageToMat(image);
         Mat coloredPicture = matImage;
 
-        //if image is grey
+        //if image is grey make it colored
         if (matImage.type() == CV_8UC1) {
             coloredPicture = new Mat(matImage.size(), CV_8UC3);
             cvtColor(matImage, coloredPicture, CV_GRAY2BGR);
@@ -220,7 +220,7 @@ public class UserFaceDetector {
         }
 
         byte[] data = ((DataBufferByte) bi.getRaster().getDataBuffer()).getData();
-        //mat.data().put(data);
+        mat.data().put(data);
 
         return mat;
     }
