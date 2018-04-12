@@ -1,5 +1,6 @@
 package org.sanstorik;
 
+import org.bytedeco.javacpp.opencv_core;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -9,6 +10,8 @@ public class Main {
 
     public static void main(String[] args) {
         try {
+            opencv_core.Mat mat = new opencv_core.Mat();
+            mat.t();
             startServer();
         } catch (Exception e) {
             e.printStackTrace();
