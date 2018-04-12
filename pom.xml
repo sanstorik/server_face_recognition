@@ -75,7 +75,7 @@
         <!--
         HERE STARTS CUSTOM OPENCV LIBS IMPORT
         TO EXCLUDE WINDOWS/ANDROID/IOS VERSION
-        WHAT SAVES 150mb OF MEMMORY ON SERVER
+        WHAT SAVES 150mb OF MEMORY ON SERVER
          -->
 
         <dependency>
