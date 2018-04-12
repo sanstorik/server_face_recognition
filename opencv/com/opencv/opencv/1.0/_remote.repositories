@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Apr 12 03:23:27 EEST 2018
+opencv-1.0.jar>=
+opencv-1.0.pom>=

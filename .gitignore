@@ -52,5 +52,4 @@ fabric.properties
 .idea
 sanstorik_server.iml
 target
-com
 opencv_jars
