@@ -1,6 +1,6 @@
 package org.sanstorik.neural_network.face_identifying;
 
-import org.apache.commons.io.IOUtils;
+import com.google.common.io.ByteStreams;
 import org.sanstorik.neural_network.face_detection.Face;
 import org.sanstorik.neural_network.face_detection.UserFaceDetector;
 import org.sanstorik.neural_network.utils.FileUtils;
@@ -260,7 +260,7 @@ public class FaceRecognizer {
     private byte[] loadGraphDef() {
         try (InputStream is = getClass().getClassLoader()
                 .getResourceAsStream("save_session/model_face_recognition.pb")) {
-            return IOUtils.toByteArray(is);
+            return ByteStreams.toByteArray(is);
         } catch (IOException e) {
            throw new RuntimeException("couldn't load graph");
         }
