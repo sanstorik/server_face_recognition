@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class HttpServer extends AbstractHandler {
+public class HttpServer extends HttpServlet {
     private final PostgreSqlConnection databaseConnection;
 
     public HttpServer() {
@@ -19,10 +19,22 @@ public class HttpServer extends AbstractHandler {
         this.databaseConnection = new PostgreSqlConnection();
     }
 
-    @Override public void handle(String s, Request request, HttpServletRequest httpServletRequest,
-                                 HttpServletResponse httpServletResponse) throws IOException {
-        Query query = Query.fromRequest(httpServletRequest, databaseConnection);
 
-        httpServletResponse.getWriter().print("hello world");
+    @Override protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        handle(req, resp);
     }
+
+
+    @Override protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        handle(req, resp);
+    }
+
+
+    private void handle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Query query = Query.fromRequest(req, databaseConnection);
+
+
+        resp.getWriter().print("hello world");
+    }
+
 }

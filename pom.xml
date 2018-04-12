@@ -8,30 +8,37 @@
     <artifactId>helloworld</artifactId>
     <dependencies>
 
+
+
+        <!--
+        SERVER DEPENDENCIES
+        -->
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.4-1201-jdbc4</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>9.2.15.v20160210</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-        </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
-            <scope>provided</scope>
         </dependency>
+
+        
+        <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>9.4.8.v20171121</version>
+        </dependency>
+
+
+        <!--
+        UTILS DEPENDENCIES
+        -->
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -60,12 +67,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.tensorflow</groupId>
-            <artifactId>tensorflow</artifactId>
-            <version>1.6.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-io</artifactId>
             <version>1.3.2</version>
@@ -74,10 +75,16 @@
 
 
         <!--
-        HERE STARTS CUSTOM OPENCV LIBS IMPORT
+        HERE STARTS TENSORFLOW AND CUSTOM OPENCV LIBS IMPORT
         TO EXCLUDE WINDOWS/ANDROID/IOS VERSION
         WHAT SAVES 150mb OF MEMORY ON SERVER
          -->
+
+        <dependency>
+            <groupId>org.tensorflow</groupId>
+            <artifactId>tensorflow</artifactId>
+            <version>1.6.0</version>
+        </dependency>
 
         <dependency>
             <groupId>com.opencv</groupId>

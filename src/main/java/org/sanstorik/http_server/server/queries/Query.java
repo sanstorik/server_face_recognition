@@ -89,7 +89,7 @@ public abstract class Query {
     protected abstract void parseRequest(HttpServletRequest request);
 
 
-    PostgreSqlConnection getDatabaseConnection() {
+    final PostgreSqlConnection getDatabaseConnection() {
         return databaseConnection;
     }
 
