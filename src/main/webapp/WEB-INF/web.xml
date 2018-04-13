@@ -1,0 +1,10 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+    <servlet>
+        <servlet-name>users_api</servlet-name>
+        <servlet-class>org.sanstorik.http_server.server.HttpServer</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>users_api</servlet-name>
+        <url-pattern>/users/api</url-pattern>
+    </servlet-mapping>
+</web-app>

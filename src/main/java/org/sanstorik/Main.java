@@ -29,7 +29,7 @@ public class Main {
         new File("images").mkdir();
 
         //create main handler http
-        Server server = new Server(5000);
+        Server server = new Server(8080);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/users");
         context.setResourceBase(resourcePath);

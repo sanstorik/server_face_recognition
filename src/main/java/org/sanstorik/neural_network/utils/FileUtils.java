@@ -28,24 +28,6 @@ public final class FileUtils {
     }
 
 
-    /**
-     * Loads image from resources root.
-     * @param imageName path to image from images folder
-     * @return image or null if wasn't found or couldn't be read
-     */
-    public static Image loadImage(String imageName) {
-        Image img = null;
-        try {
-            File file = loadFile(IMAGES_FOLDER + imageName);
-            if (file != null) img = ImageIO.read(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return img;
-    }
-
-
     public static void copyFileUsingChannel(File source, File dest) throws IOException {
         FileChannel sourceChannel = null;
         FileChannel destChannel = null;

@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Apr 13 23:09:52 EEST 2018
+opencv-3.4.1-1.4.1-linux-x86_64-gpu.jar-1.0.jar>=
+opencv-3.4.1-1.4.1-linux-x86_64-gpu.jar-1.0.pom>=

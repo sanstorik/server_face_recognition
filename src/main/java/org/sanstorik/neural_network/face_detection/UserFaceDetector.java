@@ -93,7 +93,7 @@ public class UserFaceDetector {
 
 
     /**
-     * Finds face on image and takes face and greyscale it.
+     * Finds face on image and   takes face and greyscale it.
      * If several faces are found then it'll take a random one.
      * @return cropped and greyed image 160x170px
      */
