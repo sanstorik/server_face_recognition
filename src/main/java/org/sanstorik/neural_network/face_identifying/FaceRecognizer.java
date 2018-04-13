@@ -46,7 +46,7 @@ public class FaceRecognizer {
 
     private FaceRecognizer() {
         graph = new Graph();
-        //graph.importGraphDef(loadGraphDef());
+        graph.importGraphDef(loadGraphDef());
         faceDetector = UserFaceDetector.create();
     }
 

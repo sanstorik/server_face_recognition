@@ -75,21 +75,26 @@
             <version>19.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
 
 
+
+        <!--
+        HERE STARTS TENSORFLOW AND CUSTOM OPENCV LIBS IMPORT
+        TO EXCLUDE WINDOWS/ANDROID/IOS VERSION
+        WHAT SAVES 250mb OF MEMORY ON SERVER
+        -->
 
         <dependency>
             <groupId>org.tensorflow</groupId>
             <artifactId>tensorflow</artifactId>
             <version>1.6.0</version>
         </dependency>
-
-
-        <!--
-        HERE STARTS TENSORFLOW AND CUSTOM OPENCV LIBS IMPORT
-        TO EXCLUDE WINDOWS/ANDROID/IOS VERSION
-        WHAT SAVES 150mb OF MEMORY ON SERVER
-        -->
 
 
        <dependency>
@@ -171,10 +176,9 @@
             <artifactId>javacv.jar</artifactId>
             <version>1.0</version>
         </dependency>
-
-
-
     </dependencies>
+
+
    <build>
        <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
        <plugins>
