@@ -147,11 +147,6 @@
            <version>1.0</version>
        </dependency>
 
-        <dependency>
-            <groupId>com.opencv</groupId>
-            <artifactId>opencv-3.4.1-1.4.1-sources.jar</artifactId>
-            <version>1.0</version>
-        </dependency>
 
         <dependency>
             <groupId>com.opencv</groupId>

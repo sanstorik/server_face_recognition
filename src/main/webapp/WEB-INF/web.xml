@@ -9,7 +9,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>users_api</servlet-name>
-        <url-pattern>users/api</url-pattern>
+        <url-pattern>/users/api</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>hui</servlet-name>
@@ -17,6 +17,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>hui</servlet-name>
-        <url-pattern>hui</url-pattern>
+        <url-pattern>/hui</url-pattern>
     </servlet-mapping>
 </web-app>

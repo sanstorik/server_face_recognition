@@ -47,6 +47,7 @@ public class FaceRecognizer {
 
     private FaceRecognizer() {
         graph = new Graph();
+
         graph.importGraphDef(loadGraphDef());
         faceDetector = UserFaceDetector.create();
     }
@@ -259,6 +260,7 @@ public class FaceRecognizer {
 
     private byte[] loadGraphDef() {
         System.out.println("LOADING GRAPH");
+
         try (InputStream is = getClass().getClassLoader()
                 .getResourceAsStream("save_session/model_face_recognition.pb")) {
             return ByteStreams.toByteArray(is);

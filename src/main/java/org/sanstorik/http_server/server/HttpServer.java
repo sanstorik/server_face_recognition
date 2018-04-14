@@ -25,38 +25,20 @@ public class HttpServer extends HttpServlet {
         //this.databaseConnection = new PostgreSqlConnection();
     }
 
+
     @Override public void init() throws ServletException {
         super.init();
-        //faceRecognizer = FaceRecognizer.create();
+        faceRecognizer = FaceRecognizer.create();
     }
 
+
     @Override protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().print("HELLO WORLD");
-
-        File file = new File("hello.jpg");
-
-        if (!file.exists()) {
-            resp.getWriter().print("NOT EXISTS");
-            return;
-        }
+        handle(req, resp);
     }
 
 
     @Override protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        File file = new File("hello.jpg");
-
-        if (!file.exists()) {
-            resp.getWriter().print("NOT EXISTS");
-            return;
-        }
-
-        FaceFeatures features = faceRecognizer.calculateFeaturesForFace(file, "me");
-
-
-        if (features != null && features.getFeatures() != null && features.getFeatures().length > 10) {
-            resp.getWriter().print(features.getFeatures()[5]);
-        }
-        //handle(req, resp);
+        handle(req, resp);
     }
 
 
