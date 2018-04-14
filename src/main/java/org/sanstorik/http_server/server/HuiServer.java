@@ -18,7 +18,8 @@ public class HuiServer extends HttpServlet {
 
         if (!file.exists()) {
             resp.getWriter().print("NOT EXISTS");
-            return;
+        } else {
+            resp.getWriter().print(file.getAbsolutePath());
         }
     }
 }

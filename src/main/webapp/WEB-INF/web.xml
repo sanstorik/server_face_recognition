@@ -1,11 +1,15 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
     <servlet>
         <servlet-name>users_api</servlet-name>
         <servlet-class>org.sanstorik.http_server.server.HttpServer</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>users_api</servlet-name>
-        <url-pattern>/users/api</url-pattern>
+        <url-pattern>users/api</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>hui</servlet-name>

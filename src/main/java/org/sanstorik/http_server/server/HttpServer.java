@@ -21,12 +21,13 @@ public class HttpServer extends HttpServlet {
     private FaceRecognizer faceRecognizer;
 
     public HttpServer() {
+        System.out.println("STARTED");
         //this.databaseConnection = new PostgreSqlConnection();
     }
 
     @Override public void init() throws ServletException {
         super.init();
-        faceRecognizer = FaceRecognizer.create();
+        //faceRecognizer = FaceRecognizer.create();
     }
 
     @Override protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
