@@ -3,7 +3,7 @@ package org.sanstorik.neural_network.face_detection;
 import java.awt.image.BufferedImage;
 
 public class Face {
-    public static class Response<T1,T2> {
+    public static class Response<T1, T2> {
         public T1 left;
         public T2 right;
 

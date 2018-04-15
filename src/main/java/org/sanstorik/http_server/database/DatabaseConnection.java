@@ -8,7 +8,9 @@ abstract class DatabaseConnection {
     private final String DATABASE_URL;
 
 
-    DatabaseConnection() { DATABASE_URL = System.getenv("JDBC_DATABASE_URL");}
+    DatabaseConnection() {
+        DATABASE_URL = System.getenv("JDBC_DATABASE_URL");
+    }
 
 
     DatabaseConnection(String url) {
@@ -76,7 +78,7 @@ abstract class DatabaseConnection {
     }
 
 
-    protected PreparedStatement createPreparedStatement(String sql) throws SQLException{
+    protected PreparedStatement createPreparedStatement(String sql) throws SQLException {
         return sqlConnection.prepareStatement(sql);
     }
 
@@ -86,6 +88,7 @@ abstract class DatabaseConnection {
      * As database url we use System independent environment variable $JDBC_DATABASE_URL
      * which looks like this < jdbc:postgresql://host:port/database_name >.
      * Add ssl, password and username if needed.
+     *
      * @return connection to PostgreSQL database.
      */
     private Connection getSqlConnection() throws SQLException {

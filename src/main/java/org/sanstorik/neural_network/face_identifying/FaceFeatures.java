@@ -12,7 +12,8 @@ public class FaceFeatures {
         faceLabel = String.valueOf("");
     }
 
-    public FaceFeatures() { }
+    public FaceFeatures() {
+    }
 
 
     public FaceFeatures(float[] features) {

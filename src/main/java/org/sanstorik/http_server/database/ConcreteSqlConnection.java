@@ -1,7 +1,5 @@
 package org.sanstorik.http_server.database;
 
-import org.sanstorik.http_server.Token;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,8 +7,9 @@ import java.sql.SQLException;
 
 public class ConcreteSqlConnection extends DatabaseConnection {
 
-    /** To change database type - change system variable.
-     *  You are allowed to use postgres, mysql etc.
+    /**
+     * To change database type - change system variable.
+     * You are allowed to use postgres, mysql etc.
      */
 
 

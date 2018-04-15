@@ -5,7 +5,6 @@ import org.sanstorik.http_server.Token;
 import org.sanstorik.http_server.database.ConcreteSqlConnection;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public abstract class Query {
     @FunctionalInterface
@@ -18,12 +17,18 @@ public abstract class Query {
 
         public static Type of(String type) {
             switch (type) {
-                case "GET": return Type.GET;
-                case "POST": return Type.POST;
-                case "PUT": return Type.PUT;
-                case "DELETE": return Type.DELETE;
-                case "UNIQUE": return Type.UNIQUE;
-                default: throw new IllegalArgumentException("No such type.");
+                case "GET":
+                    return Type.GET;
+                case "POST":
+                    return Type.POST;
+                case "PUT":
+                    return Type.PUT;
+                case "DELETE":
+                    return Type.DELETE;
+                case "UNIQUE":
+                    return Type.UNIQUE;
+                default:
+                    throw new IllegalArgumentException("No such type.");
             }
         }
     }
@@ -52,6 +57,7 @@ public abstract class Query {
     /**
      * Parse url and data from request and create appropriate class
      * to handle it.
+     *
      * @param request from user
      * @return query with needed response
      */
@@ -62,14 +68,30 @@ public abstract class Query {
         Query query;
 
         switch (method) {
-            case "/register": query = new RegisterQuery(); break;
-            case "/login": query = new LoginQuery(); break;
-            case "/login_photo": query = new LoginPhotoQuery(); break;
-            case "/highlight_faces": query = new HighlightFacesQuery(); break;
-            case "/faces_coordinates": query = new FacesCoordinatesQuery(); break;
-            case "/identify_group": query = new IdentifyGroupQuery(); break;
-            case "/update_user_photo": query = new UpdateUserPhotoQuery(); break;
-            default: query = new NotSupportedQuery(); break;
+            case "/register":
+                query = new RegisterQuery();
+                break;
+            case "/login":
+                query = new LoginQuery();
+                break;
+            case "/login_photo":
+                query = new LoginPhotoQuery();
+                break;
+            case "/highlight_faces":
+                query = new HighlightFacesQuery();
+                break;
+            case "/faces_coordinates":
+                query = new FacesCoordinatesQuery();
+                break;
+            case "/identify_group":
+                query = new IdentifyGroupQuery();
+                break;
+            case "/update_user_photo":
+                query = new UpdateUserPhotoQuery();
+                break;
+            default:
+                query = new NotSupportedQuery();
+                break;
         }
 
         if (query.type != Type.of(request.getMethod()) &&
@@ -98,6 +120,7 @@ public abstract class Query {
     /**
      * Main method that checks input and is making a response.
      * Override this to proccess specific query.
+     *
      * @param request
      * @param databaseConnection connection to database
      */
@@ -106,6 +129,7 @@ public abstract class Query {
 
     /**
      * Method is used to abstract from checking token validation in query.
+     *
      * @return json API response to user
      */
     private String executeAfterTokenIsVerified() {
@@ -118,25 +142,18 @@ public abstract class Query {
         String errorMessage = "Server wasn't able to verificate token";
         token = token.substring(7);
 
-        try {
-            Token decypheredToken = Token.decypherToken(token);
-            boolean isValidToken = true;
+        Token decypheredToken = Token.decypherToken(token);
+        boolean isValidToken = true;
 
-
-            if (decypheredToken == null) {
-                errorMessage = "Token is not verified. Invalid user. Make sure you've put Bearer in front.";
-                isValidToken = false;
-            } else if (decypheredToken.isExpired()) {
-                errorMessage = "Token usability time has been expired. Create a new one.";
-                isValidToken = false;
-            }
-
-            return isValidToken? execute() : HttpResponse.error(errorMessage).asJson();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (decypheredToken == null) {
+            errorMessage = "Token is not verified. Invalid user. Make sure you've put Bearer in front.";
+            isValidToken = false;
+        } else if (decypheredToken.isExpired()) {
+            errorMessage = "Token usability time has been expired. Create a new one.";
+            isValidToken = false;
         }
 
-        return HttpResponse.error(errorMessage).asJson();
+        return isValidToken ? execute() : HttpResponse.error(errorMessage).asJson();
     }
 
 

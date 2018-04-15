@@ -55,8 +55,9 @@ public class FaceRecognizer {
     /**
      * Check whether the input user and previously added features are the same person.
      * Before it proceeds image it crops face and normalizes it.
-     * @param user image of user to identify, better to be not high resolution
-     *             because face will be cropped to 160x160px
+     *
+     * @param user             image of user to identify, better to be not high resolution
+     *                         because face will be cropped to 160x160px
      * @param expectedFeatures features of a man with whom we are comparing
      * @return prediction whether it's the same person and if it percentage
      */
@@ -73,8 +74,9 @@ public class FaceRecognizer {
 
     /**
      * Simple calculation on all features of a face in image
-     * @param image of user to identify, better to be not high resolution
-     *             because face will be cropped to 160x160px
+     *
+     * @param image     of user to identify, better to be not high resolution
+     *                  because face will be cropped to 160x160px
      * @param faceLabel label of face to be made
      * @return features calculated for a single face
      */
@@ -98,8 +100,9 @@ public class FaceRecognizer {
 
     /**
      * Finding user in face features pool.
-     * @param user image of user to check, better to be not high resolution
-     *             because face will be cropped to 160x160px
+     *
+     * @param user              image of user to check, better to be not high resolution
+     *                          because face will be cropped to 160x160px
      * @param collectedFeatures expected features of all registered users
      * @return prediction that contains face features with matched user.
      */
@@ -131,12 +134,13 @@ public class FaceRecognizer {
         }
 
         return Arrays.stream(predictions).
-                max( (first, second) -> (Float.compare(first.percentage,second.percentage))).orElse(null);
+                max((first, second) -> (Float.compare(first.percentage, second.percentage))).orElse(null);
     }
 
 
     /**
      * Mark all registered users on photo
+     *
      * @return image with all faces marked - and if possible identified
      */
     public BufferedImage identifyUsersOnPhoto(File image, FaceFeatures[] collectedFeatures) {
@@ -179,6 +183,7 @@ public class FaceRecognizer {
 
     /**
      * Running neural network
+     *
      * @param image cropped, centralized face
      * @return describing of a face based on 128 float features
      */
@@ -224,6 +229,7 @@ public class FaceRecognizer {
 
     /**
      * Check how many percentage do {first} and {second} params have in common
+     *
      * @return prediction of how much they match
      */
     private Prediction matchTwoFeatureArrays(FaceFeatures first, FaceFeatures second) {
@@ -242,11 +248,12 @@ public class FaceRecognizer {
 
     /**
      * Difference between two arrays using euclid method
+     *
      * @return distance between sets
      */
     private float euclidDistance(float[] first, float[] second) {
         if (first.length != second.length) {
-            throw  new IllegalArgumentException("should be same size");
+            throw new IllegalArgumentException("should be same size");
         }
 
         float sum = 0;
@@ -254,7 +261,7 @@ public class FaceRecognizer {
             sum += Math.abs(first[i] - second[i]);
         }
 
-        return (float)Math.sqrt(sum);
+        return (float) Math.sqrt(sum);
     }
 
 
@@ -265,7 +272,7 @@ public class FaceRecognizer {
                 .getResourceAsStream("save_session/model_face_recognition.pb")) {
             return ByteStreams.toByteArray(is);
         } catch (IOException e) {
-           throw new RuntimeException("couldn't load graph");
+            throw new RuntimeException("couldn't load graph");
         }
     }
 

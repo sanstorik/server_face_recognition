@@ -66,19 +66,20 @@ public class UserFaceDetector {
 
     /**
      * Finds all faces and highlight them
+     *
      * @return image with highlighted
      */
     public Face.Response<BufferedImage, Face[]> getAllFacesFromImage(File image) {
         Mat matImage = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_GRAYSCALE);
         RectVector foundFaces = detectFaces(matImage);
-        Face[] faces = new Face[(int)foundFaces.size()];
+        Face[] faces = new Face[(int) foundFaces.size()];
 
         System.out.println("FOUND FACES = " + foundFaces.size());
         for (int i = 0; i < foundFaces.size(); i++) {
             Rect frame = foundFaces.get(i);
 
             BufferedImage croppedFace = matToImage(cropAndResizeFace(matImage, frame));
-            FileUtils.saveImageAsTemporaryFile(croppedFace, "/cached/i_"+i + ".jpg");
+            FileUtils.saveImageAsTemporaryFile(croppedFace, "/cached/i_" + i + ".jpg");
 
             faces[i] = new Face(frame.x(), frame.y(),
                     frame.width(), frame.height(), croppedFace);
@@ -94,6 +95,7 @@ public class UserFaceDetector {
     /**
      * Finds face on image and   takes face and greyscale it.
      * If several faces are found then it'll take a random one.
+     *
      * @return cropped and greyed image 160x170px
      */
     public BufferedImage cropFaceFromImage(File image) {
@@ -107,6 +109,7 @@ public class UserFaceDetector {
 
     /**
      * Finds all faces on image and marks it with a rectangle.
+     *
      * @return image with marked faces
      */
     public BufferedImage highlightFacesOnImage(File image) {
@@ -123,6 +126,7 @@ public class UserFaceDetector {
 
     /**
      * Creates rectangle and text with probability for detected image
+     *
      * @return input image with colored rectangles and probabilities
      */
     public BufferedImage drawFaceDetection(BufferedImage image, Face face, FaceRecognizer.Prediction prediction) {
@@ -144,7 +148,7 @@ public class UserFaceDetector {
 
 
         Mat coloredPicture = putTextOnImage(image, label,
-                face.getLeftTopX() - (int)(face.getLeftTopX() * offsetScale),
+                face.getLeftTopX() - (int) (face.getLeftTopX() * offsetScale),
                 face.getLeftTopY() - 15
         );
 
@@ -174,7 +178,7 @@ public class UserFaceDetector {
         }
 
         putText(coloredPicture, text,
-                new Point(pointX,pointY), FONT_HERSHEY_COMPLEX,1.5, Scalar.BLACK, 1, CV_AA, false);
+                new Point(pointX, pointY), FONT_HERSHEY_COMPLEX, 1.5, Scalar.BLACK, 1, CV_AA, false);
 
         return coloredPicture;
     }
