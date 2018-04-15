@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="google-app-engine" name="Google App Engine">
+      <configuration>
+        <sdk-home-path>$MAVEN_REPOSITORY$/com/google/appengine/appengine-java-sdk/1.9.63/appengine-java-sdk/appengine-java-sdk-1.9.63</sdk-home-path>
+      </configuration>
+    </facet>
+    <facet type="web" name="Web">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
+        </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
+        </sourceRoots>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/target/helloworld-1.0-SNAPSHOT/WEB-INF/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.postgresql:postgresql:9.4-1201-jdbc4" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-servlet:9.4.8.v20171121" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-security:9.4.8.v20171121" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-server:9.4.8.v20171121" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-http:9.4.8.v20171121" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-util:9.4.8.v20171121" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-io:9.4.8.v20171121" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.james:apache-mime4j:0.6" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.json:json:20160810" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.2" level="project" />
+    <orderEntry type="library" name="Maven: com.auth0:java-jwt:3.3.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.2" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.2" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.11" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:19.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.tensorflow:tensorflow:1.6.0" level="project" />
+    <orderEntry type="library" name="Maven: org.tensorflow:libtensorflow:1.6.0" level="project" />
+    <orderEntry type="library" name="Maven: org.tensorflow:libtensorflow_jni:1.6.0" level="project" />
+    <orderEntry type="library" name="Maven: com.opencv:opencv:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.opencv:opencv-linux-armhf:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.opencv:opencv-linux-ppc64le:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.opencv:opencv-linux-x86:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.opencv:opencv-macosx-x86_64:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.opencv:java-jwt-3.3.0.jar:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.opencv:javacpp-1.4.1.jar:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.opencv:opencv-3.4.1-1.4.1-sources.jar:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.opencv:opencv-3.4.1-1.4.1-macosx-x86_64-gpu.jar:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.opencv:opencv-3.4.1-1.4.1-linux-x86_64-gpu.jar:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.opencv:opencv-3.4.1-1.4.1-linux-x86_64.jar:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.opencv:javacv.jar:1.0" level="project" />
+  </component>
+</module>

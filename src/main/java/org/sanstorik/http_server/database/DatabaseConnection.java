@@ -61,6 +61,7 @@ abstract class DatabaseConnection {
         return executed;
     }
 
+
     protected ResultSet executeSqlQuery(String sql) {
         ResultSet resultSet = null;
 

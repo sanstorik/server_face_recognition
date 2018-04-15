@@ -9,14 +9,12 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>users_api</servlet-name>
-        <url-pattern>/users/api</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>hui</servlet-name>
-        <servlet-class>org.sanstorik.http_server.server.HuiServer</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>hui</servlet-name>
-        <url-pattern>/hui</url-pattern>
+        <url-pattern>/api/login</url-pattern>
+        <url-pattern>/api/login_photo</url-pattern>
+        <url-pattern>/api/register</url-pattern>
+        <url-pattern>/api/highlight_faces</url-pattern>
+        <url-pattern>/api/faces_coordinates/</url-pattern>
+        <url-pattern>/api/identify_group</url-pattern>
+        <url-pattern>/api/update_user_photo</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -1,0 +1,55 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="sanstorik_server:war exploded">
+    <output-path>$PROJECT_DIR$/target/helloworld-1.0-SNAPSHOT</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="sanstorik_server" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.postgresql:postgresql:9.4-1201-jdbc4" />
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-servlet:9.4.8.v20171121" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-security:9.4.8.v20171121" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-server:9.4.8.v20171121" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-http:9.4.8.v20171121" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-util:9.4.8.v20171121" />
+          <element id="library" level="project" name="Maven: org.eclipse.jetty:jetty-io:9.4.8.v20171121" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpmime:4.0.1" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.0.1" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.0.1" />
+          <element id="library" level="project" name="Maven: org.apache.james:apache-mime4j:0.6" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.1.1" />
+          <element id="library" level="project" name="Maven: org.json:json:20160810" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.2" />
+          <element id="library" level="project" name="Maven: com.auth0:java-jwt:3.3.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.2" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.2" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.11" />
+          <element id="library" level="project" name="Maven: com.google.guava:guava:19.0" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
+          <element id="library" level="project" name="Maven: org.tensorflow:tensorflow:1.6.0" />
+          <element id="library" level="project" name="Maven: org.tensorflow:libtensorflow:1.6.0" />
+          <element id="library" level="project" name="Maven: org.tensorflow:libtensorflow_jni:1.6.0" />
+          <element id="library" level="project" name="Maven: com.opencv:opencv:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:opencv-linux-armhf:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:opencv-linux-ppc64le:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:opencv-linux-x86:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:opencv-macosx-x86_64:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:java-jwt-3.3.0.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:javacpp-1.4.1.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:opencv-3.4.1-1.4.1-sources.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:opencv-3.4.1-1.4.1-macosx-x86_64-gpu.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:opencv-3.4.1-1.4.1-linux-x86_64-gpu.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:opencv-3.4.1-1.4.1-linux-x86_64.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:javacv.jar:1.0" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/helloworld-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="sanstorik_server/web/Web" />
+    </root>
+  </artifact>
+</component>

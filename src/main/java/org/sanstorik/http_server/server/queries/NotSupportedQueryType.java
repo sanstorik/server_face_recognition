@@ -1,10 +1,17 @@
 package org.sanstorik.http_server.server.queries;
 
+import org.sanstorik.http_server.database.ConcreteSqlConnection;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class NotSupportedQueryType extends Query {
 
-    @Override protected void parseRequest(HttpServletRequest request) {
+    NotSupportedQueryType() {
+        super(false);
+    }
+
+
+    @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection) {
 
     }
 }

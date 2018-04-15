@@ -49,8 +49,10 @@ fabric.properties
 .idea/workspace.xml
 .idea/sqldialects.xml
 .idea/codeStyles
-.idea
-sanstorik_server.iml
 target
 
 opencv_jars
+src/main/java/org/sanstorik/Main.java
+src/main/resources/json
+src/main/resources/images
+images

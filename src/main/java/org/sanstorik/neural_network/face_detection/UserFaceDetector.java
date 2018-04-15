@@ -25,7 +25,6 @@ public class UserFaceDetector {
 
 
     private UserFaceDetector() {
-
         faceDetector = new CascadeClassifier(getClass().getClassLoader().getResource(LOADER_URL).getPath());
     }
 
@@ -79,7 +78,7 @@ public class UserFaceDetector {
             Rect frame = foundFaces.get(i);
 
             BufferedImage croppedFace = matToImage(cropAndResizeFace(matImage, frame));
-            FileUtils.saveImageAsTemporaryFile(croppedFace, "/test/i_"+i + ".jpg");
+            FileUtils.saveImageAsTemporaryFile(croppedFace, "/cached/i_"+i + ".jpg");
 
             faces[i] = new Face(frame.x(), frame.y(),
                     frame.width(), frame.height(), croppedFace);
@@ -145,7 +144,8 @@ public class UserFaceDetector {
 
 
         Mat coloredPicture = putTextOnImage(image, label,
-                        face.getLeftTopX() - (int)(face.getLeftTopX() * offsetScale), face.getLeftTopY() - 15
+                face.getLeftTopX() - (int)(face.getLeftTopX() * offsetScale),
+                face.getLeftTopY() - 15
         );
 
         highlightFrame(coloredPicture, new Rect(

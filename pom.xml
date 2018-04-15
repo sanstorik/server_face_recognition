@@ -9,11 +9,11 @@
     <packaging>war</packaging>
 
 
-    <dependencies>
+  <dependencies>
 
-        <!--
-        SERVER DEPENDENCIES
-        -->
+      <!--
+      SERVER DEPENDENCIES
+      -->
 
         <dependency>
             <groupId>org.postgresql</groupId>

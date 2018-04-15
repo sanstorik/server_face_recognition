@@ -2,9 +2,10 @@ package org.sanstorik.http_server.server.queries;
 
 import org.sanstorik.http_server.HttpResponse;
 import org.sanstorik.http_server.Token;
-import org.sanstorik.http_server.database.PostgreSqlConnection;
+import org.sanstorik.http_server.database.ConcreteSqlConnection;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public abstract class Query {
     @FunctionalInterface
@@ -29,20 +30,24 @@ public abstract class Query {
 
     private String queryMethod;
     private Type type = Type.POST;
+    private boolean doCheckAuth = true;
     private HttpServletRequest request;
     private final HttpResponse response = HttpResponse.fromTemplate();
-    private PostgreSqlConnection databaseConnection;
+    private ConcreteSqlConnection databaseConnection;
 
 
-    Query() {
-        parseRequest(request);
-    }
+    Query() { }
 
 
     Query(Type type) {
         this.type = type;
-        parseRequest(request);
     }
+
+
+    Query(boolean doCheckAuth) {
+        this.doCheckAuth = doCheckAuth;
+    }
+
 
     /**
      * Parse url and data from request and create appropriate class
@@ -50,7 +55,7 @@ public abstract class Query {
      * @param request from user
      * @return query with needed response
      */
-    public static Query fromRequest(HttpServletRequest request, PostgreSqlConnection databaseConnection) {
+    public static Query fromRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection) {
         String url = request.getRequestURL().toString();
         String method = url.substring(url.lastIndexOf("/"), url.length());
 
@@ -61,37 +66,42 @@ public abstract class Query {
             case "/login": query = new LoginQuery(); break;
             case "/login_photo": query = new LoginPhotoQuery(); break;
             case "/highlight_faces": query = new HighlightFacesQuery(); break;
-            case "/faces_coordinated": query = new FacesCoordinatesQuery(); break;
+            case "/faces_coordinates": query = new FacesCoordinatesQuery(); break;
             case "/identify_group": query = new IdentifyGroupQuery(); break;
             case "/update_user_photo": query = new UpdateUserPhotoQuery(); break;
             default: query = new NotSupportedQuery(); break;
         }
 
-        query.queryMethod = method;
-        query.request = request;
-        query.databaseConnection = databaseConnection;
-
-        if (query.type != Type.of(request.getMethod()) ||
+        if (query.type != Type.of(request.getMethod()) &&
                 query.type != Type.UNIQUE) {
             query = new NotSupportedQueryType();
         }
 
 
+        query.request = request;
+        query.queryMethod = method;
+        query.databaseConnection = databaseConnection;
+
+
+        System.out.println("Query = " + query.getClass().toString());
+        query.parseRequest(request, databaseConnection);
+
         return query;
     }
 
 
-    public final String execute() {
-        return executeAfterTokenIsVerified();
+    public final String asJsonResponse() {
+        return doCheckAuth ? executeAfterTokenIsVerified() : execute();
     }
 
 
-    protected abstract void parseRequest(HttpServletRequest request);
-
-
-    final PostgreSqlConnection getDatabaseConnection() {
-        return databaseConnection;
-    }
+    /**
+     * Main method that checks input and is making a response.
+     * Override this to proccess specific query.
+     * @param request
+     * @param databaseConnection connection to database
+     */
+    protected abstract void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection);
 
 
     /**
@@ -122,11 +132,16 @@ public abstract class Query {
                 isValidToken = false;
             }
 
-            return isValidToken? response.asJson() : HttpResponse.error(errorMessage).asJson();
+            return isValidToken? execute() : HttpResponse.error(errorMessage).asJson();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return HttpResponse.error(errorMessage).asJson();
+    }
+
+
+    private String execute() {
+        return response.asJson();
     }
 }

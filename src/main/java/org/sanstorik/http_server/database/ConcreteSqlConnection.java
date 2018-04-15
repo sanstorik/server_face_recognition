@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class PostgreSqlConnection extends DatabaseConnection {
+public class ConcreteSqlConnection extends DatabaseConnection {
     private static final String USERS_TABLE_NAME = "users";
 
-    //System.getenv("JDBC_DATABASE_URL")
-    public PostgreSqlConnection() {
+    /** To change database type - change system variable.
+     *  You are allowed to use postgres, mysql etc.
+     */
+    public ConcreteSqlConnection() {
         super(System.getenv("JDBC_DATABASE_URL"));
     }
 

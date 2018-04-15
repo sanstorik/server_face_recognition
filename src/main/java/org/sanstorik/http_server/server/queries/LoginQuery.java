@@ -2,6 +2,7 @@ package org.sanstorik.http_server.server.queries;
 
 import org.sanstorik.http_server.HttpResponse;
 import org.sanstorik.http_server.Token;
+import org.sanstorik.http_server.database.ConcreteSqlConnection;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -11,10 +12,18 @@ public class LoginQuery extends Query {
 
     private Token token;
 
-    @Override protected void parseRequest(HttpServletRequest request) {
+
+    LoginQuery() {
+        super(false);
     }
 
-    private String loginQuery(HttpServletRequest request) {
+
+    @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection) {
+
+    }
+
+
+    private String loginQuery(HttpServletRequest request, ConcreteSqlConnection databaseConnection) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -23,7 +32,7 @@ public class LoginQuery extends Query {
             return HttpResponse.error("Params username and password are required.").asJson();
         }
 
-        if (!getDatabaseConnection().checkLogin(username, password)) {
+        if (databaseConnection.checkLogin(username, password)) {
             return HttpResponse.error("Wrong password or login").asJson();
         }
 
