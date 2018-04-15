@@ -16,18 +16,18 @@ public class HttpServer extends HttpServlet {
     private FaceRecognizer faceRecognizer;
 
 
-    @Override public void init() throws ServletException {
+    @Override public void init() {
         //databaseConnection = new ConcreteSqlConnection();
         //faceRecognizer = FaceRecognizer.create();
     }
 
 
-    @Override protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @Override protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         handle(req, resp);
     }
 
 
-    @Override protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @Override protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         handle(req, resp);
     }
 

@@ -1,14 +1,15 @@
 package org.sanstorik.http_server.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 abstract class DatabaseConnection {
 
     private Connection sqlConnection;
     private final String DATABASE_URL;
+
+
+    DatabaseConnection() { DATABASE_URL = System.getenv("JDBC_DATABASE_URL");}
+
 
     DatabaseConnection(String url) {
         DATABASE_URL = url;
@@ -72,6 +73,11 @@ abstract class DatabaseConnection {
         }
 
         return resultSet;
+    }
+
+
+    protected PreparedStatement createPreparedStatement(String sql) throws SQLException{
+        return sqlConnection.prepareStatement(sql);
     }
 
 

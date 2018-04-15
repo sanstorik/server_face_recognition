@@ -122,13 +122,12 @@ public abstract class Query {
             Token decypheredToken = Token.decypherToken(token);
             boolean isValidToken = true;
 
-            if (decypheredToken.isExpired()) {
-                errorMessage = "Token usability time has been expired. Create a new one.";
-                isValidToken = false;
-            }
 
-            if (!databaseConnection.isValidToken(decypheredToken)) {
+            if (decypheredToken == null) {
                 errorMessage = "Token is not verified. Invalid user. Make sure you've put Bearer in front.";
+                isValidToken = false;
+            } else if (decypheredToken.isExpired()) {
+                errorMessage = "Token usability time has been expired. Create a new one.";
                 isValidToken = false;
             }
 
