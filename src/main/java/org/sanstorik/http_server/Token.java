@@ -59,7 +59,7 @@ public class Token {
                     .sign(algorithm);
 
             return new Token(token, username, password, expiresAt);
-        } catch (UnsupportedEncodingException |JWTCreationException e) {
+        } catch (UnsupportedEncodingException | JWTCreationException e) {
             e.printStackTrace();
         }
 
@@ -82,9 +82,7 @@ public class Token {
                     decoded.getClaim(PASSWORD_KEY).toString(),
                     decoded.getExpiresAt()
             );
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (JWTVerificationException e){
+        } catch (UnsupportedEncodingException | JWTVerificationException e) {
             e.printStackTrace();
         }
 

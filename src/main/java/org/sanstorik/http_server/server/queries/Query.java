@@ -127,6 +127,12 @@ public abstract class Query {
     protected abstract void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection);
 
 
+    protected void errorResponse(String message) {
+        response.setErrorMessage(message);
+        response.setStatusError();
+    }
+
+
     /**
      * Method is used to abstract from checking token validation in query.
      *

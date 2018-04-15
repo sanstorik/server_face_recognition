@@ -11,6 +11,6 @@ public class NotSupportedQuery extends Query {
     }
 
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection connection) {
-
+        errorResponse("This method is not supported. See documentation.");
     }
 }

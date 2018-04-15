@@ -12,6 +12,6 @@ public class NotSupportedQueryType extends Query {
 
 
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection) {
-
+        errorResponse("Not supported type of a query for this method. If you are using GET method, use POST.");
     }
 }

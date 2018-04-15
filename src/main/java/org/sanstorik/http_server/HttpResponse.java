@@ -13,9 +13,10 @@ public final class HttpResponse {
     private String errorMessage;
     private String status;
 
+
     private HttpResponse() { }
 
-
+    
     private HttpResponse(Map<String, String> params) {
         this.params = params;
     }
@@ -26,12 +27,12 @@ public final class HttpResponse {
     }
 
 
-    public void setSuccessStatus() {
+    public void setStatusSuccess() {
         this.status = SUCCESS_STATUS;
     }
 
 
-    public void setErrorStatus() {
+    public void setStatusError() {
         this.status = ERROR_STATUS;
     }
 
@@ -56,11 +57,6 @@ public final class HttpResponse {
         response.status = SUCCESS_STATUS;
 
         return response;
-    }
-
-
-    public static HttpResponse multipart() {
-        return new HttpResponse("");
     }
 
 
