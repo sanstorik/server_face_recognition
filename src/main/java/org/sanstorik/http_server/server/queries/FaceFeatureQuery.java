@@ -8,10 +8,10 @@ import org.sanstorik.neural_network.face_identifying.FaceFeatures;
 import java.io.File;
 import java.util.List;
 
-public abstract class FaceFeatureQuery extends Query {
+abstract class FaceFeatureQuery extends Query {
 
-    public FaceFeatureQuery() {
-        super(false);
+    FaceFeatureQuery(boolean doCheckAuth) {
+        super(doCheckAuth);
     }
 
 

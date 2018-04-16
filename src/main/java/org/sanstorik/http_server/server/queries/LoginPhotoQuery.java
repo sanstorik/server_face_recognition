@@ -14,7 +14,11 @@ import java.util.UUID;
 
 import static org.sanstorik.neural_network.face_identifying.FaceRecognizer.Prediction;
 
-public class LoginPhotoQuery extends FaceFeatureQuery {
+class LoginPhotoQuery extends FaceFeatureQuery {
+
+    LoginPhotoQuery() {
+        super(false);
+    }
 
 
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {

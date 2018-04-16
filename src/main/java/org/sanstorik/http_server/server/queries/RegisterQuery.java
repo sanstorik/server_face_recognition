@@ -14,7 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
-public class RegisterQuery extends Query {
+class RegisterQuery extends Query {
 
     RegisterQuery() {
         super(false);

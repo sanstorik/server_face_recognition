@@ -5,7 +5,10 @@ import org.sanstorik.http_server.database.ConcreteSqlConnection;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class HighlightFacesQuery extends Query {
+class HighlightFacesQuery extends FaceFeatureQuery {
+
+    HighlightFacesQuery() { super(true); }
+
 
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {
 

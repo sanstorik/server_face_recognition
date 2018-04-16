@@ -5,7 +5,7 @@ import org.sanstorik.http_server.database.ConcreteSqlConnection;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class NotSupportedQuery extends Query {
+class NotSupportedQuery extends Query {
 
     NotSupportedQuery() {
         super(Type.UNIQUE, false);

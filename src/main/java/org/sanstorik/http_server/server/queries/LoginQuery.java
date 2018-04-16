@@ -5,10 +5,9 @@ import org.sanstorik.http_server.database.ConcreteSqlConnection;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class LoginQuery extends Query {
+class LoginQuery extends Query {
 
     private Token token;
-
 
     LoginQuery() {
         super(Type.GET, false);

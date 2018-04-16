@@ -5,7 +5,7 @@ import org.sanstorik.http_server.database.ConcreteSqlConnection;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class IdentifyGroupQuery extends Query {
+class IdentifyGroupQuery extends Query {
 
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {
 
