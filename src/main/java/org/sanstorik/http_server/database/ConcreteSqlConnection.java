@@ -13,7 +13,13 @@ public class ConcreteSqlConnection extends DatabaseConnection {
      */
 
 
-    public boolean checkLogin(String username, String password) {
+    /**
+     * Check if user is registered in database.
+     * @return id of user. If user wasn't found this returns negative number.
+     */
+    public int checkLogin(String username, String password) {
+        int id = -1;
+
         try {
             PreparedStatement statement = createPreparedStatement(
                     "select id, username, password from users " +
@@ -22,7 +28,30 @@ public class ConcreteSqlConnection extends DatabaseConnection {
             statement.setString(2, password);
 
             ResultSet set = statement.executeQuery();
-            return set != null && set.next();
+
+            if (set != null && set.next()) {
+                id = set.getInt(id);
+            }
+
+            return id;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return id;
+    }
+
+
+
+    public boolean registerUser(String username, String password, String imageUrl) {
+        try {
+            PreparedStatement statement = createPreparedStatement(
+                    "insert into users(username, password, image_url) " +
+                            "values(?, ?, ?);");
+            statement.setString(1, username);
+            statement.setString(2, password);
+            statement.setString(3, imageUrl);
+            return statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }

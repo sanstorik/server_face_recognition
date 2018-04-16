@@ -14,11 +14,11 @@ public class LoginQuery extends Query {
 
 
     LoginQuery() {
-        super(false);
+        super(Type.GET, false);
     }
 
 
-    @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection) {
+    @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {
 
     }
 
@@ -32,11 +32,13 @@ public class LoginQuery extends Query {
             return HttpResponse.error("Params username and password are required.").asJson();
         }
 
-        if (databaseConnection.checkLogin(username, password)) {
+        int userId = databaseConnection.checkLogin(username, password);
+
+        if (userId < 0) {
             return HttpResponse.error("Wrong password or login").asJson();
         }
 
-        Token authToken = Token.cypherToken(username, password);
+        Token authToken = Token.cypherToken(username, password, userId);
 
         if (authToken == null) {
             return HttpResponse.error("Couldn't create token for you.").asJson();

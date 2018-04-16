@@ -1,8 +1,10 @@
 package org.sanstorik.http_server;
 
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public final class HttpResponse {
@@ -10,13 +12,19 @@ public final class HttpResponse {
     private final static String ERROR_STATUS = "error";
 
     private Map<String, String> params;
-    private String errorMessage;
+    private Map<String, Map<String, String>> embeddedEntries;
+    private String errorMessage = "Unexpected error.";
     private String status;
 
+    {
+        this.params = new HashMap<>();
+        this.embeddedEntries = new HashMap<>();
+        this.status = SUCCESS_STATUS;
+    }
 
     private HttpResponse() { }
 
-    
+
     private HttpResponse(Map<String, String> params) {
         this.params = params;
     }
@@ -39,6 +47,11 @@ public final class HttpResponse {
 
     public void addParam(String key, String value) {
         params.put(key, value);
+    }
+
+
+    public void addEmbeddedEntry(String key, Map<String, String> params) {
+        this.embeddedEntries.put(key, params);
     }
 
 
@@ -72,15 +85,31 @@ public final class HttpResponse {
         JSONObject json = new JSONObject();
         json.put("status", status);
 
-        if (status == SUCCESS_STATUS && params != null) {
+        if (status.equals(SUCCESS_STATUS) && params != null) {
             JSONObject data = new JSONObject();
             json.put("data", data);
 
+            //main data
             for (Map.Entry entry : params.entrySet()) {
                 data.put(entry.getKey().toString(), entry.getValue().toString());
             }
-        } else if (status == ERROR_STATUS) {
+
+            //additional arrays
+            for (Map.Entry entry: embeddedEntries.entrySet()) {
+                Map<String, String> valuesMap = (Map<String,String>)entry.getValue();
+                String valuesMapKey = entry.getKey().toString();
+                JSONObject newEntry = new JSONObject();
+
+                for (Map.Entry values: valuesMap.entrySet()) {
+                    newEntry.put(values.getKey().toString(), values.getValue().toString());
+                }
+
+                data.put(valuesMapKey, valuesMapKey);
+            }
+        } else if (status.equals(ERROR_STATUS)) {
             json.put("errorMessage", errorMessage);
+        } else if(status.equals(SUCCESS_STATUS)) {
+            json.put("message", "Query succeded");
         }
 
         return json.toString();

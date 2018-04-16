@@ -12,17 +12,20 @@ import java.util.Date;
 public class Token {
     private static final String USERNAME_KEY = "username";
     private static final String PASSWORD_KEY = "password";
+    private static final String USERID_KEY = "user_id";
 
     private String token;
     private String username;
     private String password;
+    private int userId;
     private Date expireDate;
 
 
-    private Token(String token, String username, String password, Date creationTime) {
+    private Token(String token, String username, String password, int userId, Date creationTime) {
         this.token = token;
         this.username = username;
         this.password = password;
+        this.userId = userId;
         this.expireDate = creationTime;
     }
 
@@ -42,12 +45,17 @@ public class Token {
     }
 
 
+    public int getUserId() {
+        return userId;
+    }
+
+
     public boolean isExpired() {
         return expireDate.before(new Date());
     }
 
 
-    public static Token cypherToken(String username, String password) {
+    public static Token cypherToken(String username, String password, int userId) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(System.getenv("TOKEN_KEY"));
             Date expiresAt = new Date(System.currentTimeMillis() + 2 * 60 * 60 * 1000);
@@ -55,10 +63,11 @@ public class Token {
             String token = JWT.create()
                     .withClaim(USERNAME_KEY, username)
                     .withClaim(PASSWORD_KEY, password)
+                    .withClaim(USERID_KEY, userId)
                     .withExpiresAt(expiresAt)
                     .sign(algorithm);
 
-            return new Token(token, username, password, expiresAt);
+            return new Token(token, username, password, userId, expiresAt);
         } catch (UnsupportedEncodingException | JWTCreationException e) {
             e.printStackTrace();
         }
@@ -80,6 +89,7 @@ public class Token {
                     token,
                     decoded.getClaim(USERNAME_KEY).toString(),
                     decoded.getClaim(PASSWORD_KEY).toString(),
+                    decoded.getClaim(USERID_KEY).asInt(),
                     decoded.getExpiresAt()
             );
         } catch (UnsupportedEncodingException | JWTVerificationException e) {

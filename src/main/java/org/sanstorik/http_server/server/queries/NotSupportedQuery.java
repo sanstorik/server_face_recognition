@@ -1,5 +1,6 @@
 package org.sanstorik.http_server.server.queries;
 
+import org.sanstorik.http_server.Token;
 import org.sanstorik.http_server.database.ConcreteSqlConnection;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 public class NotSupportedQuery extends Query {
 
     NotSupportedQuery() {
-        super(false);
+        super(Type.UNIQUE, false);
     }
 
-    @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection connection) {
+    @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection connection, Token token) {
         errorResponse("This method is not supported. See documentation.");
     }
 }
