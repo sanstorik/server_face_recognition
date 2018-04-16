@@ -56,8 +56,9 @@ public class Token {
 
 
     public static Token cypherToken(String username, String password, int userId) {
+        System.out.println(username + " " + password + " " + userId);
         try {
-            Algorithm algorithm = Algorithm.HMAC256(System.getenv("TOKEN_KEY"));
+            Algorithm algorithm = Algorithm.HMAC256(System.getProperty("TOKEN_KEY"));
             Date expiresAt = new Date(System.currentTimeMillis() + 2 * 60 * 60 * 1000);
 
             String token = JWT.create()
@@ -80,7 +81,7 @@ public class Token {
         Token decypheredToken = null;
 
         try {
-            Algorithm algorithm = Algorithm.HMAC256(System.getenv("TOKEN_KEY"));
+            Algorithm algorithm = Algorithm.HMAC256(System.getProperty("TOKEN_KEY"));
 
             DecodedJWT decoded = JWT.require(algorithm)
                     .build().verify(token);

@@ -7,7 +7,7 @@ public class Face {
         public T1 left;
         public T2 right;
 
-        Response(T1 left, T2 right) {
+        public Response(T1 left, T2 right) {
             this.left = left;
             this.right = right;
         }

@@ -4,12 +4,14 @@ import org.sanstorik.http_server.database.ConcreteSqlConnection;
 import org.sanstorik.http_server.server.queries.Query;
 import org.sanstorik.neural_network.face_identifying.FaceRecognizer;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
+@MultipartConfig
 public class HttpServer extends HttpServlet {
     private ConcreteSqlConnection databaseConnection;
     private FaceRecognizer faceRecognizer;

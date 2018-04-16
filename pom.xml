@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.example</groupId>
-    <version>1.0-SNAPSHOT</version>
-    <artifactId>helloworld</artifactId>
+    <groupId>org.sanstorik.facerecognizer</groupId>
+    <version>1.0</version>
+    <artifactId>sunstory_face_recognition</artifactId>
     <packaging>war</packaging>
 
 

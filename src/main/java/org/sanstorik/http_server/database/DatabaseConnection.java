@@ -9,7 +9,7 @@ abstract class DatabaseConnection {
 
 
     DatabaseConnection() {
-        DATABASE_URL = System.getenv("JDBC_DATABASE_URL");
+        this(System.getProperty("JDBC_DATABASE_URL"));
     }
 
 

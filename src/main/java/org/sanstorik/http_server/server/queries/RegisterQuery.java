@@ -1,15 +1,20 @@
 package org.sanstorik.http_server.server.queries;
 
-import javafx.util.Pair;
+import com.google.gson.Gson;
 import org.sanstorik.http_server.Token;
 import org.sanstorik.http_server.database.ConcreteSqlConnection;
+import org.sanstorik.http_server.utils.FileUtils;
+import org.sanstorik.neural_network.face_detection.Face;
+import org.sanstorik.neural_network.face_identifying.FaceFeatures;
+import org.sanstorik.neural_network.face_identifying.FaceRecognizer;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 
 public class RegisterQuery extends Query {
-
 
     RegisterQuery() {
         super(false);
@@ -19,14 +24,59 @@ public class RegisterQuery extends Query {
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        Pair<File, String> imagePair = readImageFromMultipartRequest(request, "image", username);
 
-        if (username == null || password == null || imagePair.getKey() == null) {
+        if (username == null || password == null) {
             errorResponse("Username, password or image params are missing.");
-        } else if (!databaseConnection.registerUser(username, password, imagePair.getValue())) {
-            errorResponse("Couln't create user.");
+            return;
+        } else if (databaseConnection.isRegistered(username)) {
+            errorResponse("That login is allready taken.");
+            return;
         }
 
-        System.out.println(imagePair.getValue());
+        Face.Response<File, String> imagePair = readImageFromMultipartRequest(request, "image",
+                username, "avatar.jpg");
+
+        String jsonUrl = FileUtils.getRootJsonPath() + username + "/face_features.json";
+        boolean createdJson = createJsonWithFaceFeatures(jsonUrl, imagePair.left, username);
+
+        if (imagePair.left != null && createdJson
+                && !databaseConnection.registerUser(username, password, imagePair.right, jsonUrl)) {
+            errorResponse("Couldn't create user or some files or find face on image.");
+        }
+    }
+
+
+    private boolean createJsonWithFaceFeatures(String jsonPath, File image, String username) {
+        File json = new File(jsonPath);
+
+        //create full path dirs
+        try {
+            new File(FileUtils.getRootJsonPath() + username).mkdirs();
+
+            if (!json.exists()) {
+                json.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        FaceRecognizer faceRecognizer = FaceRecognizer.create();
+        FaceFeatures features = faceRecognizer.calculateFeaturesForFace(image, username);
+
+        //no faces found on a picture
+        if (features == null) {
+            return false;
+        }
+
+        boolean isWritten = false;
+        try (Writer writer = new FileWriter(json)) {
+            Gson gson = new Gson();
+            gson.toJson(features, writer);
+            isWritten = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return isWritten;
     }
 }

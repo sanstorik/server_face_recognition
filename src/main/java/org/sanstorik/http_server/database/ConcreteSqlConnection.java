@@ -3,6 +3,8 @@ package org.sanstorik.http_server.database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ConcreteSqlConnection extends DatabaseConnection {
@@ -29,8 +31,10 @@ public class ConcreteSqlConnection extends DatabaseConnection {
 
             ResultSet set = statement.executeQuery();
 
+            System.out.println(set == null);
+
             if (set != null && set.next()) {
-                id = set.getInt(id);
+                id = set.getInt("id");
             }
 
             return id;
@@ -42,16 +46,90 @@ public class ConcreteSqlConnection extends DatabaseConnection {
     }
 
 
+    public User getUserById(int userId) {
+        User user = null;
 
-    public boolean registerUser(String username, String password, String imageUrl) {
         try {
             PreparedStatement statement = createPreparedStatement(
-                    "insert into users(username, password, image_url) " +
-                            "values(?, ?, ?);");
+                    "select * from users where id=?;");
+            statement.setString(1, String.valueOf(userId));
+
+            ResultSet set = statement.executeQuery();
+
+            if (set != null && set.next()) {
+                user = new User(
+                        set.getString("username"),
+                        set.getString("password"),
+                        set.getString("image_url"),
+                        set.getString("json_url"),
+                        userId
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+
+        try {
+            PreparedStatement statement = createPreparedStatement(
+                    "select * from users;"
+            );
+
+            ResultSet set = statement.executeQuery();
+
+            if (set != null) {
+                while (set.next()) {
+                    users.add(new User(
+                            set.getString("username"),
+                            set.getString("password"),
+                            set.getString("image_url"),
+                            set.getString("json_url"),
+                            set.getInt("id")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
+
+
+    public boolean registerUser(String username, String password, String imageUrl, String jsonUrl) {
+        try {
+            PreparedStatement statement = createPreparedStatement(
+                    "insert into users(username, password, image_url, json_url) " +
+                            "values(?, ?, ?,?);");
             statement.setString(1, username);
             statement.setString(2, password);
             statement.setString(3, imageUrl);
-            return statement.execute();
+            statement.setString(4, jsonUrl);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+    public boolean isRegistered(String username) {
+        try {
+            PreparedStatement statement = createPreparedStatement(
+                    "select * from users where username=?;"
+            );
+            statement.setString(1, username);
+
+            ResultSet set = statement.executeQuery();
+            return set != null && set.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }

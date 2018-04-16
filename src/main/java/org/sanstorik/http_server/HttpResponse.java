@@ -1,7 +1,6 @@
 package org.sanstorik.http_server;
 
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -85,7 +84,12 @@ public final class HttpResponse {
         JSONObject json = new JSONObject();
         json.put("status", status);
 
-        if (status.equals(SUCCESS_STATUS) && params != null) {
+        if (status.equals(ERROR_STATUS)) {
+            json.put("message", errorMessage);
+        }
+
+        //normal output
+        else if (status.equals(SUCCESS_STATUS) && !params.isEmpty()) {
             JSONObject data = new JSONObject();
             json.put("data", data);
 
@@ -106,8 +110,6 @@ public final class HttpResponse {
 
                 data.put(valuesMapKey, valuesMapKey);
             }
-        } else if (status.equals(ERROR_STATUS)) {
-            json.put("errorMessage", errorMessage);
         } else if(status.equals(SUCCESS_STATUS)) {
             json.put("message", "Query succeded");
         }

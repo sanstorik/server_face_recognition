@@ -8,6 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 public class UpdateUserPhotoQuery extends Query {
 
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {
-
+        errorResponse("Not supported for now.");
     }
 }

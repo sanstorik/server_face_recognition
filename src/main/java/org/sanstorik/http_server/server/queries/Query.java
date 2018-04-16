@@ -1,8 +1,5 @@
 package org.sanstorik.http_server.server.queries;
 
-import com.google.common.io.Files;
-import javafx.util.Pair;
-import org.apache.commons.io.FileSystemUtils;
 import org.apache.commons.io.FileUtils;
 import org.sanstorik.http_server.HttpResponse;
 import org.sanstorik.http_server.Token;
@@ -11,11 +8,12 @@ import org.sanstorik.http_server.database.ConcreteSqlConnection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+
+import static org.sanstorik.neural_network.face_detection.Face.Response;
 
 public abstract class Query {
     public enum Type {
@@ -114,11 +112,11 @@ public abstract class Query {
 
         //verify token and return if not verified
         if (query.doCheckAuth) {
-            Pair<Token, String> tokenResponse = query.verifyToken(request);
-            token = tokenResponse.getKey();
+            Response<Token, String> tokenResponse = query.verifyToken(request);
+            token = tokenResponse.left;
 
-            if (tokenResponse.getKey() == null) {
-                query.errorResponse(tokenResponse.getValue());
+            if (tokenResponse.left == null) {
+                query.errorResponse(tokenResponse.right);
                 return query;
             }
         }
@@ -168,25 +166,35 @@ public abstract class Query {
      * @param directory where to create this image
      * @return image written to server with its url
      */
-    protected Pair<File, String> readImageFromMultipartRequest(HttpServletRequest request, String key, String directory) {
+    protected Response<File, String> readImageFromMultipartRequest(HttpServletRequest request, String key,
+                                                                   String directory, String imageName) {
         File image = null;
-        String url = System.getenv("IMAGE_HOSTING_URL")  + "/" + directory;
+        final String directoryUrl = org.sanstorik.http_server.utils.FileUtils.getRootImagePath() + directory;
+        final String url = directoryUrl + "/" + imageName;
 
         try {
             image = new File(url);
+
+            //create directory if not exists yet
+            new File(directoryUrl).mkdirs();
+
             if (!image.exists()) {
                 image.createNewFile();
             }
 
             Part part = request.getPart(key);
-            InputStream imageStream = part.getInputStream();
+            if (part != null) {
+                InputStream imageStream = part.getInputStream();
 
-            FileUtils.copyInputStreamToFile(imageStream, image);
-        } catch (IOException | ServletException e) {
+                FileUtils.copyInputStreamToFile(imageStream, image);
+            } else {
+                image = null;
+            }
+        } catch (IOException | ServletException | SecurityException e) {
             e.printStackTrace();
         }
 
-        return new Pair<>(image, url);
+        return new Response<>(image, url);
     }
 
 
@@ -195,11 +203,11 @@ public abstract class Query {
      *
      * @return token if verified, and null + message or error otherwise
      */
-    private Pair<Token, String> verifyToken(HttpServletRequest request) {
+    private Response<Token, String> verifyToken(HttpServletRequest request) {
         //token is in form {Bearer <token>}
         String token = request.getHeader("Authorization");
         if (token == null || token.length() < 8) {
-            return new Pair<>(null, "Token is empty or too short.");
+            return new Response<>(null, "Token is empty or too short.");
         }
 
         String errorMessage = "OK";
@@ -213,6 +221,6 @@ public abstract class Query {
             errorMessage = "Token usability time has been expired. Create a new one.";
         }
 
-        return new Pair<>(decipheredToken, errorMessage);
+        return new Response<>(decipheredToken, errorMessage);
     }
 }
