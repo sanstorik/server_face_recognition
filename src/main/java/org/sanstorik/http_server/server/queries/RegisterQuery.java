@@ -34,7 +34,7 @@ public class RegisterQuery extends Query {
         }
 
         Face.Response<File, String> imagePair = readImageFromMultipartRequest(request, "image",
-                username, "avatar.jpg");
+                FileUtils.generateRandomString(), FileUtils.generateRandomImageName());
 
         String jsonUrl = FileUtils.getRootJsonPath() + username + "/face_features.json";
         boolean createdJson = createJsonWithFaceFeatures(jsonUrl, imagePair.left, username);

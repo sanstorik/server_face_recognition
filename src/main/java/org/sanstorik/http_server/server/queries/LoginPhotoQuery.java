@@ -3,12 +3,14 @@ package org.sanstorik.http_server.server.queries;
 import org.sanstorik.http_server.Token;
 import org.sanstorik.http_server.database.ConcreteSqlConnection;
 import org.sanstorik.http_server.database.User;
+import org.sanstorik.http_server.utils.FileUtils;
 import org.sanstorik.neural_network.face_detection.Face;
 import org.sanstorik.neural_network.face_identifying.FaceFeatures;
 import org.sanstorik.neural_network.face_identifying.FaceRecognizer;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.UUID;
 
 import static org.sanstorik.neural_network.face_identifying.FaceRecognizer.Prediction;
 
@@ -17,7 +19,7 @@ public class LoginPhotoQuery extends FaceFeatureQuery {
 
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {
         Face.Response<File, String> response = readImageFromMultipartRequest(request, "image",
-                "cachedQueries", "temp.jpg");
+                "cached_images", FileUtils.generateRandomImageName());
 
         if (response.left == null) {
             errorResponse("No image given.");
@@ -49,7 +51,7 @@ public class LoginPhotoQuery extends FaceFeatureQuery {
                 addParam("Authorization", cypheredToken.getToken());
                 addParam("username", foundUser.getUsername());
             } else {
-                errorResponse("User was matched but couldn't create token by some reason.");
+                errorResponse("User was matched but server couldn't create token by some reason.");
             }
         }
     }

@@ -134,11 +134,11 @@ public abstract class Query {
 
     /**
      * Main method that checks input and is making a response.
-     * Override this to proccess specific query.
+     * Override this to proceed specific query.
      * Use token if you have to use it.
      * @param request from user
      * @param databaseConnection connection to database
-     * @param token token sent by user. Avaialble only if auth check is set true.
+     * @param token token sent by user. Available only if auth check is set true.
      */
     protected abstract void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token);
 

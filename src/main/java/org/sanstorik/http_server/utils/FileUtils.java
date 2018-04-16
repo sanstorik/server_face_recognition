@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
+import java.util.UUID;
 
 public final class FileUtils {
     private static final String IMAGES_FOLDER = "images/";
@@ -70,5 +71,15 @@ public final class FileUtils {
 
     public static String addHostUrl(String filePath) {
         return System.getProperty("IMAGE_URL_ROOT") + "/" + filePath;
+    }
+
+
+    public static String generateRandomImageName() {
+        return generateRandomString() + ".jpg";
+    }
+
+
+    public static String generateRandomString() {
+        return UUID.randomUUID().toString().replace("-","");
     }
 }
