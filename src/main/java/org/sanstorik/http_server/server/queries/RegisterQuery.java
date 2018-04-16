@@ -36,8 +36,11 @@ public class RegisterQuery extends Query {
         Face.Response<File, String> imagePair = readImageFromMultipartRequest(request, "image",
                 FileUtils.generateRandomString(), FileUtils.generateRandomImageName());
 
-        String jsonUrl = FileUtils.getRootJsonPath() + username + "/face_features.json";
-        boolean createdJson = createJsonWithFaceFeatures(jsonUrl, imagePair.left, username);
+        String directoryUserJson = FileUtils.generateRandomString();
+        String jsonFileName = FileUtils.generateRandomString() + ".json";
+        String jsonUrl = FileUtils.getRootJsonPath() + directoryUserJson + jsonFileName;
+
+        boolean createdJson = createJsonWithFaceFeatures(jsonUrl, imagePair.left, directoryUserJson, username);
 
         if (imagePair.left != null && createdJson
                 && !databaseConnection.registerUser(username, password, imagePair.right, jsonUrl)) {
@@ -46,12 +49,12 @@ public class RegisterQuery extends Query {
     }
 
 
-    private boolean createJsonWithFaceFeatures(String jsonPath, File image, String username) {
+    private boolean createJsonWithFaceFeatures(String jsonPath, File image, String directory, String username) {
         File json = new File(jsonPath);
 
         //create full path dirs
         try {
-            new File(FileUtils.getRootJsonPath() + username).mkdirs();
+            new File(FileUtils.getRootJsonPath() + directory).mkdirs();
 
             if (!json.exists()) {
                 json.createNewFile();
