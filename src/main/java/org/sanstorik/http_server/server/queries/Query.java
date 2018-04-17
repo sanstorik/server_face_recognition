@@ -208,21 +208,20 @@ public abstract class Query {
      * @return token if verified, and null + message or error otherwise
      */
     private Response<Token, String> verifyToken(HttpServletRequest request) {
-        //token is in form {Bearer <token>}
         String token = request.getHeader("Authorization");
         if (token == null || token.length() < 8) {
             return new Response<>(null, "Token is empty or too short.");
         }
 
         String errorMessage = "OK";
+
+        //token is in form {Bearer <token>}
         token = token.substring(7);
 
         Token decipheredToken = Token.decypherToken(token);
 
         if (decipheredToken == null) {
-            errorMessage = "Token is not verified. Invalid user. Make sure you've put Bearer in front.";
-        } else if (decipheredToken.isExpired()) {
-            errorMessage = "Token usability time has been expired. Create a new one.";
+            errorMessage = "Token is not verified or expired(20min). Invalid user. Make sure you've put Bearer in front.";
         }
 
         return new Response<>(decipheredToken, errorMessage);

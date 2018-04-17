@@ -10,7 +10,6 @@ import org.sanstorik.neural_network.face_identifying.FaceRecognizer;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.UUID;
 
 import static org.sanstorik.neural_network.face_identifying.FaceRecognizer.Prediction;
 

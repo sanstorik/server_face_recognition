@@ -1,11 +1,12 @@
 package org.sanstorik.http_server;
 
 
-import com.google.gson.JsonArray;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class HttpResponse {
@@ -14,13 +15,13 @@ public final class HttpResponse {
 
     private Map<String, String> params;
     private Map<String, Map<String, String>> embeddedEntries;
-    private double[] embeddedArray;
-    private String embeddedArrayKey;
+    private List<double[]> embeddedArrays;
+    private List<String> embeddedArrayKeys;
     private String errorMessage = "Unexpected error.";
     private String status;
     {
-        this.embeddedArrayKey = "array";
-        this.embeddedArray = new double[0];
+        this.embeddedArrayKeys = new ArrayList<>();
+        this.embeddedArrays = new ArrayList<>();
         this.params = new HashMap<>();
         this.embeddedEntries = new HashMap<>();
         this.status = SUCCESS_STATUS;
@@ -60,8 +61,8 @@ public final class HttpResponse {
 
 
     public void addEmbeddedArray(String key, double[] values) {
-        this.embeddedArrayKey = key;
-        this.embeddedArray = values;
+        this.embeddedArrayKeys.add(key);
+        this.embeddedArrays.add(values);
     }
 
 
@@ -100,7 +101,7 @@ public final class HttpResponse {
         }
 
         //normal output
-        else if (status.equals(SUCCESS_STATUS) && !params.isEmpty()) {
+        else if (status.equals(SUCCESS_STATUS) && (!params.isEmpty() || !embeddedArrayKeys.isEmpty())) {
             JSONObject data = new JSONObject();
             json.put("data", data);
 
@@ -109,7 +110,7 @@ public final class HttpResponse {
                 data.put(entry.getKey().toString(), entry.getValue().toString());
             }
 
-            //additional arrays
+            //additional entries
             for (Map.Entry entry: embeddedEntries.entrySet()) {
                 Map<String, String> valuesMap = (Map<String,String>)entry.getValue();
                 String valuesMapKey = entry.getKey().toString();
@@ -122,14 +123,17 @@ public final class HttpResponse {
                 data.put(valuesMapKey, newEntry);
             }
 
-            if (embeddedArray.length > 0) {
-                JSONArray array = new JSONArray();
+            //additional arrays
+            if (!embeddedArrays.isEmpty()) {
+                for (int i = 0; i < embeddedArrays.size(); i++) {
+                    JSONArray array = new JSONArray();
 
-                for (int i = 0; i < embeddedArray.length; i++) {
-                    array.put(embeddedArray[i]);
+                    for (int j = 0; j < embeddedArrays.get(i).length; j++) {
+                        array.put(embeddedArrays.get(i)[j]);
+                    }
+
+                    data.put(embeddedArrayKeys.get(i), array);
                 }
-
-                data.put(embeddedArrayKey, array);
             }
         } else if(status.equals(SUCCESS_STATUS)) {
             json.put("message", "Query succeded");

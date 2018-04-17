@@ -1,13 +1,5 @@
 package org.sanstorik.http_server.utils;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.channels.FileChannel;
 import java.util.UUID;
 
 public final class FileUtils {
