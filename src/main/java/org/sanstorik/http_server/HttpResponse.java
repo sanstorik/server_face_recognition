@@ -1,6 +1,8 @@
 package org.sanstorik.http_server;
 
 
+import com.google.gson.JsonArray;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -12,10 +14,13 @@ public final class HttpResponse {
 
     private Map<String, String> params;
     private Map<String, Map<String, String>> embeddedEntries;
+    private double[] embeddedArray;
+    private String embeddedArrayKey;
     private String errorMessage = "Unexpected error.";
     private String status;
-
     {
+        this.embeddedArrayKey = "array";
+        this.embeddedArray = new double[0];
         this.params = new HashMap<>();
         this.embeddedEntries = new HashMap<>();
         this.status = SUCCESS_STATUS;
@@ -51,6 +56,12 @@ public final class HttpResponse {
 
     public void addEmbeddedEntry(String key, Map<String, String> params) {
         this.embeddedEntries.put(key, params);
+    }
+
+
+    public void addEmbeddedArray(String key, double[] values) {
+        this.embeddedArrayKey = key;
+        this.embeddedArray = values;
     }
 
 
@@ -108,7 +119,17 @@ public final class HttpResponse {
                     newEntry.put(values.getKey().toString(), values.getValue().toString());
                 }
 
-                data.put(valuesMapKey, valuesMapKey);
+                data.put(valuesMapKey, newEntry);
+            }
+
+            if (embeddedArray.length > 0) {
+                JSONArray array = new JSONArray();
+
+                for (int i = 0; i < embeddedArray.length; i++) {
+                    array.put(embeddedArray[i]);
+                }
+
+                data.put(embeddedArrayKey, array);
             }
         } else if(status.equals(SUCCESS_STATUS)) {
             json.put("message", "Query succeded");

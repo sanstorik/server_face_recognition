@@ -92,6 +92,24 @@ public class UserFaceDetector {
     public void getEyesCoordinates() { /* TODO */ }
 
 
+    public Face[] getFacesCoordinates(File image) {
+        Mat matImage = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_GRAYSCALE);
+        RectVector foundFaces = detectFaces(matImage);
+
+        Face[] faces = new Face[(int) foundFaces.size()];
+        for (int i = 0; i < foundFaces.size(); i++) {
+            Rect frame = foundFaces.get(i);
+
+            faces[i] = new Face(
+                   frame.x(), frame.y(),
+                   frame.width(), frame.height(),
+                   null);
+        }
+
+        return faces;
+    }
+
+
     /**
      * Finds face on image and   takes face and greyscale it.
      * If several faces are found then it'll take a random one.
@@ -113,6 +131,10 @@ public class UserFaceDetector {
      * @return image with marked faces
      */
     public BufferedImage highlightFacesOnImage(File image) {
+        if (image == null) {
+            throw new IllegalArgumentException("image is null");
+        }
+
         Mat matImage = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_ANYCOLOR);
         RectVector faces = detectFaces(matImage);
 

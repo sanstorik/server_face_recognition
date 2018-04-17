@@ -159,6 +159,9 @@ public abstract class Query {
     }
 
 
+    protected void addCustomArray(String key, double[] array) { response.addEmbeddedArray(key, array); }
+
+
     /**
      * Reads image from multipart request and writes it to server.
      * @param request query

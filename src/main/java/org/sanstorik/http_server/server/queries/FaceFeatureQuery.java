@@ -15,8 +15,15 @@ abstract class FaceFeatureQuery extends Query {
     }
 
 
+    FaceFeatureQuery() { }
+
+
     protected final FaceFeatures[] getFeaturesOfAllUsers(ConcreteSqlConnection sqlConnection) {
         List<User> users = sqlConnection.getAllUsers();
+        if (users == null || users.isEmpty()) {
+            return null;
+        }
+
         FaceFeatures[] faceFeatures = new FaceFeatures[users.size()];
 
         for (int i = 0; i < faceFeatures.length; i++) {

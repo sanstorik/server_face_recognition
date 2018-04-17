@@ -24,6 +24,9 @@ public final class FileUtils {
     }
 
 
+    public static String getRootCachedImagesPath() { return getRootImagePath() + "response/"; }
+
+
     public static String addHostUrl(String filePath) {
         return System.getProperty("IMAGE_URL_ROOT") + "/" + filePath;
     }

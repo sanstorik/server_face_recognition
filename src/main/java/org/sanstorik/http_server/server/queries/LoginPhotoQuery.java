@@ -23,7 +23,7 @@ class LoginPhotoQuery extends FaceFeatureQuery {
 
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {
         Face.Response<File, String> response = readImageFromMultipartRequest(request, "image",
-                "cached_images", FileUtils.generateRandomImageName());
+                FileUtils.getRootCachedImagesPath(), FileUtils.generateRandomImageName());
 
         if (response.left == null) {
             errorResponse("No image given.");
@@ -33,6 +33,11 @@ class LoginPhotoQuery extends FaceFeatureQuery {
         FaceRecognizer recognizer = FaceRecognizer.create();
 
         FaceFeatures[] featuresOfAllUsers = getFeaturesOfAllUsers(databaseConnection);
+        if (featuresOfAllUsers == null) {
+            errorResponse("Couldn't match users from database with a photo.");
+            return;
+        }
+
         Prediction prediction = recognizer.identifyUserFromFeaturePool(response.left, featuresOfAllUsers);
 
         if (prediction == null) {
