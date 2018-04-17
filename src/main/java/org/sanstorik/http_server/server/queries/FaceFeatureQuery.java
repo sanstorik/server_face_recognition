@@ -6,6 +6,8 @@ import org.sanstorik.http_server.database.User;
 import org.sanstorik.neural_network.face_identifying.FaceFeatures;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.List;
 
 abstract class FaceFeatureQuery extends Query {
@@ -47,8 +49,15 @@ abstract class FaceFeatureQuery extends Query {
             return null;
         }
 
-        Gson gson = new Gson();
-        return gson.fromJson(url, FaceFeatures.class);
+        FaceFeatures features = null;
+
+        try {
+            features = new Gson().fromJson(new FileReader(json), FaceFeatures.class);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return features;
     }
 
 }

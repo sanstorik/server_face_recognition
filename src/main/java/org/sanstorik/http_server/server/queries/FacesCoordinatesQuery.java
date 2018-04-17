@@ -14,7 +14,7 @@ class FacesCoordinatesQuery extends Query {
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {
         Face.Response<File, String> response = readImageFromMultipartRequest(
                 request, "image",
-                FileUtils.getRootCachedImagesPath(),
+                FileUtils.getRootCachedImagesDirectoryName(),
                 FileUtils.generateRandomImageName()
         );
 

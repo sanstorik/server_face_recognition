@@ -23,7 +23,7 @@ class LoginPhotoQuery extends FaceFeatureQuery {
 
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {
         Face.Response<File, String> response = readImageFromMultipartRequest(request, "image",
-                FileUtils.getRootCachedImagesPath(), FileUtils.generateRandomImageName());
+                FileUtils.getRootCachedImagesDirectoryName(), FileUtils.generateRandomImageName());
 
         if (response.left == null) {
             errorResponse("No image given.");

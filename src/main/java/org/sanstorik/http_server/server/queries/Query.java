@@ -191,6 +191,7 @@ public abstract class Query {
 
                 FileUtils.copyInputStreamToFile(imageStream, image);
             } else {
+                image.delete();
                 image = null;
             }
         } catch (IOException | ServletException | SecurityException e) {

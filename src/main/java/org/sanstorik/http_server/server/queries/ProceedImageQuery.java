@@ -27,16 +27,18 @@ abstract class ProceedImageQuery extends FaceFeatureQuery {
         BufferedImage image = workOnImage(request, databaseConnection, token, response.left);
 
         if (image != null && writeImageToFileSystem(image, response.left)) {
-            addParam("image_url", FileUtils.addHostUrl(FileUtils.getRootCachedImagesPath() + imageName));
+            addParam("image_url", FileUtils.addHostUrl(
+                    FileUtils.getRootImagePath() + FileUtils.getRootCachedImagesDirectoryName() + imageName));
         } else {
-            errorResponse("Output image is null. Neural network couldn't proceed or write it.");
+            errorResponse("Output image is null. Neural network couldn't proceed or write it. " +
+                    "Maybe faces haven't been found.");
         }
     }
 
 
     protected Face.Response<File, String> getInputImage(HttpServletRequest request, String fileName) {
         return readImageFromMultipartRequest(request, "image",
-                FileUtils.getRootCachedImagesPath(), fileName);
+                FileUtils.getRootCachedImagesDirectoryName(), fileName);
     }
 
 

@@ -62,7 +62,6 @@
     <orderEntry type="library" name="Maven: com.opencv:opencv-linux-ppc64le:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.opencv:opencv-linux-x86:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.opencv:opencv-macosx-x86_64:1.0" level="project" />
-    <orderEntry type="library" name="Maven: com.opencv:java-jwt-3.3.0.jar:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.opencv:javacpp-1.4.1.jar:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.opencv:opencv-3.4.1-1.4.1-sources.jar:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.opencv:opencv-3.4.1-1.4.1-macosx-x86_64-gpu.jar:1.0" level="project" />

@@ -13,7 +13,7 @@
         <url-pattern>/api/login_photo</url-pattern>
         <url-pattern>/api/register</url-pattern>
         <url-pattern>/api/highlight_faces</url-pattern>
-        <url-pattern>/api/faces_coordinates/</url-pattern>
+        <url-pattern>/api/faces_coordinates</url-pattern>
         <url-pattern>/api/identify_group</url-pattern>
         <url-pattern>/api/update_user_photo</url-pattern>
     </servlet-mapping>

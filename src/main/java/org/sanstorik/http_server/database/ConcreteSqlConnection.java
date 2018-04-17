@@ -52,7 +52,7 @@ public class ConcreteSqlConnection extends DatabaseConnection {
         try {
             PreparedStatement statement = createPreparedStatement(
                     "select * from users where id=?;");
-            statement.setString(1, String.valueOf(userId));
+            statement.setInt(1, userId);
 
             ResultSet set = statement.executeQuery();
 
@@ -99,6 +99,25 @@ public class ConcreteSqlConnection extends DatabaseConnection {
         }
 
         return users;
+    }
+
+
+    public boolean update(int userId, String imageUrl, String jsonUrl) {
+        try {
+            PreparedStatement statement = createPreparedStatement(
+              "update users set image_url=?, json_url=? where id=?;"
+            );
+
+            statement.setString(1, imageUrl);
+            statement.setString(2, jsonUrl);
+            statement.setInt(3, userId);
+
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 
