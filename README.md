@@ -20,8 +20,7 @@ POST query <host url>/api/register
   <p><input type="text" name="username" value=jb">
   <p><input type="file" name="image">
 
-<br>
-![alt text](https://raw.githubusercontent.com/sanstorik/server_face_recognition/master/example/2-2015JustinBieber_8_DC_131115-1-920x610.jpg)
+![alt text](http://ksassets.timeincuk.net/wp/uploads/sites/55/2016/07/2015JustinBieber_8_DC_131115-1-920x610.jpg)
 
 Server created json representation of image (based on 128 face features) that has been passed throught Convolutional Neural Network FaceNet.
 Example: 
@@ -35,7 +34,7 @@ Then we can work login, get token and after than we can send POST query to
 Server proceeds image and spawns new image with face labels that qualify if this user has been recognized.
 Example of sending justin bieber another photo:
 
-![alt text](https://raw.githubusercontent.com/sanstorik/server_face_recognition/master/example/to/57be9738d93a4bf8a9b2d7ebba4fbaf7.jpg)
+
 ![alt text](https://raw.githubusercontent.com/sanstorik/server_face_recognition/master/example/57be9738d93a4bf8a9b2d7ebba4fbaf7.jpg)
 
 
