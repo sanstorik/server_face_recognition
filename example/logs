@@ -1,0 +1,18 @@
+objc[1738]: Class JavaLaunchHelper is implemented in both /Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/bin/java (0x1025904c0) and /Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/libinstrument.dylib (0x103dc04e0). One of the two will be used. Which one is undefined.
+land_0 473.0
+land_1 256.36000061035156
+land_2 450.2299995422363
+land_3 210.81999969482422
+land_4 495.7700004577637
+land_5 210.81999969482422
+land_6 450.2299995422363
+land_7 309.4900016784668
+land_8 503.36000061035156
+land_9 309.4900016784668
+land_10 404.689998626709
+land_11 210.81999969482422
+land_12 533.7200012207031
+land_13 210.81999969482422
+land_14 480.5900001525879
+land_15 263.95000076293945
+[ INFO:0] Initialize OpenCL runtime...

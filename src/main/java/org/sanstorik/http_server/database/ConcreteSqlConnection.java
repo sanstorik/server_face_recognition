@@ -31,8 +31,6 @@ public class ConcreteSqlConnection extends DatabaseConnection {
 
             ResultSet set = statement.executeQuery();
 
-            System.out.println(set == null);
-
             if (set != null && set.next()) {
                 id = set.getInt("id");
             }
@@ -126,7 +124,7 @@ public class ConcreteSqlConnection extends DatabaseConnection {
         try {
             PreparedStatement statement = createPreparedStatement(
                     "insert into users(username, password, image_url, json_url) " +
-                            "values(?, ?, ?,?);");
+                            "values(?, ?, ?, ?);");
             statement.setString(1, username);
             statement.setString(2, password);
             statement.setString(3, imageUrl);

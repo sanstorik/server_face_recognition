@@ -40,7 +40,7 @@ public class UserFaceDetector {
 
         Rect rect = faces.get(0);
 
-        return cropAndResizeFace(matImage, rect);
+        return cropAlignAndResizeFace(matImage, rect);
     }
 
 
@@ -55,12 +55,26 @@ public class UserFaceDetector {
     }
 
 
-    private Mat cropAndResizeFace(Mat image, Rect rect) {
+    private Mat cropAlignAndResizeFace(Mat image, Rect rect) {
         Mat face = new Mat(image, rect);
         Mat resizedFace = new Mat();
 
+        //UserFaceAligner faceAligner = UserFaceAligner.create();
+        //Mat alignedFace = faceAligner.align(face);
+
         resize(face, resizedFace, new Size(IMAGE_WIDTH, IMAGE_HEIGHT));
         return resizedFace;
+    }
+
+
+    public BufferedImage alignFace(File face) {
+        Mat matFace = imread(face.getAbsolutePath(), CV_LOAD_IMAGE_GRAYSCALE);
+        Rect faceRect = detectFaces(matFace).get(0);
+
+        UserFaceAligner aligner = UserFaceAligner.create();
+        Mat aligned = aligner.align(matFace, faceRect);
+
+        return matToImage(aligned);
     }
 
 
@@ -78,7 +92,7 @@ public class UserFaceDetector {
         for (int i = 0; i < foundFaces.size(); i++) {
             Rect frame = foundFaces.get(i);
 
-            BufferedImage croppedFace = matToImage(cropAndResizeFace(matImage, frame));
+            BufferedImage croppedFace = matToImage(cropAlignAndResizeFace(matImage, frame));
             FileUtils.saveImageAsTemporaryFile(croppedFace, "/cached/i_" + i + ".jpg");
 
             faces[i] = new Face(frame.x(), frame.y(),
@@ -89,7 +103,7 @@ public class UserFaceDetector {
     }
 
 
-    public void getEyesCoordinates() { /* TODO */ }
+    public void getEyesCoordinates(File image) { /* TODO */ }
 
 
     public Face[] getFacesCoordinates(File image) {
@@ -111,7 +125,7 @@ public class UserFaceDetector {
 
 
     /**
-     * Finds face on image and   takes face and greyscale it.
+     * Finds face on image and crops it.
      * If several faces are found then it'll take a random one.
      *
      * @return cropped and greyed image 160x170px

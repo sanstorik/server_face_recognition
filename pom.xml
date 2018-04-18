@@ -94,6 +94,12 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.6.1</version>
+        </dependency>
+
         <!--
         HERE STARTS TENSORFLOW AND CUSTOM OPENCV LIBS IMPORT
         TO EXCLUDE WINDOWS/ANDROID/IOS VERSION
@@ -175,6 +181,54 @@
             <artifactId>javacv.jar</artifactId>
             <version>1.0</version>
         </dependency>
+
+
+        <!--
+        FLANDMARK EYE DETECTION
+        -->
+
+        <dependency>
+            <groupId>com.opencv</groupId>
+            <artifactId>flandmark.jar</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.opencv</groupId>
+            <artifactId>flandmark-linux-armhf.jar</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.opencv</groupId>
+            <artifactId>flandmark-linux-ppc64le.jar</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.opencv</groupId>
+            <artifactId>flandmark-linux-x86.jar</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.opencv</groupId>
+            <artifactId>flandmark-linux-x86_64.jar</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.opencv</groupId>
+            <artifactId>flandmark-macosx-x86_64.jar</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.opencv</groupId>
+            <artifactId>flandmark-platform.jar</artifactId>
+            <version>1.0</version>
+        </dependency>
+
     </dependencies>
 
 

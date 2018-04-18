@@ -29,6 +29,7 @@
           <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
           <element id="library" level="project" name="Maven: com.google.guava:guava:19.0" />
           <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-math3:3.6.1" />
           <element id="library" level="project" name="Maven: org.tensorflow:tensorflow:1.6.0" />
           <element id="library" level="project" name="Maven: org.tensorflow:libtensorflow:1.6.0" />
           <element id="library" level="project" name="Maven: org.tensorflow:libtensorflow_jni:1.6.0" />
@@ -43,6 +44,13 @@
           <element id="library" level="project" name="Maven: com.opencv:opencv-3.4.1-1.4.1-linux-x86_64-gpu.jar:1.0" />
           <element id="library" level="project" name="Maven: com.opencv:opencv-3.4.1-1.4.1-linux-x86_64.jar:1.0" />
           <element id="library" level="project" name="Maven: com.opencv:javacv.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:flandmark.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:flandmark-linux-armhf.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:flandmark-linux-ppc64le.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:flandmark-linux-x86.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:flandmark-linux-x86_64.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:flandmark-macosx-x86_64.jar:1.0" />
+          <element id="library" level="project" name="Maven: com.opencv:flandmark-platform.jar:1.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">
