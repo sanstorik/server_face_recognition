@@ -14,7 +14,9 @@
         <url-pattern>/api/register</url-pattern>
         <url-pattern>/api/highlight_faces</url-pattern>
         <url-pattern>/api/faces_coordinates</url-pattern>
+        <url-pattern>/api/eyes_coordinates</url-pattern>
         <url-pattern>/api/identify_group</url-pattern>
         <url-pattern>/api/update_user_photo</url-pattern>
+        <url-pattern>/api/crop_face</url-pattern>
     </servlet-mapping>
 </web-app>

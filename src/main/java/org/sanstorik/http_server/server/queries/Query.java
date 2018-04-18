@@ -90,11 +90,17 @@ public abstract class Query {
             case "/faces_coordinates":
                 query = new FacesCoordinatesQuery();
                 break;
+            case "/eyes_coodinates":
+                query = new EyesCoodinatesQuery();
+                break;
             case "/identify_group":
                 query = new IdentifyGroupQuery();
                 break;
             case "/update_user_photo":
                 query = new UpdateUserPhotoQuery();
+                break;
+            case "/crop_face":
+                query = new CropFaceQuery();
                 break;
             default:
                 query = new NotSupportedQuery();
@@ -105,8 +111,6 @@ public abstract class Query {
                 query.type != Type.UNIQUE) {
             query = new NotSupportedQueryType();
         }
-
-        System.out.println("Query = " + query.getClass().toString());
 
         Token token = null;
 

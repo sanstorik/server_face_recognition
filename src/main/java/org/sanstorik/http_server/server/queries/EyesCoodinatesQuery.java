@@ -8,9 +8,9 @@ import org.sanstorik.neural_network.face_detection.UserFaceDetector;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.List;
 
-class FacesCoordinatesQuery extends Query {
-
+public class EyesCoodinatesQuery extends Query {
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {
         Face.Response<File, String> response = readImageFromMultipartRequest(
                 request, "image",
@@ -23,22 +23,18 @@ class FacesCoordinatesQuery extends Query {
             return;
         }
 
-        UserFaceDetector userFaceDetector = UserFaceDetector.create();
-        Face[] faces = userFaceDetector.getFacesCoordinates(response.left);
+        UserFaceDetector faceDetector = UserFaceDetector.create();
+        List<double[]> eyes = faceDetector.getEyesCoordinates(response.left);
 
-        if (faces == null || faces.length == 0) {
-            errorResponse("No faces found");
+        if (eyes == null || eyes.isEmpty()) {
+            errorResponse("Eyes couldn't be located.");
             return;
         }
 
-        for (int i = 0; i < faces.length; i++) {
-            double[] facesCoordinates = new double[4];
-            facesCoordinates[0] = faces[i].getLeftTopX();
-            facesCoordinates[1] = faces[i].getLeftTopY();
-            facesCoordinates[2] = faces[i].getWidth();
-            facesCoordinates[3] = faces[i].getHeight();
-
-            addCustomArray("face_" + (i + 1), facesCoordinates);
+        int eyes_ind = 1;
+        for (double[] eyesCoord: eyes) {
+            addCustomArray("eyes_" + eyes_ind, eyesCoord);
+            eyes_ind++;
         }
     }
 }

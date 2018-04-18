@@ -56,3 +56,5 @@ src/main/java/org/sanstorik/Main.java
 src/main/resources/json
 src/main/resources/images
 images
+example/logs
+example/temp_aligner.jpg

@@ -9,6 +9,8 @@ import java.awt.image.DataBufferByte;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.bytedeco.javacpp.opencv_core.*;
 import static org.bytedeco.javacpp.opencv_imgcodecs.*;
@@ -17,14 +19,16 @@ import static org.bytedeco.javacpp.opencv_objdetect.CascadeClassifier;
 
 public class UserFaceDetector {
     private static final String LOADER_URL = "save_session/haarcascade_frontalcatface.xml";
-    private static final int IMAGE_WIDTH = 165;
-    private static final int IMAGE_HEIGHT = 170;
+    public static final int IMAGE_WIDTH = 165;
+    public static final int IMAGE_HEIGHT = 170;
 
     private static UserFaceDetector instance;
+    private UserFaceAligner userFaceAligner;
     private CascadeClassifier faceDetector;
 
 
     private UserFaceDetector() {
+        userFaceAligner = UserFaceAligner.create();
         faceDetector = new CascadeClassifier(getClass().getClassLoader().getResource(LOADER_URL).getPath());
     }
 
@@ -44,37 +48,18 @@ public class UserFaceDetector {
     }
 
 
-    private Mat cropMatByRect(Mat image, Rect rect) {
-        Rect staticSizeRect = new Rect(
-                rect.x() + (rect.width() / 2) - IMAGE_WIDTH / 2,
-                rect.y() + (rect.height() / 2) - IMAGE_HEIGHT / 2,
-                IMAGE_WIDTH, IMAGE_HEIGHT
-        );
-
-        return new Mat(image, staticSizeRect);
-    }
-
-
     private Mat cropAlignAndResizeFace(Mat image, Rect rect) {
-        Mat face = new Mat(image, rect);
-        Mat resizedFace = new Mat();
+        Mat alignedFace = userFaceAligner.align(image, rect);
 
-        //UserFaceAligner faceAligner = UserFaceAligner.create();
-        //Mat alignedFace = faceAligner.align(face);
+        //if we couldn't align face by eyes
+        if (alignedFace == null) {
+            Mat croppedFace = new Mat(image, rect);
+            alignedFace = new Mat();
+            
+            resize(croppedFace, alignedFace, new Size(IMAGE_WIDTH, IMAGE_HEIGHT));
+        }
 
-        resize(face, resizedFace, new Size(IMAGE_WIDTH, IMAGE_HEIGHT));
-        return resizedFace;
-    }
-
-
-    public BufferedImage alignFace(File face) {
-        Mat matFace = imread(face.getAbsolutePath(), CV_LOAD_IMAGE_GRAYSCALE);
-        Rect faceRect = detectFaces(matFace).get(0);
-
-        UserFaceAligner aligner = UserFaceAligner.create();
-        Mat aligned = aligner.align(matFace, faceRect);
-
-        return matToImage(aligned);
+        return alignedFace;
     }
 
 
@@ -103,7 +88,34 @@ public class UserFaceDetector {
     }
 
 
-    public void getEyesCoordinates(File image) { /* TODO */ }
+    /**
+     * @return list of eyes in form of {x left, y left, x right, y right}
+     */
+    public List<double[]> getEyesCoordinates(File image) {
+        Mat imageMat = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_GRAYSCALE);
+        RectVector foundFaces = detectFaces(imageMat);
+
+        if (foundFaces.size() == 0) {
+            return null;
+        }
+
+        List<double[]> eyesCoords = new ArrayList<>();
+        for (int i = 0; i < foundFaces.size(); i++) {
+            Point2d[] eyesCenters = userFaceAligner.getEyesCenterCoordinates(imageMat, foundFaces.get(i));
+
+            if (eyesCenters != null) {
+                double[] eyes = new double[4];
+                eyes[0] = eyesCenters[0].x();
+                eyes[1] = eyesCenters[0].y();
+                eyes[2] = eyesCenters[1].x();
+                eyes[3] = eyesCenters[1].y();
+
+                eyesCoords.add(eyes);
+            }
+        }
+
+        return eyesCoords;
+    }
 
 
     public Face[] getFacesCoordinates(File image) {
@@ -150,9 +162,16 @@ public class UserFaceDetector {
         }
 
         Mat matImage = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_ANYCOLOR);
+        Mat matImageGreyscaled = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_GRAYSCALE);
         RectVector faces = detectFaces(matImage);
 
         for (int i = 0; i < faces.size(); i++) {
+            Point2d[] eyes = userFaceAligner.getEyesCenterCoordinates(matImageGreyscaled, faces.get(i));
+            if (eyes != null) {
+                highlightFrame(matImage, eyes[0]);
+                highlightFrame(matImage, eyes[1]);
+            }
+
             highlightFrame(matImage, faces.get(i));
         }
 
@@ -214,7 +233,7 @@ public class UserFaceDetector {
         }
 
         putText(coloredPicture, text,
-                new Point(pointX, pointY), FONT_HERSHEY_COMPLEX, 1.5, Scalar.BLACK, 1, CV_AA, false);
+                new Point(pointX, pointY), FONT_HERSHEY_COMPLEX, 1.5, Scalar.GREEN, 1, CV_AA, false);
 
         return coloredPicture;
     }
@@ -222,6 +241,12 @@ public class UserFaceDetector {
 
     private void highlightFrame(Mat image, Rect rect) {
         rectangle(image, rect, Scalar.RED, 3, 5, 0);
+    }
+
+
+    private void highlightFrame(Mat image, Point2d point) {
+        Rect rect = new Rect((int) point.x(), (int) point.y(), 15, 15);
+        highlightFrame(image, rect, Scalar.MAGENTA);
     }
 
 
