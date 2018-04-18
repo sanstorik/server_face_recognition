@@ -2,16 +2,13 @@ package org.sanstorik.neural_network.face_detection;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.bytedeco.javacpp.indexer.DoubleRawIndexer;
-import org.bytedeco.javacpp.indexer.UByteIndexer;
-import org.bytedeco.javacpp.opencv_core;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.bytedeco.javacpp.opencv_core.*;
 import static org.bytedeco.javacpp.flandmark.*;
+import static org.bytedeco.javacpp.opencv_core.*;
 import static org.bytedeco.javacpp.opencv_imgproc.getRotationMatrix2D;
-import static org.bytedeco.javacpp.opencv_imgproc.rectangle;
 import static org.bytedeco.javacpp.opencv_imgproc.warpAffine;
 
 class UserFaceAligner {

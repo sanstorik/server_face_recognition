@@ -90,7 +90,7 @@ public abstract class Query {
             case "/faces_coordinates":
                 query = new FacesCoordinatesQuery();
                 break;
-            case "/eyes_coodinates":
+            case "/eyes_coordinates":
                 query = new EyesCoodinatesQuery();
                 break;
             case "/identify_group":
