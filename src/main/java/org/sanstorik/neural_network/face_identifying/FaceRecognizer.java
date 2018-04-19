@@ -236,8 +236,8 @@ public class FaceRecognizer {
         float distance = euclidDistance(first.getFeatures(), second.getFeatures());
         System.out.println("distance = " + distance);
 
-        final float distanceThreshold = 2.0f;
-        final float percentageThreshold = 65;
+        final float distanceThreshold = 1.8f;
+        final float percentageThreshold = 70;
 
         float percentage = Math.min(100, 100 * distanceThreshold / distance);
         System.out.println("percentage = " + percentage);

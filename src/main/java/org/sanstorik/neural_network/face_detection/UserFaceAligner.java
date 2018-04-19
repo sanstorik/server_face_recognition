@@ -80,18 +80,29 @@ class UserFaceAligner {
         Point2d rightEyeOuter = landmarks.get(landmark_pos.RIGHT_EYE_OUTER.pos);
         Point2d rightEyeInner = landmarks.get(landmark_pos.RIGHT_EYE_INNER.pos);
 
-        return new Point2d[] { getEyeCenter(leftEyeOuter, leftEyeInner),
-                getEyeCenter(rightEyeInner, rightEyeOuter)};
+        return new Point2d[] { getLeftEyeCenter(leftEyeOuter, leftEyeInner),
+                getRightEyeCenter(rightEyeOuter, rightEyeInner) };
     }
 
 
-    private Point2d getEyeCenter(Point2d eyeOuter, Point2d eyeInner) {
+    private Point2d getLeftEyeCenter(Point2d eyeOuter, Point2d eyeInner) {
         double distX = Math.abs(eyeInner.x() - eyeOuter.x());
         double distY = Math.abs(eyeInner.y() - eyeOuter.y());
 
         return new Point2d(
                 eyeOuter.x() + distX / 2,
                 eyeOuter.y() + distY / 2
+        );
+    }
+
+
+    private Point2d getRightEyeCenter(Point2d eyeOuter, Point2d eyeInner) {
+        double distX = Math.abs(eyeInner.x() - eyeOuter.x());
+        double distY = Math.abs(eyeInner.y() - eyeOuter.y());
+
+        return new Point2d(
+                eyeInner.x() + distX / 2,
+                eyeInner.y() - distY / 2
         );
     }
 
