@@ -26,7 +26,7 @@ class UserFaceAligner {
 
         public int pos;
 
-        private landmark_pos(int pos) {
+        landmark_pos(int pos) {
             this.pos = pos;
         }
     }
@@ -58,7 +58,7 @@ class UserFaceAligner {
         }
 
         addAlignedEyesPos(landmarks);
-        return rotateImageAndExtractFace(image, landmarks, bounds.width(), bounds.height());
+        return rotateImageAndExtractFace(image, landmarks, bounds.width(), bounds.width());
     }
 
 

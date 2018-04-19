@@ -1,4 +1,0 @@
-objc[721]: Class JavaLaunchHelper is implemented in both /Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/bin/java (0x103e664c0) and /Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/libinstrument.dylib (0x103eea4e0). One of the two will be used. Which one is undefined.
-justin-bieber.jpg found faces = 1
-[318.07499861717224, 154.12499833106995, 363.7499976158142, 156.29999828338623]
-[ INFO:0] Initialize OpenCL runtime...

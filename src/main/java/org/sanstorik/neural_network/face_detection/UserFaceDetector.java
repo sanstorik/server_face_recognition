@@ -51,14 +51,12 @@ public class UserFaceDetector {
     private Mat cropAlignAndResizeFace(Mat image, Rect rect) {
         Mat alignedFace = userFaceAligner.align(image, rect);
 
-        //if we couldn't align face by eyes
         if (alignedFace == null) {
             alignedFace = new Mat(image, rect);
         }
 
         Mat resizedFace = new Mat();
         resize(alignedFace, resizedFace, new Size(IMAGE_WIDTH, IMAGE_HEIGHT));
-
         return resizedFace;
     }
 
@@ -78,7 +76,6 @@ public class UserFaceDetector {
             Rect frame = foundFaces.get(i);
 
             BufferedImage croppedFace = matToImage(cropAlignAndResizeFace(matImage, frame));
-            FileUtils.saveImageAsTemporaryFile(croppedFace, "/cached/i_" + i + ".jpg");
 
             faces[i] = new Face(frame.x(), frame.y(),
                     frame.width(), frame.height(), croppedFace);
