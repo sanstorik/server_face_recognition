@@ -53,6 +53,11 @@ public class UserFaceDetector {
     private Mat cropAlignAndResizeFace(Mat image, Rect rect) {
         Mat alignedFace = userFaceAligner.align(image, rect);
 
+        if (alignedFace == null) {
+            alignedFace = new Mat(image, rect);
+            System.out.println("-------Couldn't align facee.-------");
+        }
+
         Mat resizedFace = new Mat();
         resize(alignedFace, resizedFace, new Size(INITIAL_WIDTH, INITIAL_HEIGHT));
         alignedFace = resizedFace;

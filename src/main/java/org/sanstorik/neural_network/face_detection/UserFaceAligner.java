@@ -54,6 +54,7 @@ class UserFaceAligner {
         List<Point2d> landmarks = getEyesLandmarks(image, bounds);
 
         if (landmarks == null) {
+            System.out.println("No landmarks");
             return null;
         }
 
