@@ -21,6 +21,8 @@ public class UserFaceDetector {
     private static final String LOADER_URL = "save_session/haarcascade_frontalcatface.xml";
     public static final int IMAGE_WIDTH = 160;
     public static final int IMAGE_HEIGHT = 160;
+    private static final int INITIAL_WIDTH = 235;
+    private static final int INITIAL_HEIGHT = 225;
 
     private static UserFaceDetector instance;
     private UserFaceAligner userFaceAligner;
@@ -51,15 +53,8 @@ public class UserFaceDetector {
     private Mat cropAlignAndResizeFace(Mat image, Rect rect) {
         Mat alignedFace = userFaceAligner.align(image, rect);
 
-        /*if (alignedFace == null) {
-            alignedFace = new Mat(image, rect);
-            Mat resizedFace = new Mat();
-            resize(alignedFace, resizedFace, new Size(IMAGE_WIDTH, IMAGE_HEIGHT));
-            alignedFace = resizedFace;
-        }*/
-
         Mat resizedFace = new Mat();
-        resize(alignedFace, resizedFace, new Size(240, 240));
+        resize(alignedFace, resizedFace, new Size(INITIAL_WIDTH, INITIAL_HEIGHT));
         alignedFace = resizedFace;
 
         int centerX = alignedFace.size().width() / 2;
