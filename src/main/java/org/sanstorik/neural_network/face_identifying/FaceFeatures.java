@@ -4,7 +4,7 @@ package org.sanstorik.neural_network.face_identifying;
 public class FaceFeatures {
 
     //512 features to characterize each face
-    private float[] features = new float[512];
+    private float[] features = new float[128];
     private String faceLabel;
     private long identifier;
 

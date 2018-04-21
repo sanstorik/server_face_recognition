@@ -19,8 +19,8 @@ import static org.bytedeco.javacpp.opencv_objdetect.CascadeClassifier;
 
 public class UserFaceDetector {
     private static final String LOADER_URL = "save_session/haarcascade_frontalcatface.xml";
-    public static final int IMAGE_WIDTH = 160;
-    public static final int IMAGE_HEIGHT = 160;
+    public static final int IMAGE_WIDTH = 170;
+    public static final int IMAGE_HEIGHT = 170;
 
     private static UserFaceDetector instance;
     private UserFaceAligner userFaceAligner;
@@ -52,12 +52,13 @@ public class UserFaceDetector {
         Mat alignedFace = userFaceAligner.align(image, rect);
 
         if (alignedFace == null) {
-            alignedFace = new Mat(image, rect);
+            Mat cropped = new Mat(image, rect);
+            Mat resizedFace = new Mat();
+            resize(cropped, resizedFace, new Size(IMAGE_WIDTH, IMAGE_HEIGHT));
+            alignedFace = resizedFace;
         }
 
-        Mat resizedFace = new Mat();
-        resize(alignedFace, resizedFace, new Size(IMAGE_WIDTH, IMAGE_HEIGHT));
-        return resizedFace;
+        return alignedFace;
     }
 
 

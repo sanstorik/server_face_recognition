@@ -58,7 +58,7 @@ class UserFaceAligner {
         }
 
         addAlignedEyesPos(landmarks);
-        return rotateImageAndExtractFace(image, landmarks, bounds.width(), bounds.width());
+        return rotateImageAndExtractFace(image, landmarks, UserFaceDetector.IMAGE_WIDTH, UserFaceDetector.IMAGE_HEIGHT);
     }
 
 

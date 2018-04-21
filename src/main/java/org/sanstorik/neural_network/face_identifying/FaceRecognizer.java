@@ -209,12 +209,12 @@ public class FaceRecognizer {
             final long[] shape = response.shape();
 
             //first dimension should return 1 as for image with normal size
-            //second dimension should give 512 characteristics of face
-            if (shape[0] != 1 || shape[1] != 512) {
+            //second dimension should give 128 characteristics of face
+            if (shape[0] != 1 || shape[1] != 128) {
                 throw new IllegalStateException("illegal output values: 1 = " + shape[0] + " 2 = " + shape[1]);
             }
 
-            float[][] featuresHolder = new float[1][512];
+            float[][] featuresHolder = new float[1][128];
             response.copyTo(featuresHolder);
 
             features = new FaceFeatures();
@@ -236,8 +236,8 @@ public class FaceRecognizer {
         float distance = euclidDistance(first.getFeatures(), second.getFeatures());
         System.out.println("distance = " + distance);
 
-        final float distanceThreshold = 1.55f;
-        final float percentageThreshold = 64;
+        final float distanceThreshold = 0.6f;
+        final float percentageThreshold = 85.0f;
 
         float percentage = Math.min(100, 100 * distanceThreshold / distance);
         System.out.println("percentage = " + percentage);
