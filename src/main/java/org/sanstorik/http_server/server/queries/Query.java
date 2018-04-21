@@ -99,6 +99,9 @@ public abstract class Query {
             case "/update_user_photo":
                 query = new UpdateUserPhotoQuery();
                 break;
+            case "/non_token_crop_face":
+                query = new NonTokenCropFaceQuery();
+                break;
             case "/crop_face":
                 query = new CropFaceQuery();
                 break;

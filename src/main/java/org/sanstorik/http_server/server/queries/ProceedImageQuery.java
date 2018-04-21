@@ -14,6 +14,14 @@ import java.io.IOException;
 abstract class ProceedImageQuery extends FaceFeatureQuery {
 
 
+    ProceedImageQuery(boolean doCheckAuth) {
+        super(doCheckAuth);
+    }
+
+
+    ProceedImageQuery() { }
+
+
     protected final void proceedImage(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {
         String imageName = FileUtils.generateRandomImageName();
         Face.Response<File, String> response = getInputImage(request, imageName);
