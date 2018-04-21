@@ -19,8 +19,8 @@ import static org.bytedeco.javacpp.opencv_objdetect.CascadeClassifier;
 
 public class UserFaceDetector {
     private static final String LOADER_URL = "save_session/haarcascade_frontalcatface.xml";
-    public static final int IMAGE_WIDTH = 170;
-    public static final int IMAGE_HEIGHT = 170;
+    public static final int IMAGE_WIDTH = 160;
+    public static final int IMAGE_HEIGHT = 160;
 
     private static UserFaceDetector instance;
     private UserFaceAligner userFaceAligner;
@@ -51,14 +51,27 @@ public class UserFaceDetector {
     private Mat cropAlignAndResizeFace(Mat image, Rect rect) {
         Mat alignedFace = userFaceAligner.align(image, rect);
 
-        if (alignedFace == null) {
-            Mat cropped = new Mat(image, rect);
+        /*if (alignedFace == null) {
+            alignedFace = new Mat(image, rect);
             Mat resizedFace = new Mat();
-            resize(cropped, resizedFace, new Size(IMAGE_WIDTH, IMAGE_HEIGHT));
+            resize(alignedFace, resizedFace, new Size(IMAGE_WIDTH, IMAGE_HEIGHT));
             alignedFace = resizedFace;
-        }
+        }*/
 
-        return alignedFace;
+        Mat resizedFace = new Mat();
+        resize(alignedFace, resizedFace, new Size(240, 240));
+        alignedFace = resizedFace;
+
+        int centerX = alignedFace.size().width() / 2;
+        int centerY = alignedFace.size().height() / 2;
+
+        Rect staticSizeRect = new Rect(
+                centerX - IMAGE_WIDTH / 2,
+                centerY - IMAGE_HEIGHT / 2,
+                IMAGE_WIDTH, IMAGE_HEIGHT
+        );
+
+        return new Mat(alignedFace, staticSizeRect);
     }
 
 

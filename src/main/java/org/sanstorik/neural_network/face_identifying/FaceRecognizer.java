@@ -234,10 +234,10 @@ public class FaceRecognizer {
      */
     private Prediction matchTwoFeatureArrays(FaceFeatures first, FaceFeatures second) {
         float distance = euclidDistance(first.getFeatures(), second.getFeatures());
-        System.out.println("distance = " + distance);
+        System.out.println("distance with "+ second.getFaceLabel() + " = " + distance);
 
         final float distanceThreshold = 0.6f;
-        final float percentageThreshold = 85.0f;
+        final float percentageThreshold = 60.0f;
 
         float percentage = Math.min(100, 100 * distanceThreshold / distance);
         System.out.println("percentage = " + percentage);
