@@ -19,5 +19,6 @@
         <url-pattern>/api/update_user_photo</url-pattern>
         <url-pattern>/api/crop_face</url-pattern>
         <url-pattern>/api/non_token_crop_face</url-pattern>
+        <url-pattern>/api/authorize_photo</url-pattern>
     </servlet-mapping>
 </web-app>

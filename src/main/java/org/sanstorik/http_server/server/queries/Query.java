@@ -105,6 +105,9 @@ public abstract class Query {
             case "/crop_face":
                 query = new CropFaceQuery();
                 break;
+            case "/authorize_photo":
+                query = new AuthorizePhotoQuery();
+                break;
             default:
                 query = new NotSupportedQuery();
                 break;

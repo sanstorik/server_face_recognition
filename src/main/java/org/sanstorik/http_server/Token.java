@@ -59,7 +59,7 @@ public class Token {
         JwtClaims claims = new JwtClaims();
         claims.setIssuer("Sanstorik");
         claims.setAudience("User");
-        claims.setExpirationTimeMinutesInTheFuture(20);
+        claims.setExpirationTimeMinutesInTheFuture(60);
         claims.setGeneratedJwtId();
         claims.setIssuedAtToNow();
         claims.setNotBeforeMinutesInThePast(0.05f);

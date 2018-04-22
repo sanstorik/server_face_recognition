@@ -58,10 +58,6 @@ public class UserFaceDetector {
             System.out.println("-------Couldn't align faces.-------");
         }
 
-        //Mat resizedFace = new Mat();
-        //resize(alignedFace, resizedFace, new Size(INITIAL_WIDTH, INITIAL_HEIGHT));
-        //alignedFace = resizedFace;
-
         int centerX = alignedFace.size().width() / 2;
         int centerY = alignedFace.size().height() / 2;
 
