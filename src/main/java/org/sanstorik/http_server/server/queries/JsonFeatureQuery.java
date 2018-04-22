@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.sanstorik.http_server.utils.FileUtils;
 import org.sanstorik.neural_network.face_identifying.FaceFeatures;
 import org.sanstorik.neural_network.face_identifying.FaceRecognizer;
+import org.sanstorik.neural_network.face_identifying.FullFaceFeatures;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -18,7 +19,8 @@ abstract class JsonFeatureQuery extends Query {
     JsonFeatureQuery() { }
 
 
-    protected boolean createJsonWithFaceFeatures(String jsonPath, File image, String directory, String username) {
+    protected boolean createJsonWithFaceFeatures(String jsonPath, String directory, String username,
+                                                 File... images) {
         File json = new File(jsonPath);
 
         //create full path dirs
@@ -33,7 +35,7 @@ abstract class JsonFeatureQuery extends Query {
         }
 
         FaceRecognizer faceRecognizer = FaceRecognizer.create();
-        FaceFeatures features = faceRecognizer.calculateFeaturesForFace(image, username);
+        FullFaceFeatures features = faceRecognizer.calculateFullFeaturesForUser(username, images);
 
         //no faces found on a picture
         if (features == null) {

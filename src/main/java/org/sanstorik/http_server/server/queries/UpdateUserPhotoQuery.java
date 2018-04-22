@@ -12,24 +12,6 @@ class UpdateUserPhotoQuery extends JsonFeatureQuery {
 
 
     @Override protected void parseRequest(HttpServletRequest request, ConcreteSqlConnection databaseConnection, Token token) {
-        String newImageName = FileUtils.generateRandomImageName();
-
-        Face.Response<File, String> response = readImageFromMultipartRequest(request, "image",
-                FileUtils.generateRandomString(), newImageName);
-
-        if (response.left == null) {
-            errorResponse("Couln't get new image.");
-            return;
-        }
-
-        String jsonDirectory = FileUtils.generateRandomString();
-        String jsonPath = FileUtils.getRootJsonPath() + jsonDirectory +
-                "/" + FileUtils.generateRandomString() + ".json";
-
-        if (response.left == null
-                || !createJsonWithFaceFeatures(jsonPath, response.left, jsonDirectory, token.getUsername())
-                || !databaseConnection.update(token.getUserId(), response.right, jsonPath)) {
-                    errorResponse("Update failed. Couldn't find a face on image or update a file.");
-        }
+        errorResponse("Not supported yet.");
     }
 }

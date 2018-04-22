@@ -5,6 +5,7 @@ import org.sanstorik.http_server.Token;
 import org.sanstorik.http_server.database.ConcreteSqlConnection;
 import org.sanstorik.http_server.database.User;
 import org.sanstorik.neural_network.face_identifying.FaceFeatures;
+import org.sanstorik.neural_network.face_identifying.FullFaceFeatures;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,16 +22,16 @@ abstract class FaceFeatureQuery extends Query {
     FaceFeatureQuery() { }
 
 
-    protected final FaceFeatures[] getFeaturesOfAllUsers(ConcreteSqlConnection sqlConnection) {
+    protected final FullFaceFeatures[] getFeaturesOfAllUsers(ConcreteSqlConnection sqlConnection) {
         List<User> users = sqlConnection.getAllUsers();
         if (users == null || users.isEmpty()) {
             return null;
         }
 
-        FaceFeatures[] faceFeatures = new FaceFeatures[users.size()];
+        FullFaceFeatures[] faceFeatures = new FullFaceFeatures[users.size()];
 
         for (int i = 0; i < faceFeatures.length; i++) {
-            FaceFeatures tempFeatures = readFaceFeaturesFromJson(users.get(i).getJsonUrl());
+            FullFaceFeatures tempFeatures = readFaceFeaturesFromJson(users.get(i).getJsonUrl());
 
             if (tempFeatures != null) {
                 //mark each feature with user id so we know it's him in prediction
@@ -43,30 +44,30 @@ abstract class FaceFeatureQuery extends Query {
     }
 
 
-    protected final FaceFeatures getFeatureOfUser(int userId, ConcreteSqlConnection sqlConnection) {
+    protected final FullFaceFeatures getFeatureOfUser(int userId, ConcreteSqlConnection sqlConnection) {
         User user = sqlConnection.getUserById(userId);
         if (user == null) {
             return null;
         }
 
-        FaceFeatures features = readFaceFeaturesFromJson(user.getJsonUrl());
-        features.setIdentifier(user.getUserId());
+        FullFaceFeatures features = readFaceFeaturesFromJson(user.getJsonUrl());
+        features.setIdentifier(userId);
 
         return features;
     }
 
 
-    private FaceFeatures readFaceFeaturesFromJson(String url) {
+    private FullFaceFeatures readFaceFeaturesFromJson(String url) {
         File json = new File(url);
 
         if (!json.exists() || !json.isFile()) {
             return null;
         }
 
-        FaceFeatures features = null;
+        FullFaceFeatures features = null;
 
         try {
-            features = new Gson().fromJson(new FileReader(json), FaceFeatures.class);
+            features = new Gson().fromJson(new FileReader(json), FullFaceFeatures.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

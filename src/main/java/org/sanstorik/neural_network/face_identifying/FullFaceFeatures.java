@@ -1,11 +1,14 @@
 package org.sanstorik.neural_network.face_identifying;
 
 public class FullFaceFeatures {
-    // {left - center - right }
-    private FaceFeatures[] faceFeatures = new FaceFeatures[3];
-    private String faceLabel = String.valueOf("");
+    private FaceFeatures left;
+    private FaceFeatures center;
+    private FaceFeatures right;
 
-    public FullFaceFeatures() { }
+    private String faceLabel = String.valueOf("");
+    private int identifier = 0;
+
+    public FullFaceFeatures() {  }
 
 
     public String getFaceLabel() {
@@ -18,18 +21,46 @@ public class FullFaceFeatures {
     }
 
 
-    public void setFaceFeatures(int index, FaceFeatures features) {
-        faceFeatures[index] = features;
+    public void setIdentifier(int identifier) {
+        this.identifier = identifier;
+    }
+
+
+    public int getIdentifier() {
+        return identifier;
+    }
+
+
+    public void setFaceFeatures(int faceType, FaceFeatures features) {
+        switch (faceType) {
+            case FaceFeatures.LEFT_FACE:
+                left = features;
+                break;
+            case FaceFeatures.CENTER_FACE:
+                center = features;
+                break;
+            case FaceFeatures.RIGHT_FACE:
+                right = features;
+                break;
+        }
     }
 
 
     public FaceFeatures getFaceFeatures(int faceType) {
-        return faceFeatures[faceType];
+        switch (faceType) {
+            case FaceFeatures.LEFT_FACE:
+                return left;
+            case FaceFeatures.CENTER_FACE:
+                return center;
+            case FaceFeatures.RIGHT_FACE:
+                return right;
+            default:
+                return null;
+        }
     }
 
 
     public boolean allFacesAreSet() {
-        return faceFeatures[0] != null && faceFeatures[1] != null
-                && faceFeatures[2] != null;
+        return left != null && center != null && right != null;
     }
 }
