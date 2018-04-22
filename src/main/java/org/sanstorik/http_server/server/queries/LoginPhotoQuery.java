@@ -45,9 +45,9 @@ class LoginPhotoQuery extends FaceFeatureQuery {
         }
 
         addParam("max_probability", String.valueOf(prediction.getPercentage()));
-        addParam("matched", String.valueOf(prediction.isIdentificated()));
+        addParam("matched", String.valueOf(prediction.isIdentified()));
 
-        if (prediction.isIdentificated()) {
+        if (prediction.isIdentified()) {
             long foundMatchedUserId = prediction.getActualFeatures().getIdentifier();
 
             User foundUser = databaseConnection.getUserById((int) foundMatchedUserId);

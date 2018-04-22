@@ -13,8 +13,7 @@ public class FaceFeatures {
     private int faceType = -1;
 
 
-    public FaceFeatures() {
-    }
+    public FaceFeatures() { }
 
 
     public FaceFeatures(float[] features) {
@@ -64,6 +63,10 @@ public class FaceFeatures {
 
 
     public int getFaceType() {
+        if (faceType <= -1) {
+            throw new IllegalStateException("face type is not normal");
+        }
+
         return faceType;
     }
 }

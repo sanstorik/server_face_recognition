@@ -1,7 +1,6 @@
 package org.sanstorik.neural_network.face_detection;
 
 import org.sanstorik.neural_network.face_identifying.FaceRecognizer;
-import org.sanstorik.neural_network.utils.FileUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -154,7 +153,7 @@ public class UserFaceDetector {
      *
      * @return cropped and greyed image 160x170px
      */
-    public BufferedImage cropFaceFromImage(File image) {
+    public BufferedFace cropFaceFromImage(File image) {
         if (image == null) {
             throw new IllegalArgumentException("image is null");
         }
@@ -164,7 +163,7 @@ public class UserFaceDetector {
             return null;
         }
 
-        return matToImage(response.face);
+        return new BufferedFace(matToImage(response.face), response.faceType);
     }
 
 
@@ -206,7 +205,7 @@ public class UserFaceDetector {
         Scalar color;
         float offsetScale;
 
-        if (prediction.isIdentificated()) {
+        if (prediction.isIdentified()) {
             label = prediction.getActualFeatures().getFaceLabel() + ";prob=" +
                     String.format("%.2f%%", prediction.getPercentage());
             color = Scalar.RED;

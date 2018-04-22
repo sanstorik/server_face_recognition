@@ -1,6 +1,7 @@
 package org.sanstorik.neural_network.face_identifying;
 
 public class FullFaceFeatures {
+    // {left - center - right }
     private FaceFeatures[] faceFeatures = new FaceFeatures[3];
     private String faceLabel = String.valueOf("");
 
@@ -17,8 +18,13 @@ public class FullFaceFeatures {
     }
 
 
-    public void setFaceFeature(int index, FaceFeatures features) {
+    public void setFaceFeatures(int index, FaceFeatures features) {
         faceFeatures[index] = features;
+    }
+
+
+    public FaceFeatures getFaceFeatures(int faceType) {
+        return faceFeatures[faceType];
     }
 
 

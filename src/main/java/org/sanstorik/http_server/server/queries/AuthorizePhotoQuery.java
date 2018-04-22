@@ -2,7 +2,6 @@ package org.sanstorik.http_server.server.queries;
 
 import org.sanstorik.http_server.Token;
 import org.sanstorik.http_server.database.ConcreteSqlConnection;
-import org.sanstorik.http_server.database.User;
 import org.sanstorik.http_server.utils.FileUtils;
 import org.sanstorik.neural_network.face_detection.Face;
 import org.sanstorik.neural_network.face_identifying.FaceFeatures;
@@ -39,9 +38,9 @@ public class AuthorizePhotoQuery extends FaceFeatureQuery {
         }
 
         addParam("max_probability", String.valueOf(prediction.getPercentage()));
-        addParam("matched", String.valueOf(prediction.isIdentificated()));
+        addParam("matched", String.valueOf(prediction.isIdentified()));
 
-        String granted = prediction.isIdentificated() ? "granted" : "not granted";
+        String granted = prediction.isIdentified() ? "granted" : "not granted";
         addParam("message", "Access is " + granted + " for user " + token.getUsername());
     }
 }
