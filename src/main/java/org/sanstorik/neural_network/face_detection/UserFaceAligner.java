@@ -2,6 +2,7 @@ package org.sanstorik.neural_network.face_detection;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.bytedeco.javacpp.indexer.DoubleRawIndexer;
+import org.sanstorik.neural_network.face_identifying.FaceFeatures;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ class UserFaceAligner {
      * @param bounds bounds of a found face
      * @return cropped and aligned face with initial face sizes
      */
-    public Mat align(Mat image, Rect bounds) {
+    public MatFace align(Mat image, Rect bounds) {
         List<Point2d> landmarks = getEyesLandmarks(image, bounds);
 
         if (landmarks == null) {
@@ -59,8 +60,11 @@ class UserFaceAligner {
         }
 
         addAlignedEyesPos(landmarks);
-        return rotateImageAndExtractFace(image, landmarks,
+        Mat rotatedFace = rotateImageAndExtractFace(image, landmarks,
                 UserFaceDetector.INITIAL_WIDTH, UserFaceDetector.INITIAL_HEIGHT);
+        int faceType = findFaceType(landmarks);
+
+        return new MatFace(rotatedFace, faceType);
     }
 
 
@@ -84,6 +88,25 @@ class UserFaceAligner {
 
         return new Point2d[] { getLeftEyeCenter(leftEyeOuter, leftEyeInner),
                 getRightEyeCenter(rightEyeOuter, rightEyeInner) };
+    }
+
+
+    private int findFaceType(List<Point2d> landmarks) {
+        int type;
+
+        double center = landmarks.get(landmark_pos.FACE_CENTER.pos).x();
+        double left_eye = landmarks.get(landmark_pos.LEFT_EYE_INNER.pos).x();
+        double right_eye = landmarks.get(landmark_pos.RIGHT_EYE_INNER.pos).x();
+
+        if ((Math.abs(center - right_eye) / Math.abs(left_eye - right_eye)) > 2) {
+            type = FaceFeatures.RIGHT_FACE;
+        } else if ((Math.abs(left_eye - right_eye) / Math.abs(center - right_eye)) > 2) {
+            type = FaceFeatures.LEFT_FACE;
+        } else {
+            type = FaceFeatures.CENTER_FACE;
+        }
+
+        return type;
     }
 
 

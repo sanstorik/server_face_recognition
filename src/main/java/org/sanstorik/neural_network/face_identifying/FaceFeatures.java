@@ -2,15 +2,16 @@ package org.sanstorik.neural_network.face_identifying;
 
 
 public class FaceFeatures {
+    public static final int LEFT_FACE = 0;
+    public static final int CENTER_FACE = 1;
+    public static final int RIGHT_FACE = 2;
 
-    //512 features to characterize each face
+    //128 features to characterize each face
     private float[] features = new float[128];
-    private String faceLabel;
+    private String faceLabel = String.valueOf("");
     private long identifier;
+    private int faceType = -1;
 
-    {
-        faceLabel = String.valueOf("");
-    }
 
     public FaceFeatures() {
     }
@@ -54,5 +55,15 @@ public class FaceFeatures {
 
     public long getIdentifier() {
         return identifier;
+    }
+
+
+    public void setFaceType(int faceType) {
+        this.faceType = faceType;
+    }
+
+
+    public int getFaceType() {
+        return faceType;
     }
 }

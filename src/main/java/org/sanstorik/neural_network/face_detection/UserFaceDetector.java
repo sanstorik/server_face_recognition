@@ -35,7 +35,7 @@ public class UserFaceDetector {
     }
 
 
-    private Mat cropMatFaceFromImage(File image) {
+    private MatFace cropMatFaceFromImage(File image) {
         Mat matImage = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_GRAYSCALE);
         RectVector faces = detectFaces(matImage);
 
@@ -50,16 +50,16 @@ public class UserFaceDetector {
     }
 
 
-    private Mat cropAlignAndResizeFace(Mat image, Rect rect) {
-        Mat alignedFace = userFaceAligner.align(image, rect);
+    private MatFace cropAlignAndResizeFace(Mat image, Rect rect) {
+        MatFace response = userFaceAligner.align(image, rect);
 
-        if (alignedFace == null) {
-            alignedFace = new Mat(image, rect);
+        if (response.face == null) {
             System.out.println("-------Couldn't align faces.-------");
+            return null;
         }
 
-        int centerX = alignedFace.size().width() / 2;
-        int centerY = alignedFace.size().height() / 2;
+        int centerX = response.face.size().width() / 2;
+        int centerY = response.face.size().height() / 2;
 
         Rect staticSizeRect = new Rect(
                 centerX - IMAGE_WIDTH / 2,
@@ -67,7 +67,8 @@ public class UserFaceDetector {
                 IMAGE_WIDTH, IMAGE_HEIGHT
         );
 
-        return new Mat(alignedFace, staticSizeRect);
+        Mat alignedFace = new Mat(response.face, staticSizeRect);
+        return new MatFace(alignedFace, response.faceType);
     }
 
 
@@ -85,10 +86,13 @@ public class UserFaceDetector {
         for (int i = 0; i < foundFaces.size(); i++) {
             Rect frame = foundFaces.get(i);
 
-            BufferedImage croppedFace = matToImage(cropAlignAndResizeFace(matImage, frame));
+            MatFace matFace = cropAlignAndResizeFace(matImage, frame);
+            BufferedImage croppedFace = matToImage(matFace.face);
 
+            //assign face as well as the face type
             faces[i] = new Face(frame.x(), frame.y(),
-                    frame.width(), frame.height(), croppedFace);
+                    frame.width(), frame.height(),
+                    matFace.faceType,croppedFace);
         }
 
         return new Face.Response<>(matToImage(matImage), faces);
@@ -136,6 +140,7 @@ public class UserFaceDetector {
             faces[i] = new Face(
                    frame.x(), frame.y(),
                    frame.width(), frame.height(),
+                   -1,
                    null);
         }
 
@@ -154,7 +159,12 @@ public class UserFaceDetector {
             throw new IllegalArgumentException("image is null");
         }
 
-        return matToImage(cropMatFaceFromImage(image));
+        MatFace response = cropMatFaceFromImage(image);
+        if (response == null) {
+            return null;
+        }
+
+        return matToImage(response.face);
     }
 
 

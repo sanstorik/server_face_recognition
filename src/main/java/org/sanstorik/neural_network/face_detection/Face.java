@@ -14,6 +14,7 @@ public class Face {
     }
 
     private BufferedImage croppedImage;
+    private int faceType = -1;
 
     //position of face on the original image
     private int leftTopX;
@@ -22,12 +23,15 @@ public class Face {
     private int height;
 
 
-    public Face(int leftTopX, int leftTopY, int width, int height, BufferedImage croppedImage) {
+    public Face(int leftTopX, int leftTopY, int width, int height,
+                int faceType,
+                BufferedImage croppedImage) {
         this.leftTopX = leftTopX;
         this.leftTopY = leftTopY;
         this.width = width;
         this.height = height;
         this.croppedImage = croppedImage;
+        this.faceType = faceType;
     }
 
 
@@ -53,5 +57,10 @@ public class Face {
 
     public int getHeight() {
         return height;
+    }
+
+
+    public int getFaceType() {
+        return faceType;
     }
 }

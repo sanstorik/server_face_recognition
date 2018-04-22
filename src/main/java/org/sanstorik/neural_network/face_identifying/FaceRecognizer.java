@@ -9,12 +9,12 @@ import org.tensorflow.Session;
 import org.tensorflow.Tensor;
 import org.tensorflow.Tensors;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class FaceRecognizer {
     public static final class Prediction {
@@ -70,6 +70,38 @@ public class FaceRecognizer {
 
         return matchTwoFeatureArrays(features, expectedFeatures);
     }
+
+
+    public final FullFaceFeatures calculateFullFeaturesForUser(String faceLabel, File... images) {
+        if (images == null || faceLabel == null) {
+            throw new IllegalArgumentException("should be non null");
+        }
+
+        FullFaceFeatures features = new FullFaceFeatures();
+        features.setFaceLabel(faceLabel);
+
+        //we put them with types of faces {left, center, right}
+        List<FaceFeatures> typeFeaturesList = new ArrayList<>();
+        for (int i = 0; i < images.length; i++) {
+            FaceFeatures imageFeatures = calculateFeaturesForFace(images[i], faceLabel);
+            typeFeaturesList.add(imageFeatures);
+        }
+
+
+        //assign faces by its type
+        for (int faceType = 0; faceType < 3; faceType++) {
+            final int innerType = faceType;
+            features.setFaceFeature(innerType, meanOfFeatures(
+                    typeFeaturesList.stream()
+                            .filter(featuresFilter -> featuresFilter.getFaceType() == innerType)
+                            .collect(Collectors.toList()
+                            )));
+        }
+
+
+        return features.allFacesAreSet() ? features : null;
+    }
+
 
 
     /**
@@ -227,6 +259,24 @@ public class FaceRecognizer {
     }
 
 
+    private FaceFeatures meanOfFeatures(List<FaceFeatures> features) {
+        if (features == null || features.size() == 0) {
+            return null;
+        }
+
+        float[] meanValues = new float[features.get(0).getFeatures().length];
+        for (int i = 0; i < meanValues.length; i++) {
+            for (int j = 0; j < features.size(); j++) {
+                meanValues[i] += features.get(j).getFeatures()[i];
+            }
+
+            meanValues[i] /= features.size();
+        }
+
+        return new FaceFeatures(meanValues, features.get(0).getFaceLabel());
+    }
+
+
     /**
      * Check how many percentage do {first} and {second} params have in common
      *
@@ -287,7 +337,7 @@ public class FaceRecognizer {
         for (int i = 0; i < width; ++i) {
             for (int j = 0; j < height; ++j) {
                 int rgb = bi.getRGB(i, j);
-                Color color = new Color(rgb);
+                java.awt.Color color = new java.awt.Color(rgb);
                 image[0][i][j][0] = color.getRed();
                 image[0][i][j][1] = color.getGreen();
                 image[0][i][j][2] = color.getBlue();
