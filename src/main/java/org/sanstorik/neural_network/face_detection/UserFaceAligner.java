@@ -96,9 +96,10 @@ class UserFaceAligner {
         int type;
 
         final double center = landmarks.get(landmark_pos.NOSE_CENTER.pos).x();
-        final double left_eye = landmarks.get(landmark_pos.LEFT_EYE_OUTER.pos).x();
-        final double right_eye = landmarks.get(landmark_pos.RIGHT_EYE_OUTER.pos).x();
+        final double left_eye = landmarks.get(landmark_pos.LEFT_EYE_INNER.pos).x();
+        final double right_eye = landmarks.get(landmark_pos.RIGHT_EYE_INNER.pos).x();
 
+        System.out.println(center + " " + left_eye + " " + right_eye);
         //distances between them
         double left_center = Math.abs(left_eye - center);
         double right_center = Math.abs(center - right_eye);
@@ -107,12 +108,14 @@ class UserFaceAligner {
         left_center = left_center == 0 ? 1e-3 : left_center;
 
 
+        System.out.println("landmarks = " + landmarks.size());
         System.out.println("right = " + right_center / left_center);
         System.out.println("left = " + left_center / right_center);
-        final double scale_treshold = 2.0;
-        if (right_center / left_center >= scale_treshold) {
+        //2.2-2.5 is an perfect threshold
+        final double scale_threshold = 2.2;
+        if (right_center / left_center >= scale_threshold) {
             type = FaceFeatures.RIGHT_FACE;
-        } else if ( left_center / right_center >= scale_treshold) {
+        } else if ( left_center / right_center >= scale_threshold) {
             type = FaceFeatures.LEFT_FACE;
         } else {
             type = FaceFeatures.CENTER_FACE;
