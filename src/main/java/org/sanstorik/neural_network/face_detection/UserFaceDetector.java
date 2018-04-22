@@ -8,6 +8,7 @@ import java.awt.image.DataBufferByte;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,10 @@ public class UserFaceDetector {
 
     private UserFaceDetector() {
         userFaceAligner = UserFaceAligner.create();
-        faceDetector = new CascadeClassifier(getClass().getClassLoader().getResource(LOADER_URL).getPath());
+        URL loaderUrl = getClass().getClassLoader().getResource(LOADER_URL);
+        if (loaderUrl == null) throw new IllegalStateException("No cascade file.");
+
+        faceDetector = new CascadeClassifier(loaderUrl.getPath());
     }
 
 
@@ -52,7 +56,7 @@ public class UserFaceDetector {
     private MatFace cropAlignAndResizeFace(Mat image, Rect rect) {
         MatFace response = userFaceAligner.align(image, rect);
 
-        if (response.face == null) {
+        if (response == null || response.face == null) {
             System.out.println("-------Couldn't align faces.-------");
             return null;
         }
@@ -79,22 +83,28 @@ public class UserFaceDetector {
     public Face.Response<BufferedImage, Face[]> getAllFacesFromImage(File image) {
         Mat matImage = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_GRAYSCALE);
         RectVector foundFaces = detectFaces(matImage);
-        Face[] faces = new Face[(int) foundFaces.size()];
 
+        List<Face> alignedFaces = new ArrayList<>();
         System.out.println("FOUND FACES = " + foundFaces.size());
+
         for (int i = 0; i < foundFaces.size(); i++) {
             Rect frame = foundFaces.get(i);
 
             MatFace matFace = cropAlignAndResizeFace(matImage, frame);
-            BufferedImage croppedFace = matToImage(matFace.face);
 
-            //assign face as well as the face type
-            faces[i] = new Face(frame.x(), frame.y(),
-                    frame.width(), frame.height(),
-                    matFace.faceType,croppedFace);
+            //we were able to locate landmarks
+            if (matFace != null) {
+                BufferedImage croppedFace = matToImage(matFace.face);
+
+                //assign face as well as the face type
+                alignedFaces.add(new Face(frame.x(), frame.y(),
+                        frame.width(), frame.height(),
+                        matFace.faceType, croppedFace));
+            }
         }
 
-        return new Face.Response<>(matToImage(matImage), faces);
+        return new Face.Response<>(matToImage(matImage),
+                alignedFaces.toArray(new Face[alignedFaces.size()]));
     }
 
 

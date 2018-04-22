@@ -7,6 +7,7 @@ import org.sanstorik.http_server.utils.FileUtils;
 import org.sanstorik.neural_network.face_detection.Face;
 import org.sanstorik.neural_network.face_identifying.FaceFeatures;
 import org.sanstorik.neural_network.face_identifying.FaceRecognizer;
+import org.sanstorik.neural_network.face_identifying.FullFaceFeatures;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -31,7 +32,7 @@ class LoginPhotoQuery extends FaceFeatureQuery {
 
         FaceRecognizer recognizer = FaceRecognizer.create();
 
-        FaceFeatures[] featuresOfAllUsers = getFeaturesOfAllUsers(databaseConnection);
+        FullFaceFeatures[] featuresOfAllUsers = getFeaturesOfAllUsers(databaseConnection);
         if (featuresOfAllUsers == null) {
             errorResponse("Couldn't match users from database with a photo.");
             return;

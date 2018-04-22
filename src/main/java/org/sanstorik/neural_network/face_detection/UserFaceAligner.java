@@ -4,6 +4,7 @@ import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.bytedeco.javacpp.indexer.DoubleRawIndexer;
 import org.sanstorik.neural_network.face_identifying.FaceFeatures;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +40,10 @@ class UserFaceAligner {
 
 
     private UserFaceAligner() {
-        flandmarkModel = flandmark_init(
-                getClass().getClassLoader().getResource(LOADER_URL).getPath()
-        );
+        URL loaderUrl = getClass().getClassLoader().getResource(LOADER_URL);
+        if (loaderUrl == null) throw new IllegalStateException("Landmark model not found.");
+
+        flandmarkModel = flandmark_init(loaderUrl.getPath());
     }
 
 
@@ -86,48 +88,46 @@ class UserFaceAligner {
         Point2d rightEyeOuter = landmarks.get(landmark_pos.RIGHT_EYE_OUTER.pos);
         Point2d rightEyeInner = landmarks.get(landmark_pos.RIGHT_EYE_INNER.pos);
 
-        return new Point2d[] { getLeftEyeCenter(leftEyeOuter, leftEyeInner),
-                getRightEyeCenter(rightEyeOuter, rightEyeInner) };
+        return new Point2d[] { center(leftEyeOuter, leftEyeInner), center(rightEyeOuter, rightEyeInner) };
     }
 
 
     private int findFaceType(List<Point2d> landmarks) {
         int type;
 
-        double center = landmarks.get(landmark_pos.FACE_CENTER.pos).x();
-        double left_eye = landmarks.get(landmark_pos.LEFT_EYE_INNER.pos).x();
-        double right_eye = landmarks.get(landmark_pos.RIGHT_EYE_INNER.pos).x();
+        final double center = landmarks.get(landmark_pos.NOSE_CENTER.pos).x();
+        final double left_eye = landmarks.get(landmark_pos.LEFT_EYE_OUTER.pos).x();
+        final double right_eye = landmarks.get(landmark_pos.RIGHT_EYE_OUTER.pos).x();
 
-        if ((Math.abs(center - right_eye) / Math.abs(left_eye - right_eye)) > 2) {
+        //distances between them
+        double left_center = Math.abs(left_eye - center);
+        double right_center = Math.abs(center - right_eye);
+
+        right_center = right_center == 0 ? 1e-3 : right_center;
+        left_center = left_center == 0 ? 1e-3 : left_center;
+
+
+        System.out.println("right = " + right_center / left_center);
+        System.out.println("left = " + left_center / right_center);
+        final double scale_treshold = 2.0;
+        if (right_center / left_center >= scale_treshold) {
             type = FaceFeatures.RIGHT_FACE;
-        } else if ((Math.abs(left_eye - right_eye) / Math.abs(center - right_eye)) > 2) {
+        } else if ( left_center / right_center >= scale_treshold) {
             type = FaceFeatures.LEFT_FACE;
         } else {
             type = FaceFeatures.CENTER_FACE;
         }
 
+        System.out.println("Found face type = " + type);
+
         return type;
     }
 
 
-    private Point2d getLeftEyeCenter(Point2d eyeOuter, Point2d eyeInner) {
-        double distX = Math.abs(eyeInner.x() - eyeOuter.x());
-        double distY = Math.abs(eyeInner.y() - eyeOuter.y());
-
+    private Point2d center(Point2d left, Point2d right) {
         return new Point2d(
-                eyeOuter.x() + distX / 2,
-                eyeOuter.y() + distY / 2
-        );
-    }
-
-
-    private Point2d getRightEyeCenter(Point2d eyeOuter, Point2d eyeInner) {
-        double distX = Math.abs(eyeInner.x() - eyeOuter.x());
-        double distY = Math.abs(eyeInner.y() - eyeOuter.y());
-
-        return new Point2d(
-                eyeInner.x() + distX / 2,
-                eyeInner.y() - distY / 2
+                (left.x() + right.x()) * 0.5,
+                (left.y() + right.y()) * 0.5
         );
     }
 

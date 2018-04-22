@@ -44,14 +44,17 @@ abstract class FaceFeatureQuery extends Query {
     }
 
 
-    protected final FullFaceFeatures getFeatureOfUser(int userId, ConcreteSqlConnection sqlConnection) {
+    final FullFaceFeatures getFeatureOfUser(int userId, ConcreteSqlConnection sqlConnection) {
         User user = sqlConnection.getUserById(userId);
         if (user == null) {
             return null;
         }
 
         FullFaceFeatures features = readFaceFeaturesFromJson(user.getJsonUrl());
-        features.setIdentifier(userId);
+
+        if (features != null) {
+            features.setIdentifier(userId);
+        }
 
         return features;
     }
