@@ -25,6 +25,11 @@ class CropFaceQuery extends ProceedImageQuery {
         UserFaceDetector detector = UserFaceDetector.create();
         BufferedFace response = detector.cropFaceFromImage(image);
 
+        //couldn't find eyes on image and align it
+        if (response == null) {
+            return null;
+        }
+
         String faceType;
 
         switch (response.faceType) {

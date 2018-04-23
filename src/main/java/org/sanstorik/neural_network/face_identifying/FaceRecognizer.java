@@ -108,7 +108,10 @@ public class FaceRecognizer {
         List<FaceFeatures> typeFeaturesList = new ArrayList<>();
         for (File image : images) {
             FaceFeatures imageFeatures = calculateFeaturesForFace(image);
-            typeFeaturesList.add(imageFeatures);
+
+            if (imageFeatures != null) {
+                typeFeaturesList.add(imageFeatures);
+            }
         }
 
 
@@ -162,8 +165,7 @@ public class FaceRecognizer {
     /**
      * Finding user in face features pool.
      *
-     * @param user              image of user to check, better to be not high resolution
-     *                          because face will be cropped to 160x160px
+     * @param user              image of user to be checked
      * @param collectedFeatures expected features of all registered users
      * @return prediction that contains face features with matched user.
      */
@@ -309,7 +311,7 @@ public class FaceRecognizer {
         System.out.println("distance with " + username + " = " + distance);
 
         final float distanceThreshold = 0.6f;
-        final float percentageThreshold = 65.0f;
+        final float percentageThreshold = 70.0f;
 
         float percentage = Math.min(100, 100 * distanceThreshold / distance);
         System.out.println("percentage = " + percentage);
