@@ -76,11 +76,9 @@ public class UserFaceDetector {
 
 
     /**
-     * Finds all faces and highlight them
-     *
-     * @return image with highlighted
+     * Finds all faces on given image
      */
-    public Face.Response<BufferedImage, Face[]> getAllFacesFromImage(File image) {
+    public Face[] getAllFacesFromImage(File image) {
         Mat matImage = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_GRAYSCALE);
         RectVector foundFaces = detectFaces(matImage);
 
@@ -103,8 +101,7 @@ public class UserFaceDetector {
             }
         }
 
-        return new Face.Response<>(matToImage(matImage),
-                alignedFaces.toArray(new Face[alignedFaces.size()]));
+        return alignedFaces.toArray(new Face[alignedFaces.size()]);
     }
 
 
@@ -188,11 +185,11 @@ public class UserFaceDetector {
         }
 
         Mat matImage = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_ANYCOLOR);
-        Mat matImageGreyscaled = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_GRAYSCALE);
+        Mat matImageGreyscale = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_GRAYSCALE);
         RectVector faces = detectFaces(matImage);
 
         for (int i = 0; i < faces.size(); i++) {
-            Point2d[] eyes = userFaceAligner.getEyesCenterCoordinates(matImageGreyscaled, faces.get(i));
+            Point2d[] eyes = userFaceAligner.getEyesCenterCoordinates(matImageGreyscale, faces.get(i));
             if (eyes != null) {
                 highlightFrame(matImage, eyes[0]);
                 highlightFrame(matImage, eyes[1]);
@@ -210,7 +207,22 @@ public class UserFaceDetector {
      *
      * @return input image with colored rectangles and probabilities
      */
-    public BufferedImage drawFaceDetection(BufferedImage image, Face face, FaceRecognizer.Prediction prediction) {
+    public BufferedImage drawFaceDetection(File image, Face[] faces, FaceRecognizer.Prediction[] prediction) {
+        if (faces.length != prediction.length) {
+            return null;
+        }
+
+        Mat matImage = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_ANYCOLOR);
+
+        for (int i = 0; i < faces.length; i++) {
+            drawFaceDetection(matImage, faces[i], prediction[i]);
+        }
+
+        return matToImage(matImage);
+    }
+
+
+    private void drawFaceDetection(Mat image, Face face, FaceRecognizer.Prediction prediction) {
         String label;
         Scalar color;
         float offsetScale;
@@ -220,48 +232,36 @@ public class UserFaceDetector {
                     String.format("%.2f%%", prediction.getPercentage());
             color = Scalar.RED;
             offsetScale = 0.75f;
-
         } else {
-            label = "none";
+            label = "unknown";
             color = Scalar.BLUE;
             offsetScale = 0.25f;
         }
 
 
-        Mat coloredPicture = putTextOnImage(image, label,
+        putTextOnImage(image, label,
                 face.getLeftTopX() - (int) (face.getLeftTopX() * offsetScale),
                 face.getLeftTopY() - 15
         );
 
-        highlightFrame(coloredPicture, new Rect(
+        highlightFrame(image, new Rect(
                 face.getLeftTopX(), face.getLeftTopY(),
                 face.getWidth(), face.getHeight()
         ), color);
-
-
-        return matToImage(coloredPicture);
     }
 
 
-    public BufferedImage drawColoredText(BufferedImage image, String text, int pointX, int pointY) {
-        return matToImage(putTextOnImage(image, text, pointX, pointY));
+    public BufferedImage drawColoredText(File image, String text, int pointX, int pointY) {
+        Mat matImage = imread(image.getAbsolutePath(), CV_LOAD_IMAGE_ANYCOLOR);
+        putTextOnImage(matImage, text, pointX, pointY);
+
+        return matToImage(matImage);
     }
 
 
-    private Mat putTextOnImage(BufferedImage image, String text, int pointX, int pointY) {
-        Mat matImage = bufferedImageToMat(image);
-        Mat coloredPicture = matImage;
-
-        //if image is grey make it colored
-        if (matImage.type() == CV_8UC1) {
-            coloredPicture = new Mat(matImage.size(), CV_8UC3);
-            cvtColor(matImage, coloredPicture, CV_GRAY2BGR);
-        }
-
-        putText(coloredPicture, text,
+    private void putTextOnImage(Mat matImage, String text, int pointX, int pointY) {
+        putText(matImage, text,
                 new Point(pointX, pointY), FONT_HERSHEY_COMPLEX, 1.5, Scalar.BLUE, 1, CV_AA, false);
-
-        return coloredPicture;
     }
 
 

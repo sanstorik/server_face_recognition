@@ -203,27 +203,23 @@ public class FaceRecognizer {
      */
     public BufferedImage identifyUsersOnPhoto(File image, FullFaceFeatures[] collectedFeatures) {
         //first we take all faces on image
-        Face.Response<BufferedImage, Face[]> facesResponse = faceDetector.getAllFacesFromImage(image);
-        Face[] faces = facesResponse.right;
-        BufferedImage imageWithHighlightedFaces = facesResponse.left;
+        Face[] faces = faceDetector.getAllFacesFromImage(image);
 
         //no faces found on photo
         if (faces.length == 0) {
             return null;
         }
 
-        //draw probabilities on image with highlighted faces
-        for (Face face : faces) {
-            FaceFeatures features = passImageThroughNeuralNetwork(face.getCroppedImage(), face.getFaceType());
-            Prediction prediction = predictBestMatchFromPool(features, collectedFeatures);
+        Prediction[] predictions = new Prediction[faces.length];
 
-            //mark(text, rectangle) users faces
-            if (prediction != null) {
-                imageWithHighlightedFaces = faceDetector.drawFaceDetection(imageWithHighlightedFaces, face, prediction);
-            }
+        //draw probabilities on image with highlighted faces
+        for (int i = 0; i < faces.length; i++) {
+            FaceFeatures features = passImageThroughNeuralNetwork(faces[i].getCroppedImage(),
+                    faces[i].getFaceType());
+            predictions[i] = predictBestMatchFromPool(features, collectedFeatures);
         }
 
-        return imageWithHighlightedFaces;
+        return faceDetector.drawFaceDetection(image, faces, predictions);
     }
 
 
