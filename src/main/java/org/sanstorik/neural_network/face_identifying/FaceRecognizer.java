@@ -14,7 +14,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class FaceRecognizer {
@@ -122,11 +124,11 @@ public class FaceRecognizer {
 
         String errorMessage = "";
         if (features.getFaceFeatures(FaceFeatures.LEFT_FACE) == null) {
-            errorMessage = "No photos where user is looking left.";
+            errorMessage = "No photos provided where user is looking left.";
         } else if (features.getFaceFeatures(FaceFeatures.RIGHT_FACE) == null) {
-            errorMessage = "No photos where user is looking right.";
+            errorMessage = "No photos provided where user is looking right.";
         } else if (features.getFaceFeatures(FaceFeatures.CENTER_FACE) == null) {
-            errorMessage = "No photos where user is looking straight.";
+            errorMessage = "No photos provided where user is looking straight.";
         }
 
 

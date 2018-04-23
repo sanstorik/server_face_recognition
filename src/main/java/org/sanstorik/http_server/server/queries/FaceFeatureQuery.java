@@ -1,10 +1,8 @@
 package org.sanstorik.http_server.server.queries;
 
 import com.google.gson.Gson;
-import org.sanstorik.http_server.Token;
 import org.sanstorik.http_server.database.ConcreteSqlConnection;
 import org.sanstorik.http_server.database.User;
-import org.sanstorik.neural_network.face_identifying.FaceFeatures;
 import org.sanstorik.neural_network.face_identifying.FullFaceFeatures;
 
 import java.io.File;
@@ -22,7 +20,7 @@ abstract class FaceFeatureQuery extends Query {
     FaceFeatureQuery() { }
 
 
-    protected final FullFaceFeatures[] getFeaturesOfAllUsers(ConcreteSqlConnection sqlConnection) {
+    final FullFaceFeatures[] getFeaturesOfAllUsers(ConcreteSqlConnection sqlConnection) {
         List<User> users = sqlConnection.getAllUsers();
         if (users == null || users.isEmpty()) {
             return null;

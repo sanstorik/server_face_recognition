@@ -2,7 +2,6 @@ package org.sanstorik.http_server.server.queries;
 
 import org.sanstorik.http_server.Token;
 import org.sanstorik.http_server.database.ConcreteSqlConnection;
-import org.sanstorik.neural_network.face_identifying.FaceFeatures;
 import org.sanstorik.neural_network.face_identifying.FaceRecognizer;
 import org.sanstorik.neural_network.face_identifying.FullFaceFeatures;
 

@@ -10,7 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class CropFaceQuery extends ProceedImageQuery {
+class CropFaceQuery extends ProceedImageQuery {
+
+    CropFaceQuery(boolean doCheckAuth) {
+        super(doCheckAuth);
+    }
+
+
+    CropFaceQuery() { super(); }
+
 
     @Override protected BufferedImage workOnImage(HttpServletRequest request,
                                                   ConcreteSqlConnection databaseConnection, Token token, File image) {

@@ -3,7 +3,6 @@ package org.sanstorik.http_server.server.queries;
 import com.google.gson.Gson;
 import org.sanstorik.http_server.utils.FileUtils;
 import org.sanstorik.neural_network.face_detection.Face;
-import org.sanstorik.neural_network.face_identifying.FaceFeatures;
 import org.sanstorik.neural_network.face_identifying.FaceRecognizer;
 import org.sanstorik.neural_network.face_identifying.FullFaceFeatures;
 
@@ -23,7 +22,7 @@ abstract class JsonFeatureQuery extends Query {
     /**
      * @return error message if query wasn't successful, null otherwise
      */
-    protected String createJsonWithFaceFeatures(String jsonPath, String directory, String username,
+    String createJsonWithFaceFeatures(String jsonPath, String directory, String username,
                                                  File... images) {
         File json = new File(jsonPath);
 

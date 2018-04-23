@@ -3,7 +3,6 @@ package org.sanstorik.http_server.server.queries;
 import org.sanstorik.http_server.Token;
 import org.sanstorik.http_server.database.ConcreteSqlConnection;
 import org.sanstorik.http_server.utils.FileUtils;
-import org.sanstorik.neural_network.face_detection.BufferedFace;
 import org.sanstorik.neural_network.face_detection.Face;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,11 +33,12 @@ class RegisterQuery extends JsonFeatureQuery {
         List<File> images = new ArrayList<>();
         String randomImageUrl = "";
 
-        for (int imageKeyIndex = 1; imageKeyIndex <= 5; imageKeyIndex++) {
+        for (int imageKeyIndex = 1; imageKeyIndex <= 6; imageKeyIndex++) {
             Face.Response<File, String> imagePair = readImageFromMultipartRequest(request, "image" + imageKeyIndex,
                     FileUtils.generateRandomString(), FileUtils.generateRandomImageName());
 
             if (imagePair.left != null) {
+                images.add(imagePair.left);
                 randomImageUrl = imagePair.right;
             }
         }
