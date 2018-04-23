@@ -16,27 +16,36 @@ faces marked, face coordinates of all found faces, eyes coorinates etc.
 
 First we register new user using API.
 POST query <host url>/api/register
+  
+To create a user we must give 3 types of images: where face is looking left, right and straight.
+We can apply many images, and server will pick mean values of them.
 
 ![alt text](http://ksassets.timeincuk.net/wp/uploads/sites/55/2016/07/2015JustinBieber_8_DC_131115-1-920x610.jpg)
 
-Server created json representation of image (based on 128 face features) that has been passed through Convolutional Neural Network FaceNet.
-Example: 
-{ "features":[0.017909864,-0.09039427,-0.11307395,0.094229214,-0.0062726582,0.0854959,0.0112353945,0.13639219,0.04221405,0.088752426,0.045691364,0.107265346,0.23955862,0.021586264,-0.17147852,0.07574615,0.014535043,-0.06156437,0.22773448,1.8782669E, .....],
-"faceLabel":"jb", identifier: 0 }
+Server created json representation of images (based on 128 face features) that has been passed through Convolutional Neural Network FaceNet and disperses them into 3 categories: left, center and right.
 
-Then we can work login, get token and after than we can send POST query to
-  host url>/api/identify_users
+Example of JSON: 
+{ left {"features":[0.017909864, ...]}, center{ "features":[-0.014903864,...]} right {"features":[0.4253545443, ....], 
+facelabel: "example_user" }
+
+Then we can send login request, get a token and after than we can send POST query to
+  <host_url>/api/identify_users
     
-Server proceeds image and spawns new image with face labels that qualify if this user has been recognized.
+Server proceeds an image and spawns new image with face labels that qualify if this user has been recognized.
 Example of sending justin bieber another photo:
 
-Server crops and alignes face so that eyes are always in the same position
+Server crops and alignes a face so that eyes are always in the same position
 
 ![alt text](https://raw.githubusercontent.com/sanstorik/server_face_recognition/master/example/jb_highlight.jpg)
 
+
+Based on eyes and center of face positions, we calculate a proper face type for them whether they're looking left, right or straight.  
+
+For example this image is qualified as LOOKING_LEFT, because the distance between the left eye and the face center is much bigger than the distance between the face center and the right eye.
+
 ![alt text](https://raw.githubusercontent.com/sanstorik/server_face_recognition/master/example/jb-cropped.jpg)
 
-Based on that image it is procceded in neural network and compared with other user/users.
+Results of these calculations are proceeded in a neural network and compared with other user/users needed face type.
 
 ![alt text](https://raw.githubusercontent.com/sanstorik/server_face_recognition/master/example/57be9738d93a4bf8a9b2d7ebba4fbaf7.jpg)
 
