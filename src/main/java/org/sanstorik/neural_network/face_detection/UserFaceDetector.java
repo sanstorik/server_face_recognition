@@ -216,7 +216,7 @@ public class UserFaceDetector {
         float offsetScale;
 
         if (prediction.isIdentified()) {
-            label = prediction.getActualFeatures().getFaceLabel() + ";prob=" +
+            label = prediction.getUsername() + ";prob=" +
                     String.format("%.2f%%", prediction.getPercentage());
             color = Scalar.RED;
             offsetScale = 0.75f;

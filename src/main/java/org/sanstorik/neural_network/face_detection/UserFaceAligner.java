@@ -108,10 +108,14 @@ class UserFaceAligner {
         left_center = left_center == 0 ? 1e-3 : left_center;
 
 
+        if (landmarks.size() <= 8) {
+            throw new IllegalStateException("Not enough landmarks");
+        }
+
         System.out.println("landmarks = " + landmarks.size());
         System.out.println("right = " + right_center / left_center);
         System.out.println("left = " + left_center / right_center);
-        //2.2-2.5 is an perfect threshold
+        //2.2-2.5 is a perfect threshold
         final double scale_threshold = 2.2;
         if (right_center / left_center >= scale_threshold) {
             type = FaceFeatures.RIGHT_FACE;

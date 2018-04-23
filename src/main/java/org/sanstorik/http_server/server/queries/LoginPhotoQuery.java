@@ -34,7 +34,7 @@ class LoginPhotoQuery extends FaceFeatureQuery {
 
         FullFaceFeatures[] featuresOfAllUsers = getFeaturesOfAllUsers(databaseConnection);
         if (featuresOfAllUsers == null) {
-            errorResponse("Couldn't match users from database with a photo.");
+            errorResponse("Couldn't get users from database.");
             return;
         }
 
@@ -49,7 +49,7 @@ class LoginPhotoQuery extends FaceFeatureQuery {
         addParam("matched", String.valueOf(prediction.isIdentified()));
 
         if (prediction.isIdentified()) {
-            long foundMatchedUserId = prediction.getActualFeatures().getIdentifier();
+            long foundMatchedUserId = prediction.getIdentifier();
 
             User foundUser = databaseConnection.getUserById((int) foundMatchedUserId);
 

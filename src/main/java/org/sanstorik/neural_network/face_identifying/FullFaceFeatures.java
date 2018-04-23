@@ -5,19 +5,17 @@ public class FullFaceFeatures {
     private FaceFeatures center;
     private FaceFeatures right;
 
-    private String faceLabel = String.valueOf("");
+    private String faceLabel;
     private int identifier = 0;
 
-    public FullFaceFeatures() {  }
+
+    public FullFaceFeatures(String faceLabel) {
+        this.faceLabel = faceLabel;
+    }
 
 
     public String getFaceLabel() {
         return faceLabel;
-    }
-
-
-    public void setFaceLabel(String faceLabel) {
-        this.faceLabel = faceLabel;
     }
 
 
@@ -42,6 +40,8 @@ public class FullFaceFeatures {
             case FaceFeatures.RIGHT_FACE:
                 right = features;
                 break;
+            default:
+                throw new IllegalArgumentException("not expected facetype");
         }
     }
 

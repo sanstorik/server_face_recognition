@@ -21,24 +21,35 @@ public class FaceRecognizer {
     public static final class Prediction {
         private float percentage;
         private boolean identified;
-        private FaceFeatures actualFeatures;
+        private String username;
+        private int identifier;
 
-        private Prediction(float percentage, boolean identified, FaceFeatures actualFeatures) {
+
+        private Prediction(float percentage, boolean identified, String username, int identifier) {
             this.percentage = percentage;
             this.identified = identified;
-            this.actualFeatures = actualFeatures;
+            this.username = username;
+            this.identifier = identifier;
         }
+
 
         public double getPercentage() {
             return percentage;
         }
 
+
         public boolean isIdentified() {
             return identified;
         }
 
-        public FaceFeatures getActualFeatures() {
-            return actualFeatures;
+
+        public String getUsername() {
+            return username;
+        }
+
+
+        public int getIdentifier() {
+            return identifier;
         }
     }
 
@@ -68,31 +79,33 @@ public class FaceRecognizer {
         }
 
         //we still have to crop and normalize face from user image
-        FaceFeatures features = calculateFeaturesForFace(user, expectedFeatures.getFaceLabel());
+        FaceFeatures features = calculateFeaturesForFace(user);
         if (features == null) {
             return null;
         }
 
         return matchTwoFeatureArrays(features,
-                expectedFeatures.getFaceFeatures(features.getFaceType()));
+                expectedFeatures.getFaceFeatures(features.getFaceType()),
+                expectedFeatures.getFaceLabel(),
+                expectedFeatures.getIdentifier()
+        );
     }
 
 
     /**
      * Find all user features based on direction it's facing {left; center; right}
      */
-    public final FullFaceFeatures calculateFullFeaturesForUser(String faceLabel, File... images) {
+    public final Face.Response<FullFaceFeatures, String> calculateFullFeaturesForUser(String faceLabel, File... images) {
         if (images == null || faceLabel == null) {
             throw new IllegalArgumentException("should be non null");
         }
 
-        FullFaceFeatures features = new FullFaceFeatures();
-        features.setFaceLabel(faceLabel);
+        FullFaceFeatures features = new FullFaceFeatures(faceLabel);
 
         //we put them with types of faces {left, center, right}
         List<FaceFeatures> typeFeaturesList = new ArrayList<>();
         for (File image : images) {
-            FaceFeatures imageFeatures = calculateFeaturesForFace(image, faceLabel);
+            FaceFeatures imageFeatures = calculateFeaturesForFace(image);
             typeFeaturesList.add(imageFeatures);
         }
 
@@ -107,8 +120,17 @@ public class FaceRecognizer {
                             )));
         }
 
+        String errorMessage = "";
+        if (features.getFaceFeatures(FaceFeatures.LEFT_FACE) == null) {
+            errorMessage = "No photos where user is looking left.";
+        } else if (features.getFaceFeatures(FaceFeatures.RIGHT_FACE) == null) {
+            errorMessage = "No photos where user is looking right.";
+        } else if (features.getFaceFeatures(FaceFeatures.CENTER_FACE) == null) {
+            errorMessage = "No photos where user is looking straight.";
+        }
 
-        return features.allFacesAreSet() ? features : null;
+
+        return new Face.Response<>(errorMessage.isEmpty() ? features : null, errorMessage);
     }
 
 
@@ -118,11 +140,10 @@ public class FaceRecognizer {
      *
      * @param image     of user to identify, better to be not high resolution
      *                  because face will be cropped to 160x160px
-     * @param faceLabel label of face to be made
      * @return features calculated for a single face
      */
-    public final FaceFeatures calculateFeaturesForFace(File image, String faceLabel) {
-        if (image == null || faceLabel == null) {
+    public final FaceFeatures calculateFeaturesForFace(File image) {
+        if (image == null) {
             throw new IllegalArgumentException("should be non null");
         }
 
@@ -133,11 +154,7 @@ public class FaceRecognizer {
             return null;
         }
 
-        FaceFeatures features = passImageThroughNeuralNetwork(face.face);
-        features.setFaceLabel(faceLabel);
-        features.setFaceType(face.faceType);
-
-        return features;
+        return passImageThroughNeuralNetwork(face.face, face.faceType);
     }
 
     /**
@@ -149,7 +166,7 @@ public class FaceRecognizer {
      * @return prediction that contains face features with matched user.
      */
     public Prediction identifyUserFromFeaturePool(File user, FullFaceFeatures[] collectedFeatures) {
-        FaceFeatures userToFind = calculateFeaturesForFace(user, "user");
+        FaceFeatures userToFind = calculateFeaturesForFace(user);
 
         if (userToFind == null) {
             return null;
@@ -165,8 +182,11 @@ public class FaceRecognizer {
 
         final int inputFaceType = userToFind.getFaceType();
         for (int i = 0; i < collectedFeatures.length; i++) {
-            predictions[i] = matchTwoFeatureArrays(userToFind, collectedFeatures[i].getFaceFeatures(inputFaceType));
-            predictions[i].actualFeatures = collectedFeatures[i].getFaceFeatures(inputFaceType);
+            predictions[i] = matchTwoFeatureArrays(userToFind,
+                    collectedFeatures[i].getFaceFeatures(inputFaceType),
+                    collectedFeatures[i].getFaceLabel(),
+                    collectedFeatures[i].getIdentifier()
+            );
         }
 
         return Arrays.stream(predictions).
@@ -190,11 +210,9 @@ public class FaceRecognizer {
             return null;
         }
 
-        //draw probabilities on image with highlighed faces
+        //draw probabilities on image with highlighted faces
         for (Face face : faces) {
-            FaceFeatures features = passImageThroughNeuralNetwork(face.getCroppedImage());
-            features.setFaceType(face.getFaceType());
-
+            FaceFeatures features = passImageThroughNeuralNetwork(face.getCroppedImage(), face.getFaceType());
             Prediction prediction = predictBestMatchFromPool(features, collectedFeatures);
 
             //mark(text, rectangle) users faces
@@ -211,7 +229,7 @@ public class FaceRecognizer {
         if (faceRecognizer == null) {
             long ms = System.currentTimeMillis();
             faceRecognizer = new FaceRecognizer();
-            System.out.println("Init time = " + String.valueOf(System.currentTimeMillis() - ms) + "ms");
+            FileUtils.timeSpent(ms, "INIT");
         }
 
         return faceRecognizer;
@@ -224,12 +242,10 @@ public class FaceRecognizer {
      * @param image cropped, centralized face
      * @return describing of a face based on 128 float features
      */
-    private FaceFeatures passImageThroughNeuralNetwork(BufferedImage image) {
+    private FaceFeatures passImageThroughNeuralNetwork(BufferedImage image, int faceType) {
         FaceFeatures features;
 
-        long timeStart = System.currentTimeMillis();
         try (Session session = new Session(graph)) {
-            FileUtils.timeSpent(timeStart, "SESSION START");
             Tensor<Float> feedImage = Tensors.create(imageToMultiDimensionalArray(image));
 
             long timeResponse = System.currentTimeMillis();
@@ -254,8 +270,7 @@ public class FaceRecognizer {
             float[][] featuresHolder = new float[1][128];
             response.copyTo(featuresHolder);
 
-            features = new FaceFeatures();
-            features.setFeatures(featuresHolder[0]);
+            features = new FaceFeatures(featuresHolder[0], faceType);
 
             response.close();
         }
@@ -278,18 +293,22 @@ public class FaceRecognizer {
             meanValues[i] /= features.size();
         }
 
-        return new FaceFeatures(meanValues, features.get(0).getFaceLabel());
+        System.out.println(features.size());
+
+        return new FaceFeatures(meanValues, features.get(0).getFaceType());
     }
 
 
     /**
      * Check how many percentage do {first} and {second} params have in common
      *
+     * @param username of user to be qualified
      * @return prediction of how much they match
      */
-    private Prediction matchTwoFeatureArrays(FaceFeatures first, FaceFeatures second) {
+    private Prediction matchTwoFeatureArrays(FaceFeatures first, FaceFeatures second,
+                                             String username, int identifier) {
         float distance = euclidDistance(first.getFeatures(), second.getFeatures());
-        System.out.println("distance with "+ second.getFaceLabel() + " = " + distance);
+        System.out.println("distance with " + username + " = " + distance);
 
         final float distanceThreshold = 0.6f;
         final float percentageThreshold = 65.0f;
@@ -297,7 +316,7 @@ public class FaceRecognizer {
         float percentage = Math.min(100, 100 * distanceThreshold / distance);
         System.out.println("percentage = " + percentage);
 
-        return new Prediction(percentage, percentage >= percentageThreshold, first);
+        return new Prediction(percentage, percentage >= percentageThreshold, username, identifier);
     }
 
 
@@ -321,8 +340,6 @@ public class FaceRecognizer {
 
 
     private byte[] loadGraphDef() {
-        System.out.println("LOADING GRAPH");
-
         try (InputStream is = getClass().getClassLoader()
                 .getResourceAsStream("save_session/model_face_recognition.pb")) {
             return ByteStreams.toByteArray(is);

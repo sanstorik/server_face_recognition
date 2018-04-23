@@ -2,6 +2,7 @@ package org.sanstorik.http_server.server.queries;
 
 import com.google.gson.Gson;
 import org.sanstorik.http_server.utils.FileUtils;
+import org.sanstorik.neural_network.face_detection.Face;
 import org.sanstorik.neural_network.face_identifying.FaceFeatures;
 import org.sanstorik.neural_network.face_identifying.FaceRecognizer;
 import org.sanstorik.neural_network.face_identifying.FullFaceFeatures;
@@ -19,7 +20,10 @@ abstract class JsonFeatureQuery extends Query {
     JsonFeatureQuery() { }
 
 
-    protected boolean createJsonWithFaceFeatures(String jsonPath, String directory, String username,
+    /**
+     * @return error message if query wasn't successful, null otherwise
+     */
+    protected String createJsonWithFaceFeatures(String jsonPath, String directory, String username,
                                                  File... images) {
         File json = new File(jsonPath);
 
@@ -35,22 +39,23 @@ abstract class JsonFeatureQuery extends Query {
         }
 
         FaceRecognizer faceRecognizer = FaceRecognizer.create();
-        FullFaceFeatures features = faceRecognizer.calculateFullFeaturesForUser(username, images);
+        Face.Response<FullFaceFeatures, String> response =
+                faceRecognizer.calculateFullFeaturesForUser(username, images);
 
         //no faces found on a picture
-        if (features == null) {
-            return false;
+        if (response.left == null) {
+            return response.right;
         }
 
         boolean isWritten = false;
         try (Writer writer = new FileWriter(json)) {
             Gson gson = new Gson();
-            gson.toJson(features, writer);
+            gson.toJson(response.left, writer);
             isWritten = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return isWritten;
+        return isWritten ? null : "Wasn't able to create json file.";
     }
 }

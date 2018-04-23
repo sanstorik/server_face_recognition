@@ -8,32 +8,15 @@ public class FaceFeatures {
 
     //128 features to characterize each face
     private float[] features = new float[128];
-    private String faceLabel = String.valueOf("");
-    private long identifier;
     private int faceType = -1;
 
 
-    public FaceFeatures() { }
+    private FaceFeatures() { }
 
 
-    public FaceFeatures(float[] features) {
+    public FaceFeatures(float[] features, int faceType) {
         this.features = features;
-    }
-
-
-    public FaceFeatures(float[] features, String faceLabel) {
-        this.features = features;
-        this.faceLabel = faceLabel;
-    }
-
-
-    public void setFaceLabel(String faceLabel) {
-        this.faceLabel = faceLabel;
-    }
-
-
-    public String getFaceLabel() {
-        return faceLabel;
+        this.faceType = faceType;
     }
 
 
@@ -47,16 +30,6 @@ public class FaceFeatures {
     }
 
 
-    public void setIdentifier(long identifier) {
-        this.identifier = identifier;
-    }
-
-
-    public long getIdentifier() {
-        return identifier;
-    }
-
-
     public void setFaceType(int faceType) {
         this.faceType = faceType;
     }
@@ -64,7 +37,7 @@ public class FaceFeatures {
 
     public int getFaceType() {
         if (faceType <= -1) {
-            throw new IllegalStateException("face type is not normal");
+            throw new IllegalStateException("face type is not expected");
         }
 
         return faceType;

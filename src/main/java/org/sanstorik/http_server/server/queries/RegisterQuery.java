@@ -54,10 +54,11 @@ class RegisterQuery extends JsonFeatureQuery {
 
         File[] fileImages = images.toArray(new File[images.size()]);
 
-        if (!createJsonWithFaceFeatures(jsonUrl, directoryUserJson, username, fileImages)) {
-            errorResponse("Couldn't create user. Maybe not enough images are given. " +
-                    "You should know that there should always be photos from each side " +
-                    ": where you face right, left and at camera.");
+        String error_msg = createJsonWithFaceFeatures(jsonUrl, directoryUserJson, username, fileImages);
+
+        //error occured
+        if (error_msg != null) {
+            errorResponse(error_msg);
         } else if (!databaseConnection.registerUser(username, password, randomImageUrl, jsonUrl)) {
             errorResponse("Couldn't register user in database.");
         }
