@@ -139,7 +139,7 @@
 
         <dependency>
             <groupId>com.opencv</groupId>
-            <artifactId>opencv-macosx-x86_64</artifactId>
+            <artifactId>opencv-macosx-x86_64.jar</artifactId>
             <version>1.0</version>
         </dependency>
 
